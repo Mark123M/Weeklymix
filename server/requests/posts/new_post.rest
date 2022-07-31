@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/posts HTTP/1.1
+content-type: application/json
+
+{
+    
+    "userId": "62e5944931619d2f20567bec",
+    "postType": "feedback",
+    "title": "meaningless title",
+    "description": "Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. Change the world by being yourself. ",
+    "image": "/posts/kontakt.jpeg",
+    "audio": "pianoplaying.wav"
+}
+

@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "kevin@yaomail.com",
+    "password": "66666"
+}
+

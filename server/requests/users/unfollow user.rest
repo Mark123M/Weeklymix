@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/users/62c9998e6559d5bf251e67a8/unfollow HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "62c9c5110ab766ba7553ed1d"
+}
+

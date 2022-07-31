@@ -1,0 +1,7 @@
+DELETE http://localhost:3001/api/posts/62e698598c6dc0bce2b4cf84 HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "62e5944931619d2f20567bec"
+}
+
