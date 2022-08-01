@@ -10,6 +10,8 @@ import {
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
 
+import {Link} from 'react-router-dom'
+
 
 import {BiCommentDetail, BiLike} from 'react-icons/bi'
 
@@ -30,7 +32,7 @@ export default function Post({post}){
         }
         getUser()
         
-    },[])
+    },[post.userId])
 
     const handleMouseEnter = () =>{
         setBgColor('gray.700')
@@ -41,7 +43,6 @@ export default function Post({post}){
 
 
     return(
-        <a href = '/'>
             <Flex 
                 fontSize = 'xl' 
                 flexDirection='column'
@@ -55,7 +56,11 @@ export default function Post({post}){
             {/* i have braindamage */}
                 <Flex flexDirection='row' mt = {4}>
                     <Box display = {['none', 'none','inline','inline']}>
-                        <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','70px','70px']} maxW = {['50px','50px','70px','70px']} h = {['50px','50px','70px','70px']} borderRadius = '50%' ml = {5}/>
+                        <Link to = {`/profile/${user.username}`}>
+                            <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','70px','70px']} maxW = {['50px','50px','70px','70px']} h = {['50px','50px','70px','70px']} borderRadius = '50%' ml = {5}/>
+                        </Link>
+                           
+                        
                     </Box>
                     <Flex flexDirection = 'column'>
                         <Flex>
@@ -124,6 +129,5 @@ export default function Post({post}){
                     </Box>
                 </Flex>
             </Flex>
-        </a>
     )
 }

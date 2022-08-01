@@ -36,11 +36,11 @@ export default function Discussions(){
     const[channel, setChannel] = useState(1)
     const [channelColors, setChannelColors] = useState(['purple.300', 'transparent','transparent', 'transparent', 'transparent'])
     const channelBtns = [
-        <ChannelBtn bg = {channelColors[0]} text = 'All Posts' handleClick={(e)=>switchChannel(e,1)}/>,
-        <ChannelBtn bg = {channelColors[1]} text = 'Announcements' handleClick={(e)=>switchChannel(e,2)}/>,
-        <ChannelBtn bg = {channelColors[2]} text = 'Discussion' handleClick={(e)=>switchChannel(e,3)}/>,
-        <ChannelBtn bg = {channelColors[3]} text = 'Feedback' handleClick={(e)=>switchChannel(e,4)}/>,
-        <ChannelBtn bg = {channelColors[4]} text = 'Off Topic' handleClick={(e)=>switchChannel(e,5)}/>
+        <ChannelBtn id = {0} bg = {channelColors[0]} text = 'All Posts' handleClick={(e)=>switchChannel(e,1)}/>,
+        <ChannelBtn id = {1} bg = {channelColors[1]} text = 'Announcements' handleClick={(e)=>switchChannel(e,2)}/>,
+        <ChannelBtn id = {2} bg = {channelColors[2]} text = 'Discussion' handleClick={(e)=>switchChannel(e,3)}/>,
+        <ChannelBtn id = {3} bg = {channelColors[3]} text = 'Feedback' handleClick={(e)=>switchChannel(e,4)}/>,
+        <ChannelBtn id = {4} bg = {channelColors[4]} text = 'Off Topic' handleClick={(e)=>switchChannel(e,5)}/>
     ]
     
 
@@ -99,7 +99,7 @@ export default function Discussions(){
                 </Flex>
                 <Flex flexDirection='column' ml = '210px'  > {/*posts box */}
                     {posts.map((p)=>( //mapping the data of each post into a Post component
-                        <Post id = {p.id} post = {p}/>
+                        <Post id = {p._id} post = {p}/>
                     ))} 
                 </Flex>
             

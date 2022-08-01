@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Flex,
     Image,
@@ -17,7 +17,24 @@ import {Users} from "../DummyData"
 import Post from '../components/Post'
 import ProfileCardMini from '../components/ProfileCardMini';
 
+import axios from "axios"
+
+import {useParams} from "react-router-dom"
+
 export default function Profile() {
+    const [posts, setPosts] = useState([])
+    const {username} = useParams()
+
+    useEffect(() =>{
+        const getUserPosts = async () =>{
+            const res = await axios.get(`/posts/user/${username}`)
+            console.log(res)
+            setPosts(res.data)
+        }
+        getUserPosts()
+        
+    },[])
+
     return (
         <Box
             overflowY='auto'
@@ -50,7 +67,7 @@ export default function Profile() {
                             <Flex flexDirection={['column', 'column', 'row', 'row']}>
                                 <ProfileCard/>
                                 <Flex flexDirection='column' ml = {['0px','0px',5,5]} mt = {2}  > {/*posts box */}
-                                    {Posts.map((p)=>( //mapping the data of each post into a Post component
+                                    {posts.map((p)=>( //mapping the data of each post into a Post component
                                         <Post id = {p.id} post = {p}/>
                                     ))}
                                 </Flex>
@@ -64,10 +81,6 @@ export default function Profile() {
                                         <ProfileCardMini/>
                                     ))}
                                 </Wrap>
-
-                                <Flex flexDirection='column' ml = {['0px','0px',5,5]} mt = {2}  > {/*posts box */}
-                                   
-                                </Flex>
                             </Flex>
                         </TabPanel>
                         <TabPanel>
