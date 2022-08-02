@@ -19,6 +19,12 @@ export default function Login_and_register(){
     const handleClick = () =>{
         setFormState(formState === 'login'?'register':'login')
     }
+    const handleLogin = () => {
+        console.log('logged in')
+    }
+    const handleRegister = () =>{
+        console.log('user registered')
+    }
 
     return(
         <Flex 
@@ -92,11 +98,14 @@ export default function Login_and_register(){
                 display = {formState==='login'?'flex':'none'}
 
             >
-                <Input placeholder="Email" height = '45px' fontSize = 'md'/>
-                <Input placeholder="Password" height = '45px' fontSize = 'md' mt = {3}/>
-                <Button variant = 'solid' colorScheme='green' mt = {8}>Log In</Button>
-                <Text fontSize='sm' mt = {2} color = '#707070'>Forgot your password? too bad!!!</Text>
-                <Button variant = 'link' colorScheme='green' mt = 'auto' onClick={handleClick}>Create a new account</Button>
+                <form onSubmit={handleLogin}>
+                    <Input placeholder="Email" type = 'email' required height = '45px' fontSize = 'md'/>
+                    <Input placeholder="Password" type = 'password' required height = '45px' fontSize = 'md' mt = {3}/>
+                    <Button variant = 'solid' type = 'submit' colorScheme='green' mt = {8}>Log In</Button>
+                    <Text fontSize='sm' mt = {2} color = '#707070'>Forgot your password? too bad!!!</Text>
+                    <Button variant = 'link' colorScheme='green' mt = 'auto' onClick={handleClick}>Create a new account</Button>
+                </form>
+                
             </Flex>
 
             <Flex 
@@ -110,12 +119,15 @@ export default function Login_and_register(){
                 display = {formState==='register'?'flex':'none'}
 
             >
-                <Input placeholder="Username" height = '45px' fontSize = 'md'/>
-                <Input placeholder="Email" height = '45px' fontSize = 'md' mt = {3}/>
-                <Input placeholder="Password" height = '45px' fontSize = 'md' mt = {3}/>
-                <Button variant = 'solid' colorScheme='green' mt = {8}>Register</Button>
-                <Text fontSize='sm' mt = {2} color = '#707070'>Don't forget your password!</Text>
-                <Button variant = 'link' colorScheme='green' mt = 'auto' onClick={handleClick}>Log in to account</Button>
+                <form onSubmit={handleRegister}>
+                    <Input placeholder="Username" required height = '45px' fontSize = 'md'/>
+                    <Input placeholder="Email" type = 'email' required height = '45px' fontSize = 'md' mt = {3}/>
+                    <Input placeholder="Password"  type = 'password' required height = '45px' fontSize = 'md' mt = {3}/>
+                    <Button variant = 'solid' type = 'submit' colorScheme='green' mt = {8}>Register</Button>
+                    <Text fontSize='sm' mt = {2} color = '#707070'>Don't forget your password!</Text>
+                    <Button variant = 'link' colorScheme='green' mt = 'auto' onClick={handleClick}>Log in to account</Button>
+                </form>
+                
             </Flex>
 
 
