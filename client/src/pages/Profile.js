@@ -19,10 +19,11 @@ import ProfileCardMini from '../components/ProfileCardMini';
 
 import axios from "axios"
 
-import {useParams} from "react-router-dom"
+import {useParams} from "react-router"
 
 export default function Profile() {
     const [posts, setPosts] = useState([])
+    
     const {username} = useParams()
 
     useEffect(() =>{
@@ -32,7 +33,6 @@ export default function Profile() {
             setPosts(res.data)
         }
         getUserPosts()
-        
     },[])
 
     return (
@@ -65,7 +65,7 @@ export default function Profile() {
                     <TabPanels>
                         <TabPanel>
                             <Flex flexDirection={['column', 'column', 'row', 'row']}>
-                                <ProfileCard/>
+                                <ProfileCard username = {username} /* passing the routing parameters to component*//>
                                 <Flex flexDirection='column' ml = {['0px','0px',5,5]} mt = {2}  > {/*posts box */}
                                     {posts.map((p)=>( //mapping the data of each post into a Post component
                                         <Post id = {p.id} post = {p}/>
@@ -75,7 +75,7 @@ export default function Profile() {
                         </TabPanel>
                         <TabPanel>
                             <Flex flexDirection={['column', 'column', 'row', 'row']}>
-                                <ProfileCard/>
+                                <ProfileCard username = {username}/>
                                 <Wrap spacing = '20px' ml = {7} mt={2}>
                                     {Users.map((u)=>( //mapping the data of each post into a Post component
                                         <ProfileCardMini/>
@@ -84,10 +84,10 @@ export default function Profile() {
                             </Flex>
                         </TabPanel>
                         <TabPanel>
-                            <ProfileCard/>
+                  
                         </TabPanel>
                         <TabPanel>
-                            <ProfileCard/>
+                   
                         </TabPanel>
                     </TabPanels>
                 </Tabs>

@@ -110,7 +110,7 @@ export default function Post({post}){
                                 ml = {2}
                                 color = '#8E8F90'
                             > 
-                                {post.comments} comments
+                                {post.comments.length} {post.comments.length === 1? 'comment': 'comments'}
                             </Text>
                             <Icon as = {BiLike} w = {5} h = {5} color = '#8E8F90' ml = {5} />
                             <Text
@@ -120,7 +120,7 @@ export default function Post({post}){
                                 ml = {2}
                                 color = '#8E8F90'
                             > 
-                                {post.likes.length} likes
+                                {post.likes.length} {post.likes.length ===1? 'like': 'likes'}
                             </Text>
                         </Flex>
                     </Flex>
