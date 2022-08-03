@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import {
     Flex,
     Image,
@@ -6,24 +6,23 @@ import {
     Button,
     Text,
     Input,
+    FormLabel,
   } from '@chakra-ui/react';
 import "@fontsource/raleway"
 import "@fontsource/roboto"
-import "@fontsource/poppins"
 import "@fontsource/fira-sans"
-import "@fontsource/open-sans"
+import {Link} from 'react-router-dom' 
 
 export default function Login_and_register(){
-    const [formState, setFormState] = useState('login')
+    const emailRef = useRef()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const handleClick = () =>{
-        setFormState(formState === 'login'?'register':'login')
-    }
-    const handleLogin = () => {
-        console.log('logged in')
-    }
-    const handleRegister = () =>{
-        console.log('user registered')
+    const handleLogin = (e) => {
+        e.preventDefault()
+        setEmail('')
+        setPassword('')
+        console.log(`user logged in: ${email} ${password}`)
     }
 
     return(
@@ -90,46 +89,31 @@ export default function Login_and_register(){
             <Flex 
                 ml = {[0,0,10, 24]} 
                 flexDirection = 'column'
-                height= '300px'
+                height= '370px'
                 w = '400px'
                 padding= '20px'
                 backgroundColor= 'blackAlpha.300'
                 borderRadius= '10px'
-                display = {formState==='login'?'flex':'none'}
 
             >
                 <form onSubmit={handleLogin}>
-                    <Input placeholder="Email" type = 'email' required height = '45px' fontSize = 'md'/>
-                    <Input placeholder="Password" type = 'password' required height = '45px' fontSize = 'md' mt = {3}/>
+                    <FormLabel fontSize = 'md' color = 'gray.400'>Email:</FormLabel>
+                    <Input onChange={(e) => setEmail(e.target.value)} value = {email} type = 'email' required ref = {emailRef} height = '45px' fontSize = 'md'/>
+                    
+                    <FormLabel fontSize = 'md' color = 'gray.400'  mt = {4}>Password:</FormLabel>
+                    <Input onChange={(e) => setPassword(e.target.value)} value = {password} type = 'password' required height = '45px' fontSize = 'md'/>
                     <Button variant = 'solid' type = 'submit' colorScheme='green' mt = {8}>Log In</Button>
                     <Text fontSize='sm' mt = {2} color = '#707070'>Forgot your password? too bad!!!</Text>
-                    <Button variant = 'link' colorScheme='green' mt = 'auto' onClick={handleClick}>Create a new account</Button>
+
+                    <Link to = "/register">
+                        <Button variant = 'link' colorScheme='green' mt = 'auto'>
+                            Create a new account
+                        </Button>
+                    </Link>
+                       
                 </form>
                 
             </Flex>
-
-            <Flex 
-                ml = {[0,0,10, 24]} 
-                flexDirection = 'column'
-                height= '360px'
-                w = '400px'
-                padding= '20px'
-                backgroundColor= 'blackAlpha.300'
-                borderRadius= '10px'
-                display = {formState==='register'?'flex':'none'}
-
-            >
-                <form onSubmit={handleRegister}>
-                    <Input placeholder="Username" required height = '45px' fontSize = 'md'/>
-                    <Input placeholder="Email" type = 'email' required height = '45px' fontSize = 'md' mt = {3}/>
-                    <Input placeholder="Password"  type = 'password' required height = '45px' fontSize = 'md' mt = {3}/>
-                    <Button variant = 'solid' type = 'submit' colorScheme='green' mt = {8}>Register</Button>
-                    <Text fontSize='sm' mt = {2} color = '#707070'>Don't forget your password!</Text>
-                    <Button variant = 'link' colorScheme='green' mt = 'auto' onClick={handleClick}>Log in to account</Button>
-                </form>
-                
-            </Flex>
-
 
         </Flex>
     )
