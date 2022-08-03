@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
     Flex,
     Image,
@@ -19,10 +19,15 @@ import ProfileCardMini from '../components/ProfileCardMini';
 
 import axios from "axios"
 
-import {useParams} from "react-router-dom"
+import {useParams} from "react-router"
+import { UserContext } from '../UserContext';
 
 export default function Profile() {
+    const{value: user, setValue: setUser} = useContext(UserContext)
+    console.log(user)
+
     const [posts, setPosts] = useState([])
+    
     const {username} = useParams()
 
     useEffect(() =>{
@@ -32,9 +37,9 @@ export default function Profile() {
             setPosts(res.data)
         }
         getUserPosts()
-        
     },[])
 
+    
     return (
         <Box
             overflowY='auto'
@@ -49,9 +54,7 @@ export default function Profile() {
             backgroundPosition='bottom right'
             
         >
-            
             <Navbar/>
-            
             <Flex flexDirection='row'>
 
                 <Tabs size = {['md','md','lg','lg']} variant = 'line' colorScheme = 'purple' w = '100vw' fontFamily =  {`'fira sans', sans-serif`} mt = '80px'  >
@@ -65,7 +68,7 @@ export default function Profile() {
                     <TabPanels>
                         <TabPanel>
                             <Flex flexDirection={['column', 'column', 'row', 'row']}>
-                                <ProfileCard/>
+                                <ProfileCard username = {username} /* passing the routing parameters to component*//>
                                 <Flex flexDirection='column' ml = {['0px','0px',5,5]} mt = {2}  > {/*posts box */}
                                     {posts.map((p)=>( //mapping the data of each post into a Post component
                                         <Post id = {p.id} post = {p}/>
@@ -75,7 +78,7 @@ export default function Profile() {
                         </TabPanel>
                         <TabPanel>
                             <Flex flexDirection={['column', 'column', 'row', 'row']}>
-                                <ProfileCard/>
+                                <ProfileCard username = {username}/>
                                 <Wrap spacing = '20px' ml = {7} mt={2}>
                                     {Users.map((u)=>( //mapping the data of each post into a Post component
                                         <ProfileCardMini/>
@@ -84,10 +87,10 @@ export default function Profile() {
                             </Flex>
                         </TabPanel>
                         <TabPanel>
-                            <ProfileCard/>
+                  
                         </TabPanel>
                         <TabPanel>
-                            <ProfileCard/>
+                   
                         </TabPanel>
                     </TabPanels>
                 </Tabs>

@@ -2,12 +2,7 @@ POST http://localhost:3001/api/auth/register HTTP/1.1
 content-type: application/json
 
 {
-    "username": "LofiLarry",
-    "email": "notracist@gmail.com",
-    "password": "evaniscool#discordmod123",
-    "location": "Ontario, Canada",
-    "description": "This is HiphopHubert",
-    "socialLinks": ["Soundcloud: soundcloud.com/heir"],
-    "coverPic": "cover.png"
+    "username": "1", 
+    "email": "1@gmail.com", 
+    "password": "lookatthesky"
 }
-

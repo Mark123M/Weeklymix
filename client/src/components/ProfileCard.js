@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Flex,
     Image,
@@ -14,9 +14,21 @@ import {Users} from '../DummyData'
 import {BiImageAdd} from 'react-icons/bi'
 import { FaFlagUsa, FaYoutube, FaSpotify, FaSoundcloud, FaBandcamp, FaDiscord, FaReddit} from 'react-icons/fa';
 import SocialLink from './SocialLink';
+import axios from 'axios'
 
 
-export default function ProfileCard() {
+export default function ProfileCard({username}) {
+    const [user, setUser] = useState('')
+    useEffect(() =>{
+        const getUser = async () =>{
+            const res = await axios.get(`/users/u/${username}`)
+            console.log(res)
+            setUser(res.data)
+        }
+        getUser()
+    },[])
+
+
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
     return (
         <Flex
@@ -28,14 +40,10 @@ export default function ProfileCard() {
             borderRadius = '10px 10px 10px 10px'
             height = 'fit-content'
         >
-                
-           {/* <Box h = '100%' alignItems='center' mr = {7} >
-                <Image src='assets/guitar.jfif' objectFit='cover' minW = '400px' maxW = '400px' h = '150px' borderRadius = '20px 20px 0px 0px' marginBottom={4}/>
-            </Box> */}
 
             <Flex bg = '#2d97e5' minW = '375px' maxW = '375px' h = '140px' borderRadius = '10px 10px 0px 0px' >
                 <Box>
-                    <Image src={assetsFolder+Users.filter(u=>u.id === 1)[0].profilePicture} objectFit = 'cover' minW = '120px' maxW = '120px' h = '120px' borderRadius = '5px' ml = {8} mt = {16} outline = '4px solid white'  />
+                    <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '120px' maxW = '120px' h = '120px' borderRadius = '5px' ml = {8} mt = {16} outline = '4px solid white'  />
                 </Box>
                 <Icon as = {BiImageAdd} w = {12} h = {12} color = '#FFFFFF' ml='auto' mt = 'auto' mr = {2} mb = {2}/>
             </Flex>
@@ -46,7 +54,7 @@ export default function ProfileCard() {
                 ml = {7}
                 mt = {14}   
             >
-                MetalMark
+                {user.username}
             </Text>
 
             <Flex>
@@ -58,7 +66,7 @@ export default function ProfileCard() {
                     ml = {3}
                     color = '#8E8F90'
                 >
-                    Toronto, Ontario, Canada
+                    {user.location}
                 </Text>
                 <Button colorScheme='orange' variant='solid' ml = 'auto' mr = {5} mt = '-24px'  >
                     Follow
@@ -84,7 +92,7 @@ export default function ProfileCard() {
                 color = 'white'
 
             >
-                I’m a friendly 20 year old guy who loves to play the guitar. I recently got into metal music and fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter fillter   fillter  fillter  fillter  fillter  fillter  fillter  fillter fillter  fillter fillter  fillter fillter  fillter fillter  fillter fillter  fillter 
+                {user.description}
 
             </Text>
 
