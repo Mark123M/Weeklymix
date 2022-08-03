@@ -1,4 +1,6 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef, useEffect, useContext} from 'react'
+import AuthContext from '../context/AuthProvider'
+
 import {
     Flex,
     Image,
@@ -12,18 +14,34 @@ import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
 import {Link} from 'react-router-dom' 
+import axios from 'axios'
 
-export default function Login_and_register(){
+export default function Login(){
+    const {setAuth} = useContext(AuthContext)
+
     const emailRef = useRef()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleLogin = (e) => {
         e.preventDefault()
+        console.log(`logging in: ${email} ${password}`)
+
+        axios.post('/auth/login', {
+            email: email,
+            password: password
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function(error){
+            console.log(error)
+        })
         setEmail('')
         setPassword('')
-        console.log(`user logged in: ${email} ${password}`)
     }
+
+   
 
     return(
         <Flex 

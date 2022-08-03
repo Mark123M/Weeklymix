@@ -13,7 +13,7 @@ import "@fontsource/roboto"
 import "@fontsource/fira-sans"
 import {Link} from 'react-router-dom'
 
-export default function Login_and_register(){
+export default function Register(){
     const emailRef = useRef()
     
     const [username, setUsername] = useState('')
