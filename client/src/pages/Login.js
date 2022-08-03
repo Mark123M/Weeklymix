@@ -1,5 +1,4 @@
-import React, {useState, useRef, useEffect, useContext} from 'react'
-import AuthContext from '../context/AuthProvider'
+import React, {useState, useRef, useContext} from 'react'
 
 import {
     Flex,
@@ -15,9 +14,13 @@ import "@fontsource/roboto"
 import "@fontsource/fira-sans"
 import {Link} from 'react-router-dom' 
 import axios from 'axios'
+import { UserContext } from '../UserContext';
 
 export default function Login(){
-    const {setAuth} = useContext(AuthContext)
+    
+    const{value, setValue} = useContext(UserContext)
+    console.log(value)
+
 
     const emailRef = useRef()
     const [email, setEmail] = useState('')
@@ -32,6 +35,7 @@ export default function Login(){
             password: password
         })
         .then(function (response) {
+            setValue(response.data)
             console.log(response);
         })
         .catch(function(error){
@@ -99,7 +103,7 @@ export default function Login(){
                         textDecoration= 'underline dotted #b794f4 5px'
                         textUnderlineOffset={5}
                     >
-                        improve  
+                        improve 
                     </Text>
                 </Flex>
             </Flex> 

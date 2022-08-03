@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
     Flex,
     Image,
@@ -20,8 +20,12 @@ import ProfileCardMini from '../components/ProfileCardMini';
 import axios from "axios"
 
 import {useParams} from "react-router"
+import { UserContext } from '../UserContext';
 
 export default function Profile() {
+    const{value, setValue} = useContext(UserContext)
+    console.log(value)
+    
     const [posts, setPosts] = useState([])
     
     const {username} = useParams()
@@ -35,6 +39,7 @@ export default function Profile() {
         getUserPosts()
     },[])
 
+    
     return (
         <Box
             overflowY='auto'
@@ -49,9 +54,7 @@ export default function Profile() {
             backgroundPosition='bottom right'
             
         >
-            
             <Navbar/>
-            
             <Flex flexDirection='row'>
 
                 <Tabs size = {['md','md','lg','lg']} variant = 'line' colorScheme = 'purple' w = '100vw' fontFamily =  {`'fira sans', sans-serif`} mt = '80px'  >
