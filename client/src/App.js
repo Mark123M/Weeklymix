@@ -19,10 +19,10 @@ import { myTheme } from './styles/theme';
 import { UserContext } from './UserContext';
 
 function App() {
-  const[value, setValue] = useState('hello from context')
+  const[user, setUser] = useState('hello from context')
 
   return (
-    <UserContext.Provider value = {{value, setValue}}>
+    <UserContext.Provider value = {{value: user, setValue: setUser}}>
       <ChakraProvider theme={myTheme}>
         <HashRouter>
           <Routes>

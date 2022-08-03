@@ -18,8 +18,8 @@ import { UserContext } from '../UserContext';
 
 export default function Login(){
     
-    const{value, setValue} = useContext(UserContext)
-    console.log(value)
+    const{value: user, setValue: setUser} = useContext(UserContext)
+    console.log(user)
 
 
     const emailRef = useRef()
@@ -35,7 +35,7 @@ export default function Login(){
             password: password
         })
         .then(function (response) {
-            setValue(response.data)
+            setUser(response.data)
             console.log(response);
         })
         .catch(function(error){
