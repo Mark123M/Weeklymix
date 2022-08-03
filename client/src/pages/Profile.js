@@ -23,9 +23,9 @@ import {useParams} from "react-router"
 import { UserContext } from '../UserContext';
 
 export default function Profile() {
-    const{value, setValue} = useContext(UserContext)
-    console.log(value)
-    
+    const{value: user, setValue: setUser} = useContext(UserContext)
+    console.log(user)
+
     const [posts, setPosts] = useState([])
     
     const {username} = useParams()
