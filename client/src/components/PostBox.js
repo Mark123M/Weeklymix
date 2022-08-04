@@ -35,12 +35,15 @@ export default function PostBox({createNewPost}){
     return(
         <Flex 
             cursor = 'pointer'
-            mt = {3}
-            mb = {4}
+            mt = {5}
+            mb = {8}
+            ml = {4}
+            mr = {6}
             fontSize = 'xl' 
             flexDirection='column'
             borderRadius = '10px'
             border= '3px solid #9AE6B4'
+            bg = '#212229'
             h = '80px'
             onClick={createNewPost}
         > 
@@ -64,7 +67,7 @@ export default function PostBox({createNewPost}){
                         </Link>
                     </Button>
                 </Flex>
-                <Input cursor = 'pointer' alignSelf='center' ml = '-25px' mr = {5} h = '45px' fontSize = 'lg' placeholder='Create a new post...' color='white' bg = '#272729' colorScheme='green'></Input>
+                <Input cursor = 'pointer' alignSelf='center' ml = '-25px' mr = {5} h = '45px' fontSize = 'lg' placeholder='Create a new post...' color='white' bg = 'blackAlpha.400'></Input>
                 <ImageIcon/>
                 <AudioIcon/>
             </Flex>

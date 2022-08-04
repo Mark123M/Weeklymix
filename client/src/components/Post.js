@@ -22,7 +22,7 @@ import {format} from "timeago.js"
 export default function Post({post}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
-    const [bgColor, setBgColor] = useState('transparent')
+    const [bgColor, setBgColor] = useState('#212229')
     const [user, setUser] = useState({})
 
     useEffect(() =>{
@@ -39,7 +39,7 @@ export default function Post({post}){
         setBgColor('gray.700')
     }
     const handleMouseLeave = () =>{
-        setBgColor('transparent')
+        setBgColor('#212229')
     }
 
 
@@ -54,10 +54,14 @@ export default function Post({post}){
                 bg = {bgColor}
                 onMouseEnter = {handleMouseEnter}
                 onMouseLeave = {handleMouseLeave}
+                mt = {1}
+                mb = {1}
+                ml = {4}
+                mr = {6}
             > 
             {/* i have braindamage */}
                 <Flex flexDirection='row' mt = {4}>
-                    <Box display = {['', 'none','inline','inline']}>
+                    <Box display = {['none', 'none','inline','inline']}>
                         <Link to = {`/profile/${user.username}`}>
                             <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
                         </Link>

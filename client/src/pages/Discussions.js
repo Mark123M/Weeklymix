@@ -15,6 +15,7 @@ import Post from '../components/Post'
 import ChannelBtn from '../components/ChannelBtn'
 import axios from "axios"
 import PostBox from '../components/PostBox';
+import PostModalPopup from '../components/PostModalPopup';
 
 import { Link } from 'react-router-dom';
 
@@ -77,6 +78,8 @@ export default function Discussions(){
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
         >
+            <PostModalPopup isOpened={false}/>
+
             <Navbar/>
             <Flex 
                 flexDirection='column' 
@@ -108,7 +111,7 @@ export default function Discussions(){
                 </Button>
             </Flex>
             
-            <Flex flexDirection='column' ml = {['140px','150px','197px', '210px']} mt = {20}> 
+            <Flex flexDirection='column' ml = {['140px','150px','197px', '210px']} mt = {20} bg = '#131417'> 
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.map((p)=>( //mapping the data of each post into a Post component

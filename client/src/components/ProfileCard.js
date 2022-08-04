@@ -33,7 +33,7 @@ export default function ProfileCard({username}) {
     return (
         <Flex
             flexDirection='column'
-            bg = '#2d2e39'
+            bg = '#24262D'
             w = {['400px','400px','400px','400px']}
             ml = {['0px','0px',5,5]}
             mt = {2}
