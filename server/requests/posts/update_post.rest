@@ -1,8 +1,8 @@
-PUT http://localhost:3001/api/posts/62caccebe21b2172db8ad385 HTTP/1.1
+PUT http://localhost:3001/api/posts/62ea984c7287b1086cfdcf02 HTTP/1.1
 content-type: application/json
 
 {
-    "userId": "id3",
+    "userId": "62e5944931619d2f20567bec",
     "description": "hubie's first post mnumber 2",
     "image": "hellosir212.jpg"
 }
