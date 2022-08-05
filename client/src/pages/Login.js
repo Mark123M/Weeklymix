@@ -8,6 +8,8 @@ import {
     Text,
     Input,
     FormLabel,
+    Alert,
+    AlertIcon,
   } from '@chakra-ui/react';
 import "@fontsource/raleway"
 import "@fontsource/roboto"
@@ -15,6 +17,7 @@ import "@fontsource/fira-sans"
 import {Link} from 'react-router-dom' 
 import axios from 'axios'
 import { UserContext } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login(){
     
@@ -25,6 +28,10 @@ export default function Login(){
     const emailRef = useRef()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState(false)
+    const navigate = useNavigate()
+
+    console.log(email, password)
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -36,16 +43,25 @@ export default function Login(){
         })
         .then(function (response) {
             setUser(response.data)
+            navigate('/', { replace: true })
             console.log(response);
         })
         .catch(function(error){
-            console.log(error)
+            setError(true)
+            console.log(error, 'The username and password do not match.')
         })
         setEmail('')
         setPassword('')
     }
 
-   
+    const handleEmailChange = (e) =>{
+        setEmail(e.target.value)
+        setError(false)
+    }
+    const handlePasswordChange = (e) =>{
+        setPassword(e.target.value)
+        setError(false)
+    }
 
     return(
         <Flex 
@@ -111,24 +127,32 @@ export default function Login(){
             <Flex 
                 ml = {[0,0,10, 24]} 
                 flexDirection = 'column'
-                height= '370px'
+                
                 w = '400px'
                 padding= '20px'
                 backgroundColor= 'blackAlpha.300'
                 borderRadius= '10px'
 
-            >
+            >   
                 <form onSubmit={handleLogin}>
+                    <Flex mb = {5} flexDirection = 'row' display = {error?'inline-block':'none'}>   
+                        <Alert status='error' variant='solid' bg = 'red.300'>
+                            <AlertIcon />
+                            Username and password do not match.
+                        </Alert>
+                    </Flex>
+                    
+
                     <FormLabel fontSize = 'md' color = 'gray.400'>Email:</FormLabel>
-                    <Input onChange={(e) => setEmail(e.target.value)} value = {email} type = 'email' required ref = {emailRef} height = '45px' fontSize = 'md'/>
+                    <Input onChange={handleEmailChange} value = {email} type = 'email' required ref = {emailRef} height = '45px' fontSize = 'md'/>
                     
                     <FormLabel fontSize = 'md' color = 'gray.400'  mt = {4}>Password:</FormLabel>
-                    <Input onChange={(e) => setPassword(e.target.value)} value = {password} type = 'password' required height = '45px' fontSize = 'md'/>
+                    <Input onChange={handlePasswordChange} value = {password} type = 'password' required height = '45px' fontSize = 'md'/>
                     <Button variant = 'solid' type = 'submit' colorScheme='green' mt = {8}>Log In</Button>
                     <Text fontSize='sm' mt = {2} color = '#707070'>Forgot your password? too bad!!!</Text>
 
                     <Link to = "/register">
-                        <Button variant = 'link' colorScheme='green' mt = 'auto'>
+                        <Button variant = 'link' colorScheme='green' mt = 'auto' paddingBottom={5}>
                             Create a new account
                         </Button>
                     </Link>

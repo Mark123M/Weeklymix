@@ -7,20 +7,56 @@ import {
     Button,
     IconButton,
     Icon,
+    Text,
+    Menu, MenuButton,MenuList, MenuItem
   } from '@chakra-ui/react';
 import {FaDiscord, FaReddit, FaInstagram} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
-
-
 import NavItem from './NavbarLink'
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import "@fontsource/raleway"
-import {HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+import "@fontsource/roboto"
+import "@fontsource/fira-sans"
+import {HamburgerIcon, CloseIcon, ChevronDownIcon} from '@chakra-ui/icons'
+
+import { UserContext } from '../UserContext';
+const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
+
+
+const UserMenu = ({user}) =>{
+    return(
+        <Flex ml = {5} h = '60px' bg = 'whiteAlpha.200' alignSelf='center' border='2px none gray' borderRadius = '5px' justifyContent='center' alignItems = 'center'>
+            <Image ml = {3} src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '45px' maxW = '45px' h = '45px' borderRadius = '50%'/>
+            <Flex flexDirection = 'column' mr = {3} display = {['none','none','none','inline']}>
+                <Text
+                    fontSize= {['md', 'md', '1.20rem', '1.20rem']}
+                    fontFamily =  {`'fira sans', sans-serif`} 
+                    fontWeight = '500' 
+                    ml = {2}
+                >   
+                    {user.username}
+                </Text>
+                <Text
+                    fontSize= 'xs'
+                    fontFamily =  {`'roboto', sans-serif`} 
+                    fontWeight = '500' 
+                    ml = {2}
+                    color = '#A2A4A4'
+                >
+                    {user.followers.length} Followers
+                </Text>
+            </Flex>
+           <ChevronDownIcon w = {6} h = {6} mr = {1}/>
+            
+        </Flex>
+    )
+}
 
 export default function Navbar(){
      //responsive padding sizes
     const fontW = '700'
     const navColor = '#35363D'
+    const{value: user, setValue: setUser} = useContext(UserContext)
 
     const [display, setDisplay] = useState('none')
 
@@ -31,6 +67,7 @@ export default function Navbar(){
         fontFamily:`'Raleway', sans-serif`,
         fontSize: '1.1rem',
         fontWeight: fontW,
+        
     }
 
     const handleMenuClick = () =>{
@@ -47,14 +84,14 @@ export default function Navbar(){
                     </Flex>
                 </Link>
                 
-                <Flex display = {['none', 'none', 'none', 'flex'] }>
+                <Flex display = {['none', 'none', 'none', 'flex'] } flexDirection = 'row'>
                     
                     <Link to = '/discussions'>
                         <NavItem text = 'Discussions'/>
                     </Link>
                     <NavItem text = 'Challenge'/>
                     <NavItem text = 'Users'/>
-                    <NavItem text = 'More'/>
+                    <NavItem text = 'About'/>
 
                     <Icon as={FaDiscord} alignSelf = 'center' ml = {5} w = {8} h = {8}/>
                     <Icon as={FaReddit} alignSelf = 'center' ml = {5} w = {8} h = {8}/>
@@ -62,13 +99,15 @@ export default function Navbar(){
                     
                    
                     
-                    <Center style = {centerStyle}>
+                    <Flex style = {centerStyle} display = {user?'none':"initial"}>
                         <Link to = '/login'>
-                            <Button colorScheme='teal' variant='outline' fontSize='1.1rem' h = '45px'>
+                            <Button colorScheme='teal' variant='outline' fontSize='1.1rem' h = '45px' mt = {4}>
                                 Login/Register
                             </Button>
                         </Link>
-                    </Center>
+                    </Flex>
+
+                    <UserMenu user = {user}/>
                     
                 </Flex>
                 <Flex justifyContent='flex-end' objectFit='fill' flexGrow='1' display = {['flex', 'flex', 'flex', 'none']}>
@@ -92,15 +131,15 @@ export default function Navbar(){
                     </Link>
                     <NavItem text = 'Challenge'/>
                     <NavItem text = 'Users'/>
-                    <NavItem text = 'More'/>
+                    <NavItem text = 'About'/>
 
-                    <Center style = {centerStyle}>
+                    <Flex style = {centerStyle} display = {user?'none':'inline'}>
                         <Link to = '/login'>
                             <Button colorScheme='teal' variant='outline' fontSize='1.1rem' h = '45px'>
                                 Login/Register
                             </Button>
                         </Link>
-                    </Center>
+                    </Flex>
                 </Flex>
             </Flex>
         </Box>

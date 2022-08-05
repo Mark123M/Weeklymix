@@ -19,7 +19,7 @@ import { myTheme } from './styles/theme';
 import { UserContext } from './UserContext';
 
 function App() {
-  const[user, setUser] = useState('no user')
+  const[user, setUser] = useState(null)
 
   return (
     <UserContext.Provider value = {{value: user, setValue: setUser}}>

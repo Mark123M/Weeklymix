@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {
     Flex,
     Box,
@@ -19,11 +19,18 @@ import PostModalPopup from '../components/PostModalPopup';
 
 import { Link } from 'react-router-dom';
 
+import { UserContext } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Discussions(){
     const [posts, setPosts] = useState([])
     const [postFormDisplay, setPostFormDisplay] = useState(false)
+    const{value: user, setValue: setUser} = useContext(UserContext)
 
+    const navigate = useNavigate()
+    //console.log(user?"there is a user" : "there isn't a user")
+    
     useEffect(() =>{
         const getAllPosts = async () =>{
             const res = await axios.get("/posts/")
@@ -44,8 +51,14 @@ export default function Discussions(){
     }
 
     const createNewPost = () =>{
-        console.log('new post created')
-        setPostFormDisplay(true)
+        if(!user){
+            navigate('/login', { replace: true })
+        }
+        else {
+            console.log('new post created')
+            setPostFormDisplay(true)
+        }
+        
     }
 
 
