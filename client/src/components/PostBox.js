@@ -35,8 +35,8 @@ export default function PostBox({createNewPost}){
     return(
         <Flex 
             cursor = 'pointer'
-            mt = {5}
-            mb = {8}
+            mt = {12}
+            mb = {4}
             ml = {4}
             mr = {6}
             fontSize = 'xl' 

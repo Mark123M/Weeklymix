@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 
 export default function Discussions(){
     const [posts, setPosts] = useState([])
+    const [postFormDisplay, setPostFormDisplay] = useState(false)
 
     useEffect(() =>{
         const getAllPosts = async () =>{
@@ -44,6 +45,7 @@ export default function Discussions(){
 
     const createNewPost = () =>{
         console.log('new post created')
+        setPostFormDisplay(true)
     }
 
 
@@ -78,7 +80,7 @@ export default function Discussions(){
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
         >
-            <PostModalPopup isOpened={false}/>
+            <PostModalPopup isOpened = {postFormDisplay} setPostFormDisplay = {setPostFormDisplay}/>
 
             <Navbar/>
             <Flex 

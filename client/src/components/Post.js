@@ -54,7 +54,7 @@ export default function Post({post}){
                 bg = {bgColor}
                 onMouseEnter = {handleMouseEnter}
                 onMouseLeave = {handleMouseLeave}
-                mt = {1}
+                mt = {2}
                 mb = {1}
                 ml = {4}
                 mr = {6}
