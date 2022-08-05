@@ -20,7 +20,7 @@ import {HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
 export default function Navbar(){
      //responsive padding sizes
     const fontW = '700'
-    const navColor = '#2D2E39'
+    const navColor = '#35363D'
 
     const [display, setDisplay] = useState('none')
 
@@ -39,7 +39,7 @@ export default function Navbar(){
     }
 
     return(
-        <Box zIndex='20' position = 'fixed'>
+        <Box zIndex='1' position = 'fixed'>
             <Flex background = {navColor} w = '100vw' h = '80px'  outline = '3px solid' outlineColor='orange.200' justifyContent='center' >
                 <Link to = '/'>
                     <Flex paddingRight={[0,0,4,7]} >

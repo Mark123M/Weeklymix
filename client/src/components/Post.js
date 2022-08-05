@@ -6,6 +6,7 @@ import {
     Text,
     Box,
     Icon,
+    Button,
   } from '@chakra-ui/react';
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
@@ -21,7 +22,7 @@ import {format} from "timeago.js"
 export default function Post({post}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
-    const [bgColor, setBgColor] = useState('transparent')
+    const [bgColor, setBgColor] = useState('#212229')
     const [user, setUser] = useState({})
 
     useEffect(() =>{
@@ -38,40 +39,49 @@ export default function Post({post}){
         setBgColor('gray.700')
     }
     const handleMouseLeave = () =>{
-        setBgColor('transparent')
+        setBgColor('#212229')
     }
 
 
     return(
+        <Link to = '/'>
             <Flex 
                 fontSize = 'xl' 
                 flexDirection='column'
                 borderRadius = '10px'
-                border= '2px solid #90CDF4'
-
+                border= '3px solid #90CDF4'
+                
                 bg = {bgColor}
                 onMouseEnter = {handleMouseEnter}
                 onMouseLeave = {handleMouseLeave}
+                mt = {2}
+                mb = {1}
+                ml = {4}
+                mr = {6}
             > 
             {/* i have braindamage */}
                 <Flex flexDirection='row' mt = {4}>
                     <Box display = {['none', 'none','inline','inline']}>
                         <Link to = {`/profile/${user.username}`}>
-                            <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','70px','70px']} maxW = {['50px','50px','70px','70px']} h = {['50px','50px','70px','70px']} borderRadius = '50%' ml = {5}/>
+                            <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
                         </Link>
-                           
-                        
                     </Box>
+
                     <Flex flexDirection = 'column'>
                         <Flex>
-                            <Text
+                            <Button
+                                variant = 'link'
                                 fontSize= {['md', 'md', 'lg', 'lg']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
                                 ml = {4}
-                            >
-                                {user.username}
-                            </Text>
+                            
+                            >   
+                                <Link to = {`/profile/${user.username}`}>
+                                    {user.username}
+                                </Link>
+                            </Button>
+
                             <Text
                                 fontSize= {['xs','xs','sm','sm']}
                                 fontFamily =  {`'roboto', sans-serif`} 
@@ -129,5 +139,6 @@ export default function Post({post}){
                     </Box>
                 </Flex>
             </Flex>
+        </Link>
     )
 }

@@ -33,15 +33,15 @@ export default function ProfileCard({username}) {
     return (
         <Flex
             flexDirection='column'
-            bg = '#2d2e39'
-            w = {['375px','375px','375px','375px']}
+            bg = '#24262D'
+            w = {['400px','400px','400px','400px']}
             ml = {['0px','0px',5,5]}
             mt = {2}
             borderRadius = '10px 10px 10px 10px'
             height = 'fit-content'
         >
 
-            <Flex bg = '#2d97e5' minW = '375px' maxW = '375px' h = '140px' borderRadius = '10px 10px 0px 0px' >
+            <Flex bg = '#2d97e5' minW = '400px' maxW = '400px' h = '140px' borderRadius = '10px 10px 0px 0px' >
                 <Box>
                     <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '120px' maxW = '120px' h = '120px' borderRadius = '5px' ml = {8} mt = {16} outline = '4px solid white'  />
                 </Box>

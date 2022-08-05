@@ -44,7 +44,7 @@ export default function Profile() {
         <Box
             overflowY='auto'
             overflowX = 'auto'
-            bg = '#1b1c22' 
+            bg = '#131417' 
             position = 'fixed' 
             width = '100%' 
             height = '100%'  
