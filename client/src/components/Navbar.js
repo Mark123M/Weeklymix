@@ -20,44 +20,17 @@ import "@fontsource/fira-sans"
 import {HamburgerIcon, CloseIcon, ChevronDownIcon} from '@chakra-ui/icons'
 
 import { UserContext } from '../UserContext';
-const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
+import UserMenu from './UserMenu';
 
 
-const UserMenu = ({user}) =>{
-    if(!user) return null
-    return(
-        <Flex h = '55px' bg = 'whiteAlpha.200' alignSelf='center' border='2px none gray' borderRadius = '5px' justifyContent='center' alignItems = 'center'>
-            <Image ml = {2} src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '40px' maxW = '40px' h = '40px' borderRadius = '50%'/>
-            <Flex flexDirection = 'column' mr = {3} display = {['none','none','none','inline']}>
-                <Text
-                    fontSize= {['md', 'md', '1.14rem', '1.14rem']}
-                    fontFamily =  {`'fira sans', sans-serif`} 
-                    fontWeight = '500' 
-                    ml = {2}
-                >   
-                    {user.username}
-                </Text>
-                <Text
-                    fontSize= 'xs'
-                    fontFamily =  {`'roboto', sans-serif`} 
-                    fontWeight = '500' 
-                    ml = {2}
-                    color = '#A2A4A4'
-                >
-                    {user.followers.length} Followers
-                </Text>
-            </Flex>
-           <ChevronDownIcon w = {6} h = {6} />
-            
-        </Flex>
-    )
-}
+
 
 export default function Navbar(){
      //responsive padding sizes
     const fontW = '700'
     const navColor = '#35363D'
     const{value: user, setValue: setUser} = useContext(UserContext)
+    const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
     const [display, setDisplay] = useState('none')
 
@@ -78,7 +51,7 @@ export default function Navbar(){
 
     return(
         <Box zIndex='1' position = 'fixed'>
-            <Flex background = {navColor} w = '100vw' h = '70px'  outline = '3px solid' outlineColor='orange.200'  >
+            <Flex background = {navColor} w = '100vw' h = '73px'  borderStyle = 'none none solid none' borderWidth='2px' borderColor='orange.300'  >
                 <Flex marginRight = 'auto' ml = {8}>
                     <Link to = '/'>
                         <Flex>

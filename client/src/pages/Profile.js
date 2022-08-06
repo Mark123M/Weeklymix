@@ -45,7 +45,7 @@ export default function Profile() {
             overflowY='auto'
             overflowX = 'auto'
             bg = '#131417' 
-            position = 'fixed' 
+            position = 'fixed'
             width = '100%' 
             height = '100%'  
             backgroundImage=''  
@@ -55,9 +55,9 @@ export default function Profile() {
             
         >
             <Navbar/>
-            <Flex flexDirection='row'>
+            <Flex flexDirection='row' mt = '-10px'>
 
-                <Tabs size = {['md','md','lg','lg']} variant = 'line' colorScheme = 'purple' w = '100vw' fontFamily =  {`'fira sans', sans-serif`} mt = '80px'  >
+                <Tabs size = {['md','md','md','md']} variant = 'line' colorScheme = 'purple' w = '100vw' fontFamily =  {`'fira sans', sans-serif`} mt = '80px'  >
                     <TabList bg = '#24252E' justifyContent='center' mt = {1}>
                         <Tab mr = {[0,0,10,10]} borderWidth = '5px' borderStyle='none none solid none'>Posts</Tab>
                         <Tab mr = {[0,0,10,10]} borderWidth = '5px' borderStyle='none none solid none'>Followers</Tab>
