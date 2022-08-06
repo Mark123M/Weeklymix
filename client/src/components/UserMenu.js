@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {
     Flex,
     Image,
@@ -11,6 +11,8 @@ import "@fontsource/roboto"
 import "@fontsource/fira-sans"
 import {HamburgerIcon, CloseIcon, ChevronDownIcon} from '@chakra-ui/icons'
 
+import { UserContext } from '../UserContext';
+
 const MenuLink = ({text, link}) =>{
     <Link to = {link}>
         <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55'>
@@ -19,10 +21,12 @@ const MenuLink = ({text, link}) =>{
     </Link>
 }
 
-export default function UserMenu({user}){
+export default function UserMenu(){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
     const [menuOpened, setMenuOpened] = useState(false)
     const [menuMargin, setMenuMargin] = useState(0)
+
+    const{value: user, setValue: setUser} = useContext(UserContext)
 
     const handleClick = () =>{
         console.log('menu')
@@ -31,6 +35,7 @@ export default function UserMenu({user}){
     }
     const handleLogout = () =>{
         console.log('logged out')
+        setUser(null)
     }
 
     if(!user) return null

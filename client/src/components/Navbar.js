@@ -84,7 +84,7 @@ export default function Navbar(){
                         </Link>
                     </Flex>
 
-                    <UserMenu user = {user}/>
+                    <UserMenu/>
                     
                     
                 </Flex>
