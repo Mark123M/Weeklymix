@@ -24,12 +24,13 @@ const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
 
 const UserMenu = ({user}) =>{
+    if(!user) return null
     return(
-        <Flex ml = {5} h = '60px' bg = 'whiteAlpha.200' alignSelf='center' border='2px none gray' borderRadius = '5px' justifyContent='center' alignItems = 'center'>
-            <Image ml = {3} src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '45px' maxW = '45px' h = '45px' borderRadius = '50%'/>
+        <Flex h = '55px' bg = 'whiteAlpha.200' alignSelf='center' border='2px none gray' borderRadius = '5px' justifyContent='center' alignItems = 'center'>
+            <Image ml = {2} src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '40px' maxW = '40px' h = '40px' borderRadius = '50%'/>
             <Flex flexDirection = 'column' mr = {3} display = {['none','none','none','inline']}>
                 <Text
-                    fontSize= {['md', 'md', '1.20rem', '1.20rem']}
+                    fontSize= {['md', 'md', '1.14rem', '1.14rem']}
                     fontFamily =  {`'fira sans', sans-serif`} 
                     fontWeight = '500' 
                     ml = {2}
@@ -46,7 +47,7 @@ const UserMenu = ({user}) =>{
                     {user.followers.length} Followers
                 </Text>
             </Flex>
-           <ChevronDownIcon w = {6} h = {6} mr = {1}/>
+           <ChevronDownIcon w = {6} h = {6} />
             
         </Flex>
     )
@@ -61,8 +62,8 @@ export default function Navbar(){
     const [display, setDisplay] = useState('none')
 
     const centerStyle = {
-        paddingLeft: 32,
-        paddingRight: 32,
+        paddingLeft: 10,
+        paddingRight: 10,
         height: '80px',
         fontFamily:`'Raleway', sans-serif`,
         fontSize: '1.1rem',
@@ -77,28 +78,31 @@ export default function Navbar(){
 
     return(
         <Box zIndex='1' position = 'fixed'>
-            <Flex background = {navColor} w = '100vw' h = '80px'  outline = '3px solid' outlineColor='orange.200' justifyContent='center' >
-                <Link to = '/'>
-                    <Flex paddingRight={[0,0,4,7]} >
-                            <Image src='https://i.imgur.com/JWiCcmR.png' alt = 'WeeklyMix Logo' maxW = '250px'  />
-                    </Flex>
-                </Link>
-                
-                <Flex display = {['none', 'none', 'none', 'flex'] } flexDirection = 'row'>
-                    
-                    <Link to = '/discussions'>
-                        <NavItem text = 'Discussions'/>
+            <Flex background = {navColor} w = '100vw' h = '70px'  outline = '3px solid' outlineColor='orange.200'  >
+                <Flex marginRight = 'auto' ml = {8}>
+                    <Link to = '/'>
+                        <Flex>
+                                <Image src='https://i.imgur.com/JWiCcmR.png' alt = 'WeeklyMix Logo' maxW = '220px'  />
+                        </Flex>
                     </Link>
-                    <NavItem text = 'Challenge'/>
-                    <NavItem text = 'Users'/>
-                    <NavItem text = 'About'/>
 
-                    <Icon as={FaDiscord} alignSelf = 'center' ml = {5} w = {8} h = {8}/>
-                    <Icon as={FaReddit} alignSelf = 'center' ml = {5} w = {8} h = {8}/>
-                    <Icon as={FaInstagram} alignSelf = 'center' ml = {5} w = {8} h = {8}/>
+                    <Flex display = {['none', 'none', 'none', 'flex'] } ml = {6}>
+                        <Link to = '/discussions'>
+                            <NavItem text = 'Discussions'/>
+                        </Link>
+                        <NavItem text = 'Challenge'/>
+                        <NavItem text = 'Users'/>
+                        <NavItem text = 'About'/>
+                    </Flex>
                     
-                   
+                </Flex>
+                
+                
+                <Flex display = {['none', 'none', 'none', 'flex'] } flexDirection = 'row' justifyContent='center' ml = 'auto' mr = {12}>
                     
+                    <Icon as={FaDiscord} alignSelf = 'center' mr = {5} w = {7} h = {7}/>
+                    <Icon as={FaReddit} alignSelf = 'center' mr = {5} w = {7} h = {7}/>
+
                     <Flex style = {centerStyle} display = {user?'none':"initial"}>
                         <Link to = '/login'>
                             <Button colorScheme='teal' variant='outline' fontSize='1.1rem' h = '45px' mt = {4}>
@@ -108,6 +112,7 @@ export default function Navbar(){
                     </Flex>
 
                     <UserMenu user = {user}/>
+                    
                     
                 </Flex>
                 <Flex justifyContent='flex-end' objectFit='fill' flexGrow='1' display = {['flex', 'flex', 'flex', 'none']}>

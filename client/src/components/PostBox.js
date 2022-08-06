@@ -16,14 +16,14 @@ import {FaImage, FaFileAudio} from 'react-icons/fa'
 
 const ImageIcon = () =>{
     return(
-        <Icon as = {FaImage} w = {10} h = {10} color = 'gray.300' alignSelf='center' display = {['none','none','inline','inline']}>
+        <Icon as = {FaImage} w = {7} h = {7} color = 'gray.300' alignSelf='center' display = {['none','none','inline','inline']}>
         </Icon>
     )
 }
 
 const AudioIcon = () =>{
     return(
-        <Icon as = {FaFileAudio} w = {9} h = {9} color = 'gray.300' ml = {3} mr = {10} alignSelf='center' display = {['none','none','inline','inline']}>
+        <Icon as = {FaFileAudio} w = {7} h = {7} color = 'gray.300' ml = {3} mr = {10} alignSelf='center' display = {['none','none','inline','inline']}>
         </Icon>
     )
 }
@@ -35,22 +35,22 @@ export default function PostBox({createNewPost}){
     return(
         <Flex 
             cursor = 'pointer'
-            mt = {12}
+            mt = {8}
             mb = {4}
             ml = {4}
-            mr = {6}
+            mr = {8}
             fontSize = 'xl' 
             flexDirection='column'
             borderRadius = '10px'
-            border= '3px solid #9AE6B4'
+            border= '2px solid #9AE6B4'
             bg = '#212229'
-            h = '80px'
+            h = '70px'
             onClick={createNewPost}
         > 
             <Flex flexDirection='row'  h = '100%'>
                 <Flex display = {['none', 'none','inline','inline']} alignSelf = 'center'>
                     <Link to = {`/profile/${user.username}`}>
-                        <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
+                        <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','50px','50px']} maxW = {['50px','50px','50px','50px']} h = {['50px','50px','50px','50px']} borderRadius = '50%' ml = {5}/>
                     </Link>
                 </Flex>
 

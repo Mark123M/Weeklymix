@@ -13,7 +13,7 @@ export default function ChannelBtn({bg, handleClick, text}){
             variant = 'ghost' 
             textColor = 'white'
             mt = {7} 
-            fontSize= {[ 'xs' ,'sm', 'lg', 'xl' ]} 
+            fontSize= {[ 'xs' ,'sm', 'lg', 'lg' ]} 
             fontFamily =  {`'fira sans', sans-serif`} 
             fontWeight = '500' 
             onClick={handleClick}

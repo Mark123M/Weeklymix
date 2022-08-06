@@ -9,11 +9,11 @@ import "@fontsource/fira-sans"
 export default function NavbarLink({text}){
     return(
         <Center
-            paddingLeft = {[2,'0vw','0.7vw',6]}
-            paddingRight = {[2,'0vw','0.7vw',6]}
-            height = '80px'
+            marginLeft = {[2,'0vw','0.7vw',5]}
+            marginRight = {[2,'0vw','0.7vw',5]}
+            height = '70px'
             fontFamily = {`'Raleway', sans-serif`}
-            fontSize = '1.1rem'
+            fontSize = '1.0rem'
             fontWeight = '700'
         >
             {text}

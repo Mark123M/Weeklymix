@@ -49,15 +49,15 @@ export default function Post({post}){
                 fontSize = 'xl' 
                 flexDirection='column'
                 borderRadius = '10px'
-                border= '3px solid #90CDF4'
+                border= '1px solid #90CDF4'
                 
                 bg = {bgColor}
                 onMouseEnter = {handleMouseEnter}
                 onMouseLeave = {handleMouseLeave}
-                mt = {2}
+                mt = {1}
                 mb = {1}
                 ml = {4}
-                mr = {6}
+                mr = {8}
             > 
             {/* i have braindamage */}
                 <Flex flexDirection='row' mt = {4}>
@@ -71,7 +71,7 @@ export default function Post({post}){
                         <Flex>
                             <Button
                                 variant = 'link'
-                                fontSize= {['md', 'md', 'lg', 'lg']}
+                                fontSize= {['md', 'md', 'md', 'md']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
                                 ml = {4}
@@ -87,7 +87,7 @@ export default function Post({post}){
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
                                 ml = {4}
-                                mt = {1}
+                                
                                 color = '#8E8F90'
                             >
                                 {format(post.createdAt)}

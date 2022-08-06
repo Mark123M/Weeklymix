@@ -126,7 +126,7 @@ export default function Discussions(){
                 </Button>
             </Flex>
             
-            <Flex flexDirection='column' ml = {['140px','150px','197px', '210px']} mt = {20} bg = '#131417'> 
+            <Flex flexDirection='column' ml = {['140px','150px','197px', '195px']} mt = {16} bg = '#131417' paddingTop={5}> 
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.map((p)=>( //mapping the data of each post into a Post component
