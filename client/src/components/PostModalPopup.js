@@ -19,19 +19,31 @@ import axios from 'axios'
 import { UserContext } from '../UserContext';
 import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
 
-export default function PostModalPopup({isOpened, setPostFormDisplay}) {
+export default function PostModalPopup({isOpened, setPostFormDisplay, getAllPosts}) {
     
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [postType, setPostType] = useState('')
+    const{value: user, setValue: setUser} = useContext(UserContext)
 
     console.log(title,desc,postType)
 
     const submitNewPost = (e) =>{
         e.preventDefault()
+        axios.post('/posts', {
+            userId: user._id,
+            postType: postType,
+            title: title,
+            description: desc,
+        })
+        .then((res)=>{
+            console.log(res)
+        })
         setTitle('')
         setDesc('')
         setPostType('')
+        setPostFormDisplay(false)
+        getAllPosts()
     }
 
     return (
@@ -104,12 +116,6 @@ export default function PostModalPopup({isOpened, setPostFormDisplay}) {
 
                     <Button variant = 'solid' type = 'submit' colorScheme='orange' mt = {8}>Create Post</Button>
                     <Text fontSize='sm' mt = {2} color = '#707070'>Forgot your password? too bad!!!</Text>
-
-                    <Link to = "/register">
-                        <Button variant = 'link' colorScheme='green' mt = 'auto'>
-                            Create a new account
-                        </Button>
-                    </Link>
                 </form> 
             </Flex>
         </Center>

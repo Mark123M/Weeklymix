@@ -41,10 +41,10 @@ export default function Login(){
             email: email,
             password: password
         })
-        .then(function (response) {
-            setUser(response.data)
+        .then((res)=>{
+            setUser(res.data)
             navigate('/', { replace: true })
-            console.log(response);
+            console.log(res);
         })
         .catch(function(error){
             setError(true)

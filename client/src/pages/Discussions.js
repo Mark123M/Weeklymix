@@ -31,14 +31,15 @@ export default function Discussions(){
     const navigate = useNavigate()
     //console.log(user?"there is a user" : "there isn't a user")
     
+    const getAllPosts = async () =>{
+        const res = await axios.get("/posts/")
+        console.log(res)
+        res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
+        setPosts(res.data)   
+    }
+
     useEffect(() =>{
-        const getAllPosts = async () =>{
-            const res = await axios.get("/posts/")
-            console.log(res)
-            setPosts(res.data)
-        }
         getAllPosts()
-        
     },[])
 
     const[channel, setChannel] = useState(1)
@@ -93,7 +94,7 @@ export default function Discussions(){
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
         >
-            <PostModalPopup isOpened = {postFormDisplay} setPostFormDisplay = {setPostFormDisplay}/>
+            <PostModalPopup isOpened = {postFormDisplay} setPostFormDisplay = {setPostFormDisplay} getAllPosts = {getAllPosts}/>
 
             <Navbar/>
             <Flex 
@@ -116,17 +117,18 @@ export default function Discussions(){
                     variant = 'solid' 
                     mt = {10} 
                     colorScheme = 'orange' 
-                    fontSize='xl' 
-                    w = '130px' 
-                    h = '48px'
+                    fontSize={['md','md','xl','xl']} 
+                    w = {['100px','100px','130px','130px']} 
+                    h = {['35px','35px','48px', '48px']}
                     alignSelf='center'
                     onClick = {createNewPost}
+                
                 >
                     +new post
                 </Button>
             </Flex>
             
-            <Flex flexDirection='column' ml = {['140px','150px','197px', '195px']} mt = {16} bg = '#131417' paddingTop={5}> 
+            <Flex flexDirection='column' ml = {['140px','150px','200px', '200px']} mt = {16} bg = '#131417' paddingTop={5}> 
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.map((p)=>( //mapping the data of each post into a Post component
