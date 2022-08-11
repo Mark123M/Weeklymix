@@ -37,13 +37,16 @@ export default function PostModalPopup({isOpened, setPostFormDisplay, getAllPost
             description: desc,
         })
         .then((res)=>{
+            getAllPosts()
             console.log(res)
+            setPostFormDisplay(false)
         })
+        
         setTitle('')
         setDesc('')
         setPostType('')
-        setPostFormDisplay(false)
-        getAllPosts()
+        
+        
     }
 
     return (

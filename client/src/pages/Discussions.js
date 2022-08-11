@@ -35,7 +35,8 @@ export default function Discussions(){
         const res = await axios.get("/posts/")
         console.log(res)
         res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
-        setPosts(res.data)   
+        setPosts(res.data)
+        //this.forceUpdate()   //had to use this since state hooks were kind of bugging out
     }
 
     useEffect(() =>{
@@ -128,7 +129,7 @@ export default function Discussions(){
                 </Button>
             </Flex>
             
-            <Flex flexDirection='column' ml = {['140px','150px','200px', '200px']} mt = {16} bg = '#131417' paddingTop={5}> 
+            <Flex flexDirection='column' ml = {['140px','150px','200px', '200px']} mt = {16} bg = '#131417' paddingTop={5} paddingLeft = {6}> 
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.map((p)=>( //mapping the data of each post into a Post component

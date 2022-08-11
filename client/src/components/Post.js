@@ -7,6 +7,7 @@ import {
     Box,
     Icon,
     Button,
+    IconButton
   } from '@chakra-ui/react';
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
@@ -15,9 +16,21 @@ import {Link} from 'react-router-dom'
 
 
 import {BiCommentDetail, BiLike} from 'react-icons/bi'
+import { FaShare } from 'react-icons/fa';
 
 import axios from 'axios'
 import {format} from "timeago.js"
+
+const PostButton = (type, color, req) =>{
+    let icon = <Icon as = {BiCommentDetail} w = {6} h = {6} color = '#8E8F90' ml = {3}/>
+    if(type =='like'){
+        console.log('wtfwtf')
+    }
+    return(
+        icon
+    )
+}
+
 
 export default function Post({post}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
@@ -112,22 +125,24 @@ export default function Post({post}){
                             {post.description}
                         </Text>
                         <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
-                            <Icon as = {BiCommentDetail} w = {5} h = {5} color = '#8E8F90' />
+                            <Icon as = {BiCommentDetail} w = {6} h = {6} color = '#8E8F90' />
                             <Text
                                 fontSize= {['xs','xs','sm','sm']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
-                                ml = {2}
+                                ml = {1}
                                 color = '#8E8F90'
                             > 
                                 {post.comments.length} {post.comments.length === 1? 'comment': 'comments'}
                             </Text>
-                            <Icon as = {BiLike} w = {5} h = {5} color = '#8E8F90' ml = {5} />
+
+                            <PostButton type = "like"/>
+
                             <Text
                                 fontSize= {['xs','xs','sm','sm']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
-                                ml = {2}
+                                ml = {1}
                                 color = '#8E8F90'
                             > 
                                 {post.likes.length} {post.likes.length ===1? 'like': 'likes'}
