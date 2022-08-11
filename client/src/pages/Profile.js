@@ -34,6 +34,7 @@ export default function Profile() {
         const getUserPosts = async () =>{
             const res = await axios.get(`/posts/user/${username}`)
             console.log(res)
+            res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
             setPosts(res.data)
         }
         getUserPosts()

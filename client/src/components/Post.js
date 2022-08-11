@@ -17,26 +17,17 @@ import {Link} from 'react-router-dom'
 
 import {BiCommentDetail, BiLike} from 'react-icons/bi'
 import { FaShare } from 'react-icons/fa';
+import {MdThumbUp} from 'react-icons/md'
 
 import axios from 'axios'
 import {format} from "timeago.js"
-
-const PostButton = (type, color, req) =>{
-    let icon = <Icon as = {BiCommentDetail} w = {6} h = {6} color = '#8E8F90' ml = {3}/>
-    if(type =='like'){
-        console.log('wtfwtf')
-    }
-    return(
-        icon
-    )
-}
-
 
 export default function Post({post}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
     const [bgColor, setBgColor] = useState('#212229')
     const [user, setUser] = useState({})
+    const [liked, setLiked] = useState(false)
 
     useEffect(() =>{
         const getUser = async () =>{
@@ -55,9 +46,22 @@ export default function Post({post}){
         setBgColor('#212229')
     }
 
+    const handleLikeClick = () =>{
+        setLiked(!liked)
+        axios.put(`/posts/${post._id}/like`, { //i tried to do axios.post and kept getting 404 because it was actually a put endpoint
+            userId: user._id
+        })
+        .then((res)=>{
+            console.log(res)
+            console.log('post liked')
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
 
     return(
-        <Link to = '/'>
             <Flex 
                 fontSize = 'xl' 
                 flexDirection='column'
@@ -82,19 +86,20 @@ export default function Post({post}){
 
                     <Flex flexDirection = 'column'>
                         <Flex>
-                            <Button
-                                variant = 'link'
+                            <Flex
                                 fontSize= {['md', 'md', 'md', 'md']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
                                 ml = {4}
-                            
-                            >   
-                                <Link to = {`/profile/${user.username}`}>
+                                _hover = {{textDecoration: 'underline'}}
+                            >
+                                <Link 
+                                    to = {`/profile/${user.username}`}
+                                >
                                     {user.username}
                                 </Link>
-                            </Button>
-
+                            </Flex>
+                            
                             <Text
                                 fontSize= {['xs','xs','sm','sm']}
                                 fontFamily =  {`'roboto', sans-serif`} 
@@ -125,28 +130,37 @@ export default function Post({post}){
                             {post.description}
                         </Text>
                         <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
-                            <Icon as = {BiCommentDetail} w = {6} h = {6} color = '#8E8F90' />
+
+                            <Flex onClick = {handleLikeClick} color = {liked?'orange.300':'#8E8F90'} _hover = {{color: 'orange.100'}} cursor = 'pointer'>
+                                <MdThumbUp size={25}  />
+                            </Flex>
                             <Text
-                                fontSize= {['xs','xs','sm','sm']}
+                                fontSize= {['sm','sm','0.92rem','0.92rem']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
-                                ml = {1}
+                                ml = {2}
+                                color = {liked?'whiteAlpha.900':'#8E8F90'}
+                                textDecoration = {liked? 'underline 2px solid' :'initial'}
+                                
+                            > 
+                                {post.likes.length} {post.likes.length ===1? 'like': 'likes'}
+                            </Text>
+
+                            <Flex ml = {5}>
+                                <BiCommentDetail size={25} color = '#8E8F90' />
+                            </Flex>
+                            <Text
+                                fontSize= {['sm','sm','0.92rem','0.92rem']}
+                                fontFamily =  {`'roboto', sans-serif`} 
+                                fontWeight = '500' 
+                                ml = {2}
                                 color = '#8E8F90'
                             > 
                                 {post.comments.length} {post.comments.length === 1? 'comment': 'comments'}
                             </Text>
+                            
+                            
 
-                            <PostButton type = "like"/>
-
-                            <Text
-                                fontSize= {['xs','xs','sm','sm']}
-                                fontFamily =  {`'roboto', sans-serif`} 
-                                fontWeight = '500' 
-                                ml = {1}
-                                color = '#8E8F90'
-                            > 
-                                {post.likes.length} {post.likes.length ===1? 'like': 'likes'}
-                            </Text>
                         </Flex>
                     </Flex>
                     <Box h = '100%' alignItems='center' marginLeft = 'auto' mr = {7}>
@@ -154,6 +168,6 @@ export default function Post({post}){
                     </Box>
                 </Flex>
             </Flex>
-        </Link>
+
     )
 }
