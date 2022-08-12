@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
     Flex,
     Image,
@@ -21,21 +21,23 @@ import {MdThumbUp} from 'react-icons/md'
 
 import axios from 'axios'
 import {format} from "timeago.js"
+import { UserContext } from '../UserContext';
 
 export default function Post({post}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
     const [bgColor, setBgColor] = useState('#212229')
-    const [user, setUser] = useState({})
+    const [postUser, setPostUser] = useState({})
     const [liked, setLiked] = useState(false)
+    const{value: user, setValue: setUser} = useContext(UserContext)
 
     useEffect(() =>{
-        const getUser = async () =>{
+        const getPostUser = async () =>{
             const res = await axios.get(`users/${post.userId}`)
             console.log(res)
-            setUser(res.data)
+            setPostUser(res.data)
         }
-        getUser()
+        getPostUser()
         
     },[post.userId])
 
@@ -79,8 +81,8 @@ export default function Post({post}){
             {/* i have braindamage */}
                 <Flex flexDirection='row' mt = {4}>
                     <Box display = {['none', 'none','inline','inline']}>
-                        <Link to = {`/profile/${user.username}`}>
-                            <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
+                        <Link to = {`/profile/${postUser.username}`}>
+                            <Image src={postUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
                         </Link>
                     </Box>
 
@@ -94,9 +96,9 @@ export default function Post({post}){
                                 _hover = {{textDecoration: 'underline'}}
                             >
                                 <Link 
-                                    to = {`/profile/${user.username}`}
+                                    to = {`/profile/${postUser.username}`}
                                 >
-                                    {user.username}
+                                    {postUser.username}
                                 </Link>
                             </Flex>
                             
@@ -143,7 +145,7 @@ export default function Post({post}){
                                 textDecoration = {liked? 'underline 2px solid' :'initial'}
                                 
                             > 
-                                {post.likes.length} {post.likes.length ===1? 'like': 'likes'}
+                                {post.likes} {post.likes ===1? 'like': 'likes'}
                             </Text>
 
                             <Flex ml = {5}>

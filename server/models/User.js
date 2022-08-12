@@ -49,7 +49,10 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default:[]
     },
-
+    likedPosts:{
+        type: Array,
+        default:[]
+    }
     /*the following maybe be harder to implement
     competitionsEntered:{
         type: Number,

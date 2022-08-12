@@ -1,7 +1,7 @@
-PUT http://localhost:3001/api/posts/62f4f099000291567fd86870/like HTTP/1.1
+PUT http://localhost:3001/api/posts/62f5549347dc0b2cba7bb721/like HTTP/1.1
 content-type: application/json
 
 {
-    //s"userId": "62e5944931619d2f20567bec"
+    "userId": "62e5944931619d2f20567bec"
 }
 

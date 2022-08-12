@@ -46,7 +46,7 @@ router.delete('/:id', async (req, res)=>{
    
 })
 //like a post
-router.put('/:id/like', async(req, res)=>{
+/*router.put('/:id/like', async(req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
         if(!post.likes.includes(req.body.userId)){
@@ -59,7 +59,28 @@ router.put('/:id/like', async(req, res)=>{
     } catch (err){
         res.status(500).json(err)
     }
+}) */
+
+router.put('/:id/like', async(req, res)=>{
+    console.log(req.body.userId)
+    try{
+        const user = await User.findById(req.body.userId)
+        
+        const post = await Post.findById(req.params.id)
+        if(!user.likedPosts.includes(req.params.id)){
+            await user.updateOne({$push:{likedPosts:req.params.id}})
+            await post.updateOne({$inc:{likes: 1}})
+            res.status(200).json('You have liked this post')
+        } else {
+            await user.updateOne({$pull:{likedPosts:req.params.id}})
+            await post.updateOne({$inc:{likes: -1}})
+            res.status(200).json('You have unliked this post')
+        }
+    } catch (err){
+        res.status(500).json(err)
+    }
 })
+
 //get a post
 
 router.get('/:id', async(req, res)=>{
