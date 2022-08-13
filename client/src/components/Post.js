@@ -28,18 +28,32 @@ export default function Post({post}){
 
     const [bgColor, setBgColor] = useState('#212229')
     const [postUser, setPostUser] = useState({})
-    const [liked, setLiked] = useState(false)
+    const [reload, setReload] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
+    const [postLikes, setPostLikes] = useState(post.likes)
+  
 
     useEffect(() =>{
         const getPostUser = async () =>{
             const res = await axios.get(`users/${post.userId}`)
-            console.log(res)
+            //console.log(res)
             setPostUser(res.data)
         }
         getPostUser()
         
     },[post.userId])
+
+    const initLikedState = () =>{
+        if(user===null){
+            return false
+        } 
+        else{
+            console.log(user)
+            return user.likedPosts.includes(post._id)
+        }
+    }
+    
+    console.log(initLikedState())
 
     const handleMouseEnter = () =>{
         setBgColor('gray.700')
@@ -49,16 +63,30 @@ export default function Post({post}){
     }
 
     const handleLikeClick = () =>{
-        setLiked(!liked)
         axios.put(`/posts/${post._id}/like`, { //i tried to do axios.post and kept getting 404 because it was actually a put endpoint
             userId: user._id
         })
         .then((res)=>{
-            console.log(res)
+            //console.log(res)
             console.log('post liked')
+
+            let updatedUser = {
+                ...user
+            }
+            if(!initLikedState()){
+                updatedUser.likedPosts.push(post._id)
+                setPostLikes(postLikes+1)
+            } else {
+                updatedUser.likedPosts.splice(updatedUser.likedPosts.indexOf(post._id),1)
+                setPostLikes(postLikes-1)
+            }
+            
+            setUser(updatedUser)
+            setReload(!reload)
+            
         })
         .catch((err)=>{
-            console.log(err)
+            //console.log(err)
         })
     }
 
@@ -133,7 +161,7 @@ export default function Post({post}){
                         </Text>
                         <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
 
-                            <Flex onClick = {handleLikeClick} color = {liked?'orange.300':'#8E8F90'} _hover = {{color: 'orange.100'}} cursor = 'pointer'>
+                            <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#8E8F90'} _hover = {{color: 'orange.100'}} cursor = 'pointer'>
                                 <MdThumbUp size={25}  />
                             </Flex>
                             <Text
@@ -141,11 +169,12 @@ export default function Post({post}){
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
                                 ml = {2}
-                                color = {liked?'whiteAlpha.900':'#8E8F90'}
-                                textDecoration = {liked? 'underline 2px solid' :'initial'}
+                                color = {initLikedState()?'whiteAlpha.900':'#8E8F90'}
+                                textDecoration = {initLikedState()? 'underline 2px solid' :'initial'}
                                 
                             > 
-                                {post.likes} {post.likes ===1? 'like': 'likes'}
+                                
+                                {postLikes} {postLikes ===1? 'like': 'likes'}
                             </Text>
 
                             <Flex ml = {5}>
