@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {
-  ChakraProvider, CSSReset,
+  ChakraProvider, CSSReset, propNames,
 } from '@chakra-ui/react';
 
 import Home from './pages/Home'
@@ -28,7 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element = {<Home />}></Route>
             <Route path="/discussions" element = {<Discussions />}></Route>
-            <Route path="/profile/:username" element = {<Profile />}></Route>
+            <Route path="/profile/:username" element = {<Profile/>}></Route>
             <Route path="/login" element = {<Login />}></Route>
             <Route path="/register" element = {<Register />}></Route>
           </Routes>

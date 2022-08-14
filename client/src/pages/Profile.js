@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect} from 'react'
 import {
     Flex,
-    Image,
-    Text,
     Box,
-    Icon,
     Tabs, TabList, TabPanels, Tab, TabPanel,
     Wrap
   } from '@chakra-ui/react';
@@ -12,35 +9,39 @@ import "@fontsource/fira-sans"
 import "@fontsource/roboto"
 import Navbar from '../components/Navbar'
 import ProfileCard from '../components/ProfileCard';
-import {Posts} from "../DummyData"
 import {Users} from "../DummyData"
 import Post from '../components/Post'
 import ProfileCardMini from '../components/ProfileCardMini';
-
 import axios from "axios"
-
 import {useParams} from "react-router"
-import { UserContext } from '../UserContext';
 
-export default function Profile() {
-    const{value: user, setValue: setUser} = useContext(UserContext)
-    console.log(user)
-
-    const [posts, setPosts] = useState([])
-    
+const UserPosts = () =>{
     const {username} = useParams()
 
-    useEffect(() =>{
+    const [posts, setPosts] = useState([])
+
+    useEffect(()=>{
         const getUserPosts = async () =>{
             const res = await axios.get(`/posts/user/${username}`)
-            console.log(res)
             res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
             setPosts(res.data)
-        }
+        }   
         getUserPosts()
-    },[])
-
+    }, [])
     
+
+    return(
+        posts.map((p)=>( //mapping the data of each post into a Post component
+            <Post id = {p.id} post = {p} key ={window.location.href}/>
+        ))
+    )
+
+}
+
+export default function Profile() {
+   // const{value: user, setValue: setUser} = useContext(UserContext)
+   // console.log(user)
+    const {username} = useParams()
     return (
         <Box
             overflowY='auto'
@@ -54,6 +55,7 @@ export default function Profile() {
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
             
+            key ={window.location.href}
         >
             <Navbar/>
             <Flex flexDirection='row' mt = '-10px'>
@@ -71,9 +73,7 @@ export default function Profile() {
                             <Flex flexDirection={['column', 'column', 'row', 'row']}>
                                 <ProfileCard username = {username} /* passing the routing parameters to component*//>
                                 <Flex flexDirection='column' ml = {['0px','0px',5,5]} mt = {2}  > {/*posts box */}
-                                    {posts.map((p)=>( //mapping the data of each post into a Post component
-                                        <Post id = {p.id} post = {p}/>
-                                    ))}
+                                    <UserPosts/>
                                 </Flex>
                             </Flex>
                         </TabPanel>

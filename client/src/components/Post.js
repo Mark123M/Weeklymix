@@ -28,7 +28,6 @@ export default function Post({post}){
 
     const [bgColor, setBgColor] = useState('#212229')
     const [postUser, setPostUser] = useState({})
-    const [reload, setReload] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
     const [postLikes, setPostLikes] = useState(post.likes)
   
@@ -48,12 +47,12 @@ export default function Post({post}){
             return false
         } 
         else{
-            console.log(user)
+           // console.log(user)
             return user.likedPosts.includes(post._id)
         }
     }
     
-    console.log(initLikedState())
+    //console.log(initLikedState())
 
     const handleMouseEnter = () =>{
         setBgColor('gray.700')
@@ -82,8 +81,6 @@ export default function Post({post}){
             }
             
             setUser(updatedUser)
-            setReload(!reload)
-            
         })
         .catch((err)=>{
             //console.log(err)

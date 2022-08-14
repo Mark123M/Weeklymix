@@ -12,6 +12,8 @@ import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
 import {Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 export default function Register(){
     const emailRef = useRef()
@@ -19,9 +21,21 @@ export default function Register(){
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
 
     const handleRegister = (e) => {
         e.preventDefault()
+
+        axios.post('/auth/register', {
+            username: username,
+            email: email,
+            password: password
+        })
+        .then((res)=>{
+            navigate('/login', { replace: true })
+            console.log(res);
+        })
+
         setUsername('')
         setEmail('')
         setPassword('')

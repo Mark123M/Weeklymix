@@ -18,16 +18,17 @@ import axios from 'axios'
 
 
 export default function ProfileCard({username}) {
-    const [user, setUser] = useState('')
+    const [profileUser, setProfileUser] = useState('')
     useEffect(() =>{
-        const getUser = async () =>{
+        const getProfileUser = async () =>{
             const res = await axios.get(`/users/u/${username}`)
             console.log(res)
-            setUser(res.data)
+            setProfileUser(res.data)
         }
-        getUser()
+        getProfileUser()
     },[])
 
+   // console.log(user)
 
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
     return (
@@ -43,7 +44,7 @@ export default function ProfileCard({username}) {
 
             <Flex bg = '#2d97e5' minW = '400px' maxW = '400px' h = '140px' borderRadius = '10px 10px 0px 0px' >
                 <Box>
-                    <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '120px' maxW = '120px' h = '120px' borderRadius = '5px' ml = {8} mt = {16} outline = '4px solid white'  />
+                    <Image src={profileUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '120px' maxW = '120px' h = '120px' borderRadius = '5px' ml = {8} mt = {16} outline = '4px solid white'  />
                 </Box>
                 <Icon as = {BiImageAdd} w = {12} h = {12} color = '#FFFFFF' ml='auto' mt = 'auto' mr = {2} mb = {2}/>
             </Flex>
@@ -54,7 +55,7 @@ export default function ProfileCard({username}) {
                 ml = {7}
                 mt = {14}   
             >
-                {user.username}
+                {profileUser.username}
             </Text>
 
             <Flex>
@@ -66,7 +67,7 @@ export default function ProfileCard({username}) {
                     ml = {3}
                     color = '#8E8F90'
                 >
-                    {user.location}
+                    {profileUser.location}
                 </Text>
                 <Button colorScheme='orange' variant='solid' ml = 'auto' mr = {5} mt = '-24px'  >
                     Follow
@@ -92,7 +93,7 @@ export default function ProfileCard({username}) {
                 color = 'white'
 
             >
-                {user.description}
+                {profileUser.description}
 
             </Text>
 
