@@ -60,7 +60,8 @@ export default function Discussions(){
         }
         else {
             console.log('new post created')
-            setPostFormDisplay(true)
+            //setPostFormDisplay(true)
+            navigate('/discussions/new-post', {replace:true})
         }
         
     }
@@ -97,7 +98,7 @@ export default function Discussions(){
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
         >
-            <PostModalPopup isOpened = {postFormDisplay} setPostFormDisplay = {setPostFormDisplay} getAllPosts = {getAllPosts}/>
+            {/*<PostModalPopup isOpened = {postFormDisplay} setPostFormDisplay = {setPostFormDisplay} getAllPosts = {getAllPosts}/> */}
 
             <Navbar/>
             <Flex 
@@ -128,19 +129,6 @@ export default function Discussions(){
                 
                 >
                     +new post
-                </Button>
-                <Button 
-                    variant = 'solid' 
-                    mt = {10} 
-                    colorScheme = 'orange' 
-                    fontSize={['md','md','xl','xl']} 
-                    w = {['100px','100px','130px','130px']} 
-                    h = {['35px','35px','48px', '48px']}
-                    alignSelf='center'
-                    //onClick = {()=>{setTestState(testState+1)}}
-                
-                >
-                    reload
                 </Button>
             </Flex>
             
