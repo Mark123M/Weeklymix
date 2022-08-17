@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {
     Flex,
     Box,
@@ -20,13 +20,24 @@ import { UserContext } from '../UserContext';
 import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
 import {AiFillAudio} from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 
-export default function NewPost() {
+export default function EditPost() {
+    const {postId} = useParams()
+    const [originalPost, setOriginalPost] = useState()
+
+    useEffect(()=>{
+        const getOriginalPost = async()=>{
+            const res = await axios.get(`/posts/${postId}`)
+            setOriginalPost(res.data)
+        }
+        getOriginalPost()
+    }, [postId])
     
-    const [title, setTitle] = useState('')
-    const [desc, setDesc] = useState('')
-    const [postType, setPostType] = useState('')
+
+    const [title, setTitle] = useState(originalPost.title)
+    const [desc, setDesc] = useState(originalPost.description)
+    const [postType, setPostType] = useState(originalPost.postType)
     const{value: user, setValue: setUser} = useContext(UserContext)
     const navigate = useNavigate()
 
@@ -99,7 +110,7 @@ export default function NewPost() {
                         alignSelf='center'
                         
                     > 
-                        Create new post:
+                        Edit post:
                     
                     </Flex>
                    

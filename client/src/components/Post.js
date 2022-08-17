@@ -16,20 +16,37 @@ import {Link} from 'react-router-dom'
 
 
 import {BiCommentDetail, BiLike} from 'react-icons/bi'
-import { FaShare } from 'react-icons/fa';
+import { FaShare, FaTrashAlt, FaEdit } from 'react-icons/fa';
 import {MdThumbUp} from 'react-icons/md'
 
 import axios from 'axios'
 import {format} from "timeago.js"
 import { UserContext } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
 
-export default function Post({post}){
+const PostLabel = ({text}) =>{
+    return(
+        <Text
+            fontSize= {['sm','sm','0.90rem','0.90rem']}
+            fontFamily =  {`'roboto', sans-serif`} 
+            fontWeight = '500' 
+            ml = {1}
+            color = '#8E8F90'
+        >
+            {text}
+        </Text>
+    )
+}
+
+export default function Post({post, getAllPosts}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
     const [bgColor, setBgColor] = useState('#212229')
     const [postUser, setPostUser] = useState({})
     const{value: user, setValue: setUser} = useContext(UserContext)
     const [postLikes, setPostLikes] = useState(post.likes)
+
+    const navigate = useNavigate()
   
 
     useEffect(() =>{
@@ -60,8 +77,17 @@ export default function Post({post}){
     const handleMouseLeave = () =>{
         setBgColor('#212229')
     }
+    const showEdit = () =>{
+        if(!user){
+            return false
+        }
+        return user._id==post.userId
+    }
 
     const handleLikeClick = () =>{
+        if(!user){
+            navigate('/login', { replace: true })
+        }
         axios.put(`/posts/${post._id}/like`, { //i tried to do axios.post and kept getting 404 because it was actually a put endpoint
             userId: user._id
         })
@@ -83,7 +109,33 @@ export default function Post({post}){
             setUser(updatedUser)
         })
         .catch((err)=>{
-            //console.log(err)
+            console.log(err)
+        })
+    }
+
+    const handleShare = () =>{
+        //code here
+    }
+
+    const handleDelete = () =>{
+        if(!user){
+            navigate('/login', { replace: true })
+        }
+        console.log(`THE dddddID OF THE USER IS ${user._id}`)
+
+        axios.post(`/posts/${post._id}/delete`, {
+            userId: user._id,
+        })
+        .then((res)=>{
+            //console.log(res)
+            console.log('post deleted')
+            getAllPosts()
+        })
+        .catch((err)=>{
+            console.log(err)
+    
+            console.log(`the id of logged in user is ${user._id}`)
+            console.log(`the post is ${post._id}`)
         })
     }
 
@@ -158,11 +210,11 @@ export default function Post({post}){
                         </Text>
                         <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
 
-                            <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#8E8F90'} _hover = {{color: 'orange.100'}} cursor = 'pointer'>
-                                <MdThumbUp size={25}  />
+                            <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#8E8F90'} _hover = {{color: 'orange.300'}} cursor = 'pointer'>
+                                <MdThumbUp size={22}  />
                             </Flex>
                             <Text
-                                fontSize= {['sm','sm','0.92rem','0.92rem']}
+                                fontSize= {['sm','sm','0.90rem','0.90rem']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
                                 ml = {2}
@@ -175,17 +227,24 @@ export default function Post({post}){
                             </Text>
 
                             <Flex ml = {5}>
-                                <BiCommentDetail size={25} color = '#8E8F90' />
+                                <BiCommentDetail size={22} color = '#8E8F90' />
+                                <PostLabel text ={`${post.comments.length} ${post.comments.length === 1? 'comment': 'comments'}`} />
                             </Flex>
-                            <Text
-                                fontSize= {['sm','sm','0.92rem','0.92rem']}
-                                fontFamily =  {`'roboto', sans-serif`} 
-                                fontWeight = '500' 
-                                ml = {2}
-                                color = '#8E8F90'
-                            > 
-                                {post.comments.length} {post.comments.length === 1? 'comment': 'comments'}
-                            </Text>
+
+                            
+                            
+                            <Flex ml = {4} onClick = {handleShare} color = '#8E8F90'  _hover = {{color: 'white'}}  cursor = 'pointer'>
+                                <FaShare size={20}  />
+                                <PostLabel text = 'share'/>
+                            </Flex>
+
+                            
+
+                            <Flex visibility = {showEdit()?'visible':'hidden'}  ml = {4} onClick = {handleDelete} color = '#8E8F90'  _hover = {{color: 'blue.300'}}  cursor = 'pointer'>
+                                <FaEdit size={20}  />
+                                <PostLabel text = 'edit' />
+                            </Flex>
+
                             
                             
 

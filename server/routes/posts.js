@@ -30,10 +30,12 @@ router.put('/:id', async (req, res)=>{
 })
 
 //delete a post
-router.delete('/:id', async (req, res)=>{
+router.post('/:id/delete', async (req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
-        if(post.userId === req.body.userId){ //check if the userId of the request equal to the userId of the post (if the post is theirs)
+        await console.log(`THE ID OF THE USER IS ${req.body.userId}`)
+        await console.log(`THE USERID OF POST IS ${post.userId}`)
+        if(post.userId == req.body.userId){ //check if the userId of the request equal to the userId of the post (if the post is theirs)
             //req.body.userId stroes WHO made the request
             await post.deleteOne()
             res.status(200).json("This post has been deleted.")

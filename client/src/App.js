@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Login from './pages/Login'
 import Register from './pages/Register'
 import NewPost from './pages/NewPost'
+import EditPost from './pages/EditPost'
 
 import {
   HashRouter, //using hashrouter for client side routing
@@ -29,7 +30,9 @@ function App() {
           <Routes>
             <Route path="/" element = {<Home />}></Route>
             <Route path="/discussions" element = {<Discussions />}></Route>
-            <Route path="/discussions/new-post" element = {<NewPost isOpened = {true}/>}></Route>
+            <Route path="/discussions/new-post" element = {<NewPost/>}></Route>
+            
+
             <Route path="/profile/:username" element = {<Profile/>}></Route>
             <Route path="/login" element = {<Login />}></Route>
             <Route path="/register" element = {<Register />}></Route>

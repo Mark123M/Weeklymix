@@ -136,7 +136,7 @@ export default function Discussions(){
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.map((p)=>( //mapping the data of each post into a Post component
-                    <Post id = {p._id} post = {p}/>
+                    <Post id = {p._id} getAllPosts = {getAllPosts} post = {p}/>
                 ))} 
             </Flex>
         </Box>
