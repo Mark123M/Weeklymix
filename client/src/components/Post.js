@@ -38,7 +38,7 @@ const PostLabel = ({text}) =>{
     )
 }
 
-export default function Post({post, getAllPosts}){
+export default function Post({post}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
     const [bgColor, setBgColor] = useState('#212229')
@@ -117,26 +117,13 @@ export default function Post({post, getAllPosts}){
         //code here
     }
 
-    const handleDelete = () =>{
+    const handleEdit = () =>{
         if(!user){
             navigate('/login', { replace: true })
         }
-        console.log(`THE dddddID OF THE USER IS ${user._id}`)
-
-        axios.post(`/posts/${post._id}/delete`, {
-            userId: user._id,
-        })
-        .then((res)=>{
-            //console.log(res)
-            console.log('post deleted')
-            getAllPosts()
-        })
-        .catch((err)=>{
-            console.log(err)
-    
-            console.log(`the id of logged in user is ${user._id}`)
-            console.log(`the post is ${post._id}`)
-        })
+        else{
+            navigate(`/discussions/${post._id}/edit`, { replace: true })
+        }
     }
 
 
@@ -145,7 +132,7 @@ export default function Post({post, getAllPosts}){
                 fontSize = 'xl' 
                 flexDirection='column'
                 borderRadius = '10px'
-                border= '1px solid #90CDF4'
+                border= '2px solid #90CDF4'
                 
                 bg = {bgColor}
                 onMouseEnter = {handleMouseEnter}
@@ -191,7 +178,7 @@ export default function Post({post, getAllPosts}){
                             </Text>
                         </Flex>
                         <Text
-                            fontSize= {['md', 'md', 'xl', 'xl']}
+                            fontSize= {['md', 'md', '1.3rem', '1.3rem']}
                             fontFamily =  {`'roboto', sans-serif`} 
                             fontWeight = '600' 
                             ml = {4}
@@ -240,7 +227,7 @@ export default function Post({post, getAllPosts}){
 
                             
 
-                            <Flex visibility = {showEdit()?'visible':'hidden'}  ml = {4} onClick = {handleDelete} color = '#8E8F90'  _hover = {{color: 'blue.300'}}  cursor = 'pointer'>
+                            <Flex visibility = {showEdit()?'visible':'hidden'}  ml = {4} onClick = {handleEdit} color = '#8E8F90'  _hover = {{color: 'blue.300'}}  cursor = 'pointer'>
                                 <FaEdit size={20}  />
                                 <PostLabel text = 'edit' />
                             </Flex>

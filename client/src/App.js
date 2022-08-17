@@ -31,7 +31,7 @@ function App() {
             <Route path="/" element = {<Home />}></Route>
             <Route path="/discussions" element = {<Discussions />}></Route>
             <Route path="/discussions/new-post" element = {<NewPost/>}></Route>
-            
+            <Route path="/discussions/:id/edit" element = {<EditPost/>}></Route>
 
             <Route path="/profile/:username" element = {<Profile/>}></Route>
             <Route path="/login" element = {<Login />}></Route>

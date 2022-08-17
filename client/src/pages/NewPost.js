@@ -89,7 +89,7 @@ export default function NewPost() {
                         onClick = {()=>navigate('/discussions')}
                     />
                     <Flex 
-                        fontFamily={`'roboto',san-serif`} 
+                        fontFamily={`'raleway',san-serif`} 
                         fontWeight = '600' 
                         fontSize={[ 'lg' ,'xl', '2xl', '2xl' ]}
                         color = 'gray.300'
@@ -138,7 +138,7 @@ export default function NewPost() {
                 alignSelf = 'center'
             >
                 <Flex 
-                    fontFamily={`'roboto',san-serif`} 
+                    fontFamily={`'raleway',san-serif`} 
                     fontWeight = '600' 
                     fontSize={[ 'lg' ,'xl', '2xl', '2xl' ]}
                     color = 'gray.300'
@@ -148,7 +148,7 @@ export default function NewPost() {
                     alignSelf='center'
                     
                 > 
-                    Attach files
+                   Attach files:
 
                 </Flex>
                 <FormLabel fontSize = 'md' color = 'gray.400' ml = {5}>Image:</FormLabel>

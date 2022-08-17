@@ -23,33 +23,36 @@ import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate, useParams} from 'react-router-dom';
 
 export default function EditPost() {
-    const {postId} = useParams()
-    const [originalPost, setOriginalPost] = useState()
-
-    useEffect(()=>{
-        const getOriginalPost = async()=>{
-            const res = await axios.get(`/posts/${postId}`)
-            setOriginalPost(res.data)
-        }
-        getOriginalPost()
-    }, [postId])
-    
-
-    const [title, setTitle] = useState(originalPost.title)
-    const [desc, setDesc] = useState(originalPost.description)
-    const [postType, setPostType] = useState(originalPost.postType)
+    const {id} = useParams()
+    const [title, setTitle] = useState('')
+    const [desc, setDesc] = useState('')
+    const [postType, setPostType] = useState('')
     const{value: user, setValue: setUser} = useContext(UserContext)
     const navigate = useNavigate()
 
+    useEffect(()=>{
+        const getOriginalPost = async()=>{
+            const res = await axios.get(`/posts/${id}`)
+            console.log(res.data)
+            await setTitle(res.data.title)
+            await setDesc(res.data.description)
+            await setPostType(res.data.postType)
+        }
+        getOriginalPost()
+    }, [])
+    
+    console.log(id)
+    
+
     console.log(title,desc,postType)
 
-    const submitNewPost = (e) =>{
+    const submitPostEdits = (e) =>{
         e.preventDefault()
         if(!user){
             navigate('/login', { replace: true })
         }
 
-        axios.post('/posts', {
+        axios.put(`/posts/${id}`, {
             userId: user._id,
             postType: postType,
             title: title,
@@ -63,6 +66,25 @@ export default function EditPost() {
         setTitle('')
         setDesc('')
         setPostType('')     
+    }
+    const handleDelete = () =>{
+        if(!user){
+            navigate('/login', { replace: true })
+        }
+       // console.log(`THE dddddID OF THE USER IS ${user._id}`)
+
+        axios.post(`/posts/${id}/delete`, {
+            userId: user._id,
+        })
+        .then((res)=>{
+            //console.log(res)
+            navigate('/discussions',{replace:true})
+        })
+        .catch((err)=>{
+            console.log(err)
+            //console.log(`the id of logged in user is ${user._id}`)
+            //console.log(`the post is ${post._id}`)
+        })
     }
 
     return (
@@ -100,7 +122,7 @@ export default function EditPost() {
                         onClick = {()=>navigate('/discussions')}
                     />
                     <Flex 
-                        fontFamily={`'roboto',san-serif`} 
+                        fontFamily={`'raleway',san-serif`} 
                         fontWeight = '600' 
                         fontSize={[ 'lg' ,'xl', '2xl', '2xl' ]}
                         color = 'gray.300'
@@ -117,7 +139,7 @@ export default function EditPost() {
                     
                 </Flex>
                 
-                <form onSubmit={submitNewPost}>
+                <form onSubmit={submitPostEdits}>
                     <FormLabel fontSize = 'md' color = 'gray.400'>Title:</FormLabel>
                     <Input value = {title} onChange = {(e)=>setTitle(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
                     
@@ -132,8 +154,11 @@ export default function EditPost() {
                         <option value='Off topic'>Off topic</option>
                     </Select>
 
-
-                    <Button variant = 'solid' type = 'submit' colorScheme='orange' size = 'lg' mt = {7}>Create Post</Button>
+                    <Flex>
+                        <Button variant = 'solid' type = 'submit' colorScheme='green' size = 'lg' mt = {7}>Save Edits</Button>
+                        <Button variant = 'outline' onClick = {handleDelete} colorScheme='red' size = 'md' ml = 'auto' mt = {7}>Delete Post</Button>
+                    </Flex>
+                    
                     <Text fontSize='sm' mt = {2} color = '#707070'>Please be respectful to others.</Text>
                 </form> 
             </Flex>
@@ -149,7 +174,7 @@ export default function EditPost() {
                 alignSelf = 'center'
             >
                 <Flex 
-                    fontFamily={`'roboto',san-serif`} 
+                    fontFamily={`'raleway',san-serif`} 
                     fontWeight = '600' 
                     fontSize={[ 'lg' ,'xl', '2xl', '2xl' ]}
                     color = 'gray.300'
@@ -159,7 +184,7 @@ export default function EditPost() {
                     alignSelf='center'
                     
                 > 
-                    Attach files
+                   Attach files:
 
                 </Flex>
                 <FormLabel fontSize = 'md' color = 'gray.400' ml = {5}>Image:</FormLabel>
@@ -167,7 +192,7 @@ export default function EditPost() {
                     <BsImageFill size = {67} color = '#525252'/>
                     <Flex flexDirection = 'column'>
                         <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'orange' size = 'sm' ml = {2} mt = {2}>Select File</Button>
+                        <Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>
                     </Flex>
                 </Center>
                 <FormLabel mt = {5} fontSize = 'md' color = 'gray.400' ml = {5}>Audio:</FormLabel>
@@ -175,7 +200,7 @@ export default function EditPost() {
                     <AiFillAudio size = {67} color = '#525252'/>
                     <Flex flexDirection = 'column'>
                         <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'orange' size = 'sm' ml = {2} mt = {2}>Select File</Button>
+                        <Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>
                     </Flex>
                 </Center>
             </Flex>

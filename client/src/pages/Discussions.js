@@ -25,13 +25,10 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Discussions(){
     const [posts, setPosts] = useState([])
-    const [postFormDisplay, setPostFormDisplay] = useState(false)
+    //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
 
-    //const[testState, setTestState] = useState(1)
-
     const navigate = useNavigate()
-    //console.log(user?"there is a user" : "there isn't a user")
     
     const getAllPosts = async () =>{
         const res = await axios.get("/posts/")
@@ -121,9 +118,7 @@ export default function Discussions(){
                     variant = 'solid' 
                     mt = {10} 
                     colorScheme = 'orange' 
-                    fontSize={['md','md','xl','xl']} 
-                    w = {['100px','100px','130px','130px']} 
-                    h = {['35px','35px','48px', '48px']}
+                    size = {['md','md','lg','lg']}
                     alignSelf='center'
                     onClick = {createNewPost}
                 
