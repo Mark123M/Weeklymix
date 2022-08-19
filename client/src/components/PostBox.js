@@ -43,7 +43,7 @@ export default function PostBox({createNewPost}){
             flexDirection='column'
             borderRadius = '10px'
             border= '2px solid #9AE6B4'
-            bg = '#212229'
+            bg = '#24262d'
             h = '70px'
             onClick={createNewPost}
         > 

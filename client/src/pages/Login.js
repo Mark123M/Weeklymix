@@ -148,11 +148,11 @@ export default function Login(){
                     
                     <FormLabel fontSize = 'md' color = 'gray.400'  mt = {4}>Password:</FormLabel>
                     <Input onChange={handlePasswordChange} value = {password} type = 'password' required height = '45px' fontSize = 'md'/>
-                    <Button variant = 'solid' type = 'submit' colorScheme='green' mt = {8}>Log In</Button>
+                    <Button variant = 'solid' type = 'submit' colorScheme='orange' mt = {8}>Log In</Button>
                     <Text fontSize='sm' mt = {2} color = '#707070'>Forgot your password? too bad!!!</Text>
 
                     <Link to = "/register">
-                        <Button variant = 'link' colorScheme='green' mt = 'auto' paddingBottom={5}>
+                        <Button variant = 'link' colorScheme='orange' mt = 'auto' paddingBottom={5}>
                             Create a new account
                         </Button>
                     </Link>

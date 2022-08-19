@@ -22,58 +22,65 @@ import {BsImageFill} from 'react-icons/bs'
 import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate, useParams} from 'react-router-dom';
 
-export default function EditPost() {
-    const {id} = useParams()
-    const [title, setTitle] = useState('')
-    const [desc, setDesc] = useState('')
-    const [postType, setPostType] = useState('')
+export default function EditProfile() {
+    const {name} = useParams()
+    const [username, setUsername] = useState('')
+    const [description, setDescription] = useState('')
+ //   const [password, setPassword] = useState('')
+    const [userId, setUserId] = useState('')
+    
     const{value: user, setValue: setUser} = useContext(UserContext)
     const navigate = useNavigate()
 
     useEffect(()=>{
         if(!user){
             navigate('/login', {replace:true})
+        } else if (user.username!=name){
+            navigate(`/profile/${name}`, {replace:true})
         }
-        const getOriginalPost = async()=>{
-            const res = await axios.get(`/posts/${id}`)
+        const getOriginalUser = async()=>{
+            const res = await axios.get(`/users/u/${name}`)
             console.log(res.data)
-            await setTitle(res.data.title)
-            await setDesc(res.data.description)
-            await setPostType(res.data.postType)
-            if(user._id!=res.data.userId){
-                navigate('/discussions', {replace:true})
-            }
+            await setUserId(res.data._id)
+            await setUsername(res.data.username)
+            await setDescription(res.data.description)
+          //  await setPassword(res.data.password)
         }
-        getOriginalPost()
+        getOriginalUser()
     }, [])
     
-    console.log(id)
-    
 
-    console.log(title,desc,postType)
+    console.log(username,description)
 
-    const submitPostEdits = (e) =>{
+    const submitProfileEdits = (e) =>{
         e.preventDefault()
 
-        axios.put(`/posts/${id}`, {
+        axios.put(`/users/${userId}`, {
             userId: user._id,
-            postType: postType,
-            title: title,
-            description: desc,
+           // password: password,
+            username: username,
+            description: description,
         })
         .then((res)=>{
             console.log(res)
-            navigate('/discussions',{replace:true})
+            let updatedUser = {
+                ...user
+            }
+            //update the user changes locally in context api
+            updatedUser.username = username
+            updatedUser.description = description
+            setUser(updatedUser)
+            navigate(`/profile/${username}`,{replace:true})
         })
         
-        setTitle('')
-        setDesc('')
-        setPostType('')     
+        setUsername('')
+        setDescription('')
+       // setPassword('')     
     }
     const handleDelete = () =>{
        // console.log(`THE dddddID OF THE USER IS ${user._id}`)
 
-        axios.post(`/posts/${id}/delete`, {
+        axios.post(`/`, {
             userId: user._id,
         })
         .then((res)=>{
@@ -104,7 +111,7 @@ export default function EditPost() {
              <Flex
                 alignSelf = 'center'
                 flexDirection = 'column'
-                height= '600px'
+                height= '640px'
                 w = '500px'
                 padding= '20px'
                 backgroundColor= '#17171d'
@@ -119,7 +126,7 @@ export default function EditPost() {
                         marginRight = 'auto'
                         variant = 'ghost'
                       
-                        onClick = {()=>navigate('/discussions', {replace:true})}
+                        onClick = {()=>navigate(`/profile/${user.username}`,{replace:true})}
                     />
                     <Flex 
                         fontFamily={`'raleway',san-serif`} 
@@ -132,41 +139,40 @@ export default function EditPost() {
                         alignSelf='center'
                         
                     > 
-                        Edit post:
+                        Edit profile:
                     
                     </Flex>
                    
                     
                 </Flex>
                 
-                <form onSubmit={submitPostEdits}>
-                    <FormLabel fontSize = 'md' color = 'gray.400'>Title:</FormLabel>
-                    <Input value = {title} onChange = {(e)=>setTitle(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
+                <form onSubmit={submitProfileEdits}>
+                    <FormLabel fontSize = 'md' color = 'gray.400'>Username:</FormLabel>
+                    <Input value = {username} onChange = {(e)=>setUsername(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
                     
-                    <FormLabel fontSize = 'md' color = 'gray.400'  mt = {4}>Description:</FormLabel>
-                    <Textarea resize = 'none' value = {desc} onChange = {(e)=>setDesc(e.target.value)} required height = '200px' fontSize = 'md' bg = 'blackAlpha.400'/>
-
-                    <Select value = {postType} onChange = {(e)=>setPostType(e.target.value)} outline = 'solid 1px #5E5B5A' variant = 'filled' colorScheme = 'blue' required mt = {7}>
-                        <option value=''>Select a channel</option>
-                        <option value='Announcements'>Announcements</option>
-                        <option value='Discussion'>Discussion</option>
-                        <option value='Feedback'>Feedback</option>
-                        <option value='Off topic'>Off topic</option>
-                    </Select>
+                    <FormLabel fontSize = 'md' color = 'gray.400'  mt = {4}>About me:</FormLabel>
+                    <Textarea resize = 'none' value = {description} onChange = {(e)=>setDescription(e.target.value)} required height = '150px' fontSize = 'md' bg = 'blackAlpha.400'/>
+                    
+                    
+                    
+                    {/* 
+                        <FormLabel fontSize = 'md' color = 'gray.400'>Re-enter new password:</FormLabel>
+                        <Input value = {username} onChange = {(e)=>setUsername(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
+                   */} 
 
                     <Flex>
                         <Button variant = 'solid' type = 'submit' colorScheme='green' size = 'lg' mt = {7}>Save Edits</Button>
-                        <Button variant = 'outline' onClick = {handleDelete} colorScheme='red' size = 'md' ml = 'auto' mt = {7}>Delete Post</Button>
+                        <Button variant = 'outline' onClick = {handleDelete} colorScheme='red' size = 'md' ml = 'auto' mt = {7}>Delete User</Button>
                     </Flex>
                     
-                    <Text fontSize='sm' mt = {2} color = '#707070'>Please be respectful to others.</Text>
+                    
                 </form> 
             </Flex>
 
             <Flex 
                 mt = {[5,5,0,0]} 
                 w = '400px' 
-                h = '600px' 
+                h = '640px' 
                 backgroundColor= '#17171d' 
                 flexDirection = 'column'  
                 borderRadius= '10px' 
@@ -187,7 +193,7 @@ export default function EditPost() {
                    Attach files:
 
                 </Flex>
-                <FormLabel fontSize = 'md' color = 'gray.400' ml = {5}>Image:</FormLabel>
+                <FormLabel fontSize = 'md' color = 'gray.400' ml = {5}>Avatar:</FormLabel>
                 <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <BsImageFill size = {67} color = '#525252'/>
                     <Flex flexDirection = 'column'>
@@ -195,7 +201,7 @@ export default function EditPost() {
                         <Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>
                     </Flex>
                 </Center>
-                <FormLabel mt = {5} fontSize = 'md' color = 'gray.400' ml = {5}>Audio:</FormLabel>
+                <FormLabel mt = {5} fontSize = 'md' color = 'gray.400' ml = {5}>Banner:</FormLabel>
                 <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <AiFillAudio size = {67} color = '#525252'/>
                     <Flex flexDirection = 'column'>

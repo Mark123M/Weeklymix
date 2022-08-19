@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
     Flex,
     Image,
@@ -12,13 +12,18 @@ import "@fontsource/fira-sans"
 import "@fontsource/roboto"
 import {Users} from '../DummyData'
 import {BiImageAdd} from 'react-icons/bi'
+import {BiPencil} from 'react-icons/bi'
 import { FaFlagUsa, FaYoutube, FaSpotify, FaSoundcloud, FaBandcamp, FaDiscord, FaReddit} from 'react-icons/fa';
 import SocialLink from './SocialLink';
 import axios from 'axios'
-
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../UserContext';
 
 export default function ProfileCard({username}) {
     const [profileUser, setProfileUser] = useState('')
+    const navigate = useNavigate()
+    const{value: user, setValue: setUser} = useContext(UserContext)
+
     useEffect(() =>{
         const getProfileUser = async () =>{
             const res = await axios.get(`/users/u/${username}`)
@@ -28,6 +33,12 @@ export default function ProfileCard({username}) {
         getProfileUser()
     },[])
 
+    const showEdit = () =>{
+        if(!user){
+            return false
+        }
+        return user.username==username
+    }
    // console.log(user)
 
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
@@ -46,7 +57,14 @@ export default function ProfileCard({username}) {
                 <Box>
                     <Image src={profileUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '120px' maxW = '120px' h = '120px' borderRadius = '5px' ml = {8} mt = {16} outline = '4px solid white'  />
                 </Box>
-                <Icon as = {BiImageAdd} w = {12} h = {12} color = '#FFFFFF' ml='auto' mt = 'auto' mr = {2} mb = {2}/>
+                <Button visibility = {showEdit()?'visible':'hidden'} mt = '155px' ml = 'auto' mr = {5} colorScheme = 'purple' onClick = {()=>navigate(`/profile/${profileUser.username}/edit`)}>
+                    <BiPencil size = {30}/>
+                    <Text fontSize = 'md'>
+                        Edit profile
+                    </Text>
+                    
+                </Button>
+                
             </Flex>
             <Text
                 fontSize= '2xl'
@@ -69,9 +87,14 @@ export default function ProfileCard({username}) {
                 >
                     {profileUser.location}
                 </Text>
-                <Button colorScheme='orange' variant='solid' ml = 'auto' mr = {5} mt = '-24px'  >
-                    Follow
-                </Button>
+               
+                
+                    
+                    <Button colorScheme='orange' variant='solid' ml = 'auto' mr = {5} mt = '-24px'  >
+                        Follow
+                    </Button>
+                
+                
 
             </Flex>
             

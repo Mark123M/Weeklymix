@@ -124,10 +124,10 @@ export default function Register(){
                     <Input onChange={(e) => setPassword(e.target.value)} value = {password} type = 'password' required height = '45px' fontSize = 'md'/>
 
 
-                    <Button variant = 'solid' type = 'submit' colorScheme='green' mt = {8}>Register</Button>
+                    <Button variant = 'solid' type = 'submit' colorScheme='orange' mt = {8}>Register</Button>
                     <Text fontSize='sm' mt = {2} color = '#707070'>don't forget your password!</Text>
                     <Link to = "/login">
-                        <Button variant = 'link' colorScheme='green' mt = 'auto'>
+                        <Button variant = 'link' colorScheme='orange' mt = 'auto'>
                             Log in to existing account
                         </Button>
                     </Link>

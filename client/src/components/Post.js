@@ -41,7 +41,7 @@ const PostLabel = ({text}) =>{
 export default function Post({post}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
 
-    const [bgColor, setBgColor] = useState('#212229')
+    const [bgColor, setBgColor] = useState('#24262d')
     const [postUser, setPostUser] = useState({})
     const{value: user, setValue: setUser} = useContext(UserContext)
     const [postLikes, setPostLikes] = useState(post.likes)
@@ -75,7 +75,7 @@ export default function Post({post}){
         setBgColor('gray.700')
     }
     const handleMouseLeave = () =>{
-        setBgColor('#212229')
+        setBgColor('#24262d')
     }
     const showEdit = () =>{
         if(!user){
@@ -98,6 +98,7 @@ export default function Post({post}){
             let updatedUser = {
                 ...user
             }
+            //update the user changes locally in context api
             if(!initLikedState()){
                 updatedUser.likedPosts.push(post._id)
                 setPostLikes(postLikes+1)
