@@ -21,7 +21,7 @@ router.put("/:id", async(req, res)=>{
 })
 
 //delete a user
-router.delete("/:id", async(req, res)=>{
+router.post("/:id/delete", async(req, res)=>{
     //compares id of the request and the parameter so that a user could only update their own info
     if(req.body.userId === req.params.id||req.body.isAdmin){ 
         try{

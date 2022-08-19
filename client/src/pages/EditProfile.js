@@ -80,12 +80,12 @@ export default function EditProfile() {
     const handleDelete = () =>{
        // console.log(`THE dddddID OF THE USER IS ${user._id}`)
 
-        axios.post(`/`, {
+        axios.post(`/users/${userId}/delete`, {
             userId: user._id,
         })
         .then((res)=>{
             //console.log(res)
-            navigate('/discussions',{replace:true})
+            navigate('/login',{replace:true})
         })
         .catch((err)=>{
             console.log(err)
@@ -162,7 +162,7 @@ export default function EditProfile() {
 
                     <Flex>
                         <Button variant = 'solid' type = 'submit' colorScheme='green' size = 'lg' mt = {7}>Save Edits</Button>
-                        <Button variant = 'outline' onClick = {handleDelete} colorScheme='red' size = 'md' ml = 'auto' mt = {7}>Delete User</Button>
+                        {/*<Button variant = 'outline' onClick = {handleDelete} colorScheme='red' size = 'md' ml = 'auto' mt = {7}>Delete User</Button>*/}
                     </Flex>
                     
                     
