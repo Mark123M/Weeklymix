@@ -12,7 +12,7 @@ import {
   } from '@chakra-ui/react';
 import {FaDiscord, FaReddit, FaInstagram} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
-import NavItem from './NavbarLink'
+//import NavItem from './NavbarLink'
 import {useState, useContext} from 'react'
 import "@fontsource/raleway"
 import "@fontsource/roboto"
@@ -22,7 +22,21 @@ import {HamburgerIcon, CloseIcon, ChevronDownIcon} from '@chakra-ui/icons'
 import { UserContext } from '../UserContext';
 import UserMenu from './UserMenu';
 
-
+const NavItem = ({text}) =>{
+    return(
+        <Center
+            marginLeft = {[2,'0vw','0.7vw',5]}
+            marginRight = {[2,'0vw','0.7vw',5]}
+            height = '70px'
+            fontFamily = {`'Raleway', sans-serif`}
+            fontSize = '1.0rem'
+            fontWeight = '700'
+            _hover={{textDecoration: 'underline'}}
+        >
+                {text}
+        </Center>
+    )
+}
 
 
 export default function Navbar(){

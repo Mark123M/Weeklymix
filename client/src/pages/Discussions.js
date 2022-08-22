@@ -29,16 +29,15 @@ export default function Discussions(){
     const{value: user, setValue: setUser} = useContext(UserContext)
 
     const navigate = useNavigate()
-    
-    const getAllPosts = async () =>{
-        const res = await axios.get("/posts/")
-        console.log(res)
-        res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
-        setPosts(res.data)
-        //this.forceUpdate()   //had to use this since state hooks were kind of bugging out
-    }
 
     useEffect(() =>{
+        const getAllPosts = async () =>{
+            const res = await axios.get("/posts/")
+            console.log(res)
+            res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
+            setPosts(res.data)
+            //this.forceUpdate()   //had to use this since state hooks were kind of bugging out
+        }
         getAllPosts()
     },[])
 
@@ -131,7 +130,7 @@ export default function Discussions(){
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.map((p)=>( //mapping the data of each post into a Post component
-                    <Post id = {p._id} getAllPosts = {getAllPosts} post = {p}/>
+                    <Post id = {p._id} post = {p}/>
                 ))} 
             </Flex>
         </Box>

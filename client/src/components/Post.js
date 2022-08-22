@@ -153,7 +153,7 @@ export default function Post({post}){
 
                     <Flex flexDirection = 'column'>
                         <Flex>
-                            <Flex
+                            <Text
                                 fontSize= {['md', 'md', 'md', 'md']}
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
@@ -165,7 +165,7 @@ export default function Post({post}){
                                 >
                                     {postUser.username}
                                 </Link>
-                            </Flex>
+                            </Text>
                             
                             <Text
                                 fontSize= {['xs','xs','sm','sm']}
