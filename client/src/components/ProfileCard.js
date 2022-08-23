@@ -23,6 +23,7 @@ export default function ProfileCard({username}) {
     const [profileUser, setProfileUser] = useState({
         followers:[],
     })
+    const [followers, setFollowers] = useState()
     const navigate = useNavigate()
     const{value: user, setValue: setUser} = useContext(UserContext)
 
@@ -31,7 +32,8 @@ export default function ProfileCard({username}) {
             const res = await axios.get(`/users/u/${username}`)
             console.log(res)
             setProfileUser(res.data)
-            console.log()
+            setFollowers(res.data.followers.length)
+         
         }
         getProfileUser()
     },[])
@@ -42,6 +44,7 @@ export default function ProfileCard({username}) {
         })
         .then((res)=>{
             console.log(res)
+            setFollowers(followers+1)
         })
     }
 
@@ -98,7 +101,7 @@ export default function ProfileCard({username}) {
                             fontFamily =  {`'roboto', sans-serif`} 
                             fontWeight = '500' 
                             ml = {3}
-                            color = '#8E8F90'
+                            color = '#A2A4A4'
                         >
                             {profileUser.location}
                         </Text>
@@ -111,10 +114,10 @@ export default function ProfileCard({username}) {
                             fontFamily =  {`'roboto', sans-serif`} 
                             fontWeight = '500' 
                             ml = {3}
-                            color = '#8E8F90'
+                            color = '#A2A4A4'
                             mt = {1}
                         >
-                            {profileUser.followers.length} Followers
+                            {followers} Followers
                         </Text>
                     </Flex>
                     

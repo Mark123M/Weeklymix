@@ -31,7 +31,7 @@ const PostLabel = ({text}) =>{
             fontFamily =  {`'roboto', sans-serif`} 
             fontWeight = '500' 
             ml = {1}
-            color = '#8E8F90'
+            color = '#A2A4A4'
         >
             {text}
         </Text>
@@ -173,7 +173,7 @@ export default function Post({post}){
                                 fontWeight = '500' 
                                 ml = {4}
                                 
-                                color = '#8E8F90'
+                                color = '#A2A4A4'
                             >
                                 {format(post.createdAt)}
                             </Text>
@@ -198,7 +198,7 @@ export default function Post({post}){
                         </Text>
                         <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
 
-                            <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#8E8F90'} _hover = {{color: 'orange.300'}} cursor = 'pointer'>
+                            <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#A2A4A4'} _hover = {{color: 'orange.300'}} cursor = 'pointer'>
                                 <MdThumbUp size={22}  />
                             </Flex>
                             <Text
@@ -206,7 +206,7 @@ export default function Post({post}){
                                 fontFamily =  {`'roboto', sans-serif`} 
                                 fontWeight = '500' 
                                 ml = {2}
-                                color = {initLikedState()?'whiteAlpha.900':'#8E8F90'}
+                                color = {initLikedState()?'whiteAlpha.900':'#A2A4A4'}
                                 textDecoration = {initLikedState()? 'underline 2px solid' :'initial'}
                                 
                             > 
@@ -215,20 +215,20 @@ export default function Post({post}){
                             </Text>
 
                             <Flex ml = {5}>
-                                <BiCommentDetail size={22} color = '#8E8F90' />
+                                <BiCommentDetail size={22} color = '#A2A4A4' />
                                 <PostLabel text ={`${post.comments.length} ${post.comments.length === 1? 'comment': 'comments'}`} />
                             </Flex>
 
                             
                             
-                            <Flex ml = {4} onClick = {handleShare} color = '#8E8F90'  _hover = {{color: 'white'}}  cursor = 'pointer'>
+                            <Flex ml = {4} onClick = {handleShare} color = '#A2A4A4'  _hover = {{color: 'white'}}  cursor = 'pointer'>
                                 <FaShare size={20}  />
                                 <PostLabel text = 'share'/>
                             </Flex>
 
                             
 
-                            <Flex visibility = {showEdit()?'visible':'hidden'}  ml = {4} onClick = {handleEdit} color = '#8E8F90'  _hover = {{color: 'blue.300'}}  cursor = 'pointer'>
+                            <Flex visibility = {showEdit()?'visible':'hidden'}  ml = {4} onClick = {handleEdit} color = '#A2A4A4'  _hover = {{color: 'blue.300'}}  cursor = 'pointer'>
                                 <FaEdit size={20}  />
                                 <PostLabel text = 'edit' />
                             </Flex>

@@ -136,7 +136,7 @@ export default function Home(){
                     Featured Tracks:
                 </Text>
                 <SongEmbed title = 'Christmas Morning' link = 'https://www.youtube.com/embed/yJW3ZEsDhg8' username = 'MetalMark' 
-                    description = 'This is a lofi/funk beat I made. I used keyscape for the piano and rhodes, xpand for the strings and sax, serum for the bass, and samples for the drums. Im still an amateur at mixing so the sounds may be overcompressed. I am really proud of the chords and melody. I applied some of the knowledge I learned and also experimented with new ideas'
+                    description = 'This is a beat I made. I used keyscape for the piano and rhodes, xpand for the strings and sax, serum for the bass, and samples for the drums. Im still an amateur at mixing so the sounds may be overcompressed. I am really proud of the chords and melody. I applied some of the knowledge I learned and also experimented with new ideas'
                 />
                 <SongEmbed title = 'EPIC TALIBAN SONG' link = 'https://www.youtube.com/embed/uueQbsl01Kg' username = 'ModalMatthew' 
                     description = 'عشوائية ليس لها معنى لا ترتبط حتى بموضوع المحادثة؟ مثل من فضلك ، تشكو دائمًا من سبب عدم حديث أحد معك أو عدم قيام أحد بالتعبير عن آرائه تجاهك لأنك دائمًا ما تنفث القرف العشوائي مثل المضايقين المستندة إلى الإزعاج وعندما تحاول شرح ما هو عليه وأنت تقول فقط إنه مضحك مثل ماذا ؟ ما المضحك في ذلك ، هل تعتقد أنك ستصبح مجرد ممثل كوميدي ستاند أب سيحظى بحفاوة بالغة لمجرد أنك قلت "النُطَف المَنَويّة" في المسرح؟ الجحيم لا أنت أيها الأحمق، لذا أرجوك اسكت واستخدم الكلمات بشكل صحيح أيها العاهرة الغبية'

@@ -60,7 +60,7 @@ router.get('/u/:username', async (req, res)=>{
 
 //follow&unfollow a user
 
-router.put("/:id/follow", async(req, res)=>{
+/*router.put("/:id/follow", async(req, res)=>{
     
     if(req.body.userId !== req.params.id){
         try{
@@ -78,6 +78,39 @@ router.put("/:id/follow", async(req, res)=>{
                 res.status(200).json("User has been followed")
             } else {
                 res.status(403).json("You already follow this member")
+            }
+        } catch (err){
+            res.status(500).json(err)
+        }
+    } else {
+        res.status(403).json("Don't follow yourself!")
+    }
+})
+*/
+router.put("/:id/follow", async(req, res)=>{
+    
+    if(req.body.userId !== req.params.id){
+        try{
+            console.log("following time")
+            const user = await User.findById(req.params.id) //the user that is going to be followed
+            const currentUser = await User.findById(req.body.userId) //the user that wants to follow (make request)
+            if(!user.followers.includes(req.body.userId)){
+                
+                await user.updateOne({ 
+                    $push:{followers: req.body.userId}
+                 })
+                await currentUser.updateOne({ 
+                    $push:{follows: req.params.id}
+                 })
+                res.status(200).json("User has been followed")
+            } else {
+                await user.updateOne({ 
+                    $pull:{followers: req.body.userId}
+                 })
+                await currentUser.updateOne({ 
+                    $pull:{follows: req.params.id}
+                 })
+                res.status(200).json("User has been unfollowed")
             }
         } catch (err){
             res.status(500).json(err)
