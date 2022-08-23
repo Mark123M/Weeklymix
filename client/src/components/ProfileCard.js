@@ -24,6 +24,7 @@ export default function ProfileCard({username}) {
         followers:[],
     })
     const [followers, setFollowers] = useState()
+    const [isFollowed, setIsFollowed] = useState('init')
     const navigate = useNavigate()
     const{value: user, setValue: setUser} = useContext(UserContext)
 
@@ -31,20 +32,21 @@ export default function ProfileCard({username}) {
         const getProfileUser = async () =>{
             const res = await axios.get(`/users/u/${username}`)
             console.log(res)
-            setProfileUser(res.data)
-            setFollowers(res.data.followers.length)
-         
+            await setProfileUser(res.data)
+            await setFollowers(res.data.followers.length)
+            await setIsFollowed(res.data.followers.includes(user._id))
+            console.log(res.data.followers.includes(user._id))
         }
         getProfileUser()
-    },[])
-
+    },[isFollowed])
+    
     const handleFollow = () =>{
         axios.put(`/users/${profileUser._id}/follow`, {
             userId:user._id
         })
         .then((res)=>{
+            setIsFollowed(!isFollowed)
             console.log(res)
-            setFollowers(followers+1)
         })
     }
 
@@ -117,16 +119,16 @@ export default function ProfileCard({username}) {
                             color = '#A2A4A4'
                             mt = {1}
                         >
-                            {followers} Followers
+                            {followers} followers 
                         </Text>
                     </Flex>
                     
                     
                 </Flex>
                 
-                <Button colorScheme='orange' variant='solid' ml = 'auto' mr = {5} mt = '-24px' onClick = {handleFollow} >
-                    <Icon as = {AiOutlineUserAdd} w = {6} h = {6} color = 'black'/>
-                    Follow
+                <Button colorScheme='orange' variant={isFollowed?'outline':'solid'} ml = 'auto' mr = {5} mt = '-24px' onClick = {handleFollow} >
+                    <Icon as = {AiOutlineUserAdd} w = {6} h = {6} color ={isFollowed?'orange.200':'black'}/>
+                    {isFollowed?'Unfollow':'Follow'}
                 </Button>
                 
                 
