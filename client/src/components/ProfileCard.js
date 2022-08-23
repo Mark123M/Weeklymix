@@ -24,7 +24,7 @@ export default function ProfileCard({username}) {
         followers:[],
     })
     const [followers, setFollowers] = useState()
-    const [isFollowed, setIsFollowed] = useState('init')
+    const [isFollowed, setIsFollowed] = useState(false)
     const navigate = useNavigate()
     const{value: user, setValue: setUser} = useContext(UserContext)
 
@@ -39,7 +39,7 @@ export default function ProfileCard({username}) {
         }
         getProfileUser()
     },[isFollowed])
-    
+
     const handleFollow = () =>{
         axios.put(`/users/${profileUser._id}/follow`, {
             userId:user._id

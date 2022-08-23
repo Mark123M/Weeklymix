@@ -1,6 +1,7 @@
 const User = require("../models/User")
 const router = require('express').Router()
-
+const cloudinary = require('../utils/cloudinary')
+const upload = require('../utils/multer')
 
 //create&change a user's info
 router.put("/:id", async(req, res)=>{
@@ -17,6 +18,23 @@ router.put("/:id", async(req, res)=>{
         }
     } else {
         return res.status(403).json("You don't have permission to update this account")
+    }
+})
+
+router.post("/profilePicture", upload.single("profilePicture"), async(req,res)=>{
+    try{
+        const result = await cloudinary.uploader.upload(req.file.path, {resource_type:"image"})
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+router.post("/coverPicture", upload.single("coverPicture"), async(req,res)=>{
+    try{
+        const result = await cloudinary.uploader.upload(req.file.path, {resource_type:"image"})
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(500).json(err)
     }
 })
 

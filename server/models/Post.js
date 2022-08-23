@@ -21,6 +21,7 @@ const postSchema = new mongoose.Schema({
     },
     image:{
         type:String,
+        default:null
     },
     audio:{
         type:String,
