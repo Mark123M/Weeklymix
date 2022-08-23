@@ -72,7 +72,7 @@ export default function Profile() {
                         <TabPanel>
                             <Flex flexDirection={['column', 'column', 'column', 'row']}>
                                 <ProfileCard username = {username} /* passing the routing parameters to component*//>
-                                <Flex flexDirection='column' ml = {['0px','0px',5,5]} mt = {2} w = '100%' bg = 'green'> {/*posts box */}
+                                <Flex flexDirection='column' ml = {['0px','0px',3,3]} mt = {2} w = '100%'> {/*posts box */}
                                     <UserPosts/>
                                 </Flex>
                             </Flex>

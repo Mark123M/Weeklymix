@@ -65,7 +65,7 @@ export default function ProfileCard({username}) {
             bg = '#24262D'
             w = {['400px','400px','400px','400px']}
             ml = {['0px','0px',5,5]}
-            mt = {2}
+            mt = {3}
             borderRadius = '10px 10px 10px 10px'
             height = 'fit-content'
         >
