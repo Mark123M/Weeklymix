@@ -15,7 +15,6 @@ import Post from '../components/Post'
 import ChannelBtn from '../components/ChannelBtn'
 import axios from "axios"
 import PostBox from '../components/PostBox';
-import PostModalPopup from '../components/PostModalPopup';
 
 import { Link } from 'react-router-dom';
 

@@ -10,17 +10,19 @@ import {
   } from '@chakra-ui/react';
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
-import {Users} from '../DummyData'
-import {BiImageAdd} from 'react-icons/bi'
 import {BiPencil} from 'react-icons/bi'
-import { FaFlagUsa, FaYoutube, FaSpotify, FaSoundcloud, FaBandcamp, FaDiscord, FaReddit} from 'react-icons/fa';
+import { FaFlagUsa, FaYoutube, FaSpotify, FaSoundcloud,FaReddit} from 'react-icons/fa';
+import {HiUserGroup} from 'react-icons/hi'
+import {AiOutlineUserAdd} from 'react-icons/ai'
 import SocialLink from './SocialLink';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 
 export default function ProfileCard({username}) {
-    const [profileUser, setProfileUser] = useState('')
+    const [profileUser, setProfileUser] = useState({
+        followers:[],
+    })
     const navigate = useNavigate()
     const{value: user, setValue: setUser} = useContext(UserContext)
 
@@ -29,9 +31,19 @@ export default function ProfileCard({username}) {
             const res = await axios.get(`/users/u/${username}`)
             console.log(res)
             setProfileUser(res.data)
+            console.log()
         }
         getProfileUser()
     },[])
+
+    const handleFollow = () =>{
+        axios.put(`/users/${profileUser._id}/follow`, {
+            userId:user._id
+        })
+        .then((res)=>{
+            console.log(res)
+        })
+    }
 
     const showEdit = () =>{
         if(!user){
@@ -77,22 +89,42 @@ export default function ProfileCard({username}) {
             </Text>
 
             <Flex>
-                <Icon as = {FaFlagUsa} w = {5} h = {5} ml = {7}/>
-                <Text
-                    fontSize= {['xs','xs','sm','sm']}
-                    fontFamily =  {`'roboto', sans-serif`} 
-                    fontWeight = '500' 
-                    ml = {3}
-                    color = '#8E8F90'
-                >
-                    {profileUser.location}
-                </Text>
-               
-                
+
+                <Flex flexDirection = 'column'>
+                    <Flex>
+                        <Icon as = {FaFlagUsa} w = {5} h = {5} ml = {7}/>
+                        <Text
+                            fontSize= {['xs','xs','sm','sm']}
+                            fontFamily =  {`'roboto', sans-serif`} 
+                            fontWeight = '500' 
+                            ml = {3}
+                            color = '#8E8F90'
+                        >
+                            {profileUser.location}
+                        </Text>
+                    </Flex>
                     
-                    <Button colorScheme='orange' variant='solid' ml = 'auto' mr = {5} mt = '-24px'  >
-                        Follow
-                    </Button>
+                    <Flex mt = {2}>
+                        <Icon as = {HiUserGroup} w = {6} h = {6} ml = {7} color = 'white'/>
+                        <Text
+                            fontSize= {['xs','xs','sm','sm']}
+                            fontFamily =  {`'roboto', sans-serif`} 
+                            fontWeight = '500' 
+                            ml = {3}
+                            color = '#8E8F90'
+                            mt = {1}
+                        >
+                            {profileUser.followers.length} Followers
+                        </Text>
+                    </Flex>
+                    
+                    
+                </Flex>
+                
+                <Button colorScheme='orange' variant='solid' ml = 'auto' mr = {5} mt = '-24px' onClick = {handleFollow} >
+                    <Icon as = {AiOutlineUserAdd} w = {6} h = {6} color = 'black'/>
+                    Follow
+                </Button>
                 
                 
 

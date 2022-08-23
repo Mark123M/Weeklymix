@@ -1,7 +1,7 @@
-PUT http://localhost:3001/api/users/62c9998e6559d5bf251e67a8/follow HTTP/1.1
+PUT http://localhost:3001/api/users/62e5956a31619d2f20567bf6/follow HTTP/1.1
 content-type: application/json
 
 {
-    "userId": "62c9c5110ab766ba7553ed1d"
+    "userId": "62e5944931619d2f20567bec"
 }
 

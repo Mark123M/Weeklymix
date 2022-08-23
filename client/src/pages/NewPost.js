@@ -21,7 +21,7 @@ import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
 import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
-
+//klraz63n
 export default function NewPost() {
     
     const [title, setTitle] = useState('')
