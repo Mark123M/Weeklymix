@@ -129,120 +129,120 @@ export default function Post({post}){
 
 
     return(
-            <Flex 
-                fontSize = 'xl' 
-                flexDirection='column'
-                borderRadius = '10px'
-                border= '2px solid #90CDF4'
-                
-                bg = {bgColor}
-                onMouseEnter = {handleMouseEnter}
-                onMouseLeave = {handleMouseLeave}
-                mt = {1}
-                mb = {1}
-                ml = {4}
-                mr = {8}
-            > 
-            {/* i have braindamage */}
-                <Flex flexDirection='row' mt = {4}>
-                    <Box display = {['none', 'none','inline','inline']}>
-                        <Link to = {`/profile/${postUser.username}`}>
-                            <Image src={postUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
-                        </Link>
-                    </Box>
+        <Flex 
+            fontSize = 'xl' 
+            flexDirection='column'
+            borderRadius = '10px'
+            border= '2px solid #90CDF4'
+            
+            bg = {bgColor}
+            onMouseEnter = {handleMouseEnter}
+            onMouseLeave = {handleMouseLeave}
+            mt = {1}
+            mb = {1}
+            ml = {4}
+            mr = {8}
+        > 
+        {/* i have braindamage */}
+            <Flex flexDirection='row' mt = {4}>
+                <Box display = {['none', 'none','inline','inline']}>
+                    <Link to = {`/profile/${postUser.username}`}>
+                        <Image src={postUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
+                    </Link>
+                </Box>
 
-                    <Flex flexDirection = 'column'>
-                        <Flex>
-                            <Text
-                                fontSize= {['md', 'md', 'md', 'md']}
-                                fontFamily =  {`'roboto', sans-serif`} 
-                                fontWeight = '500' 
-                                ml = {4}
-                                _hover = {{textDecoration: 'underline'}}
-                            >
-                                <Link 
-                                    to = {`/profile/${postUser.username}`}
-                                >
-                                    {postUser.username}
-                                </Link>
-                            </Text>
-                            
-                            <Text
-                                fontSize= {['xs','xs','sm','sm']}
-                                fontFamily =  {`'roboto', sans-serif`} 
-                                fontWeight = '500' 
-                                ml = {4}
-                                
-                                color = '#A2A4A4'
-                            >
-                                {format(post.createdAt)}
-                            </Text>
-                        </Flex>
+                <Flex flexDirection = 'column'>
+                    <Flex>
                         <Text
-                            fontSize= {['md', 'md', '1.3rem', '1.3rem']}
-                            fontFamily =  {`'roboto', sans-serif`} 
-                            fontWeight = '600' 
-                            ml = {4}
-                        >
-                            {post.title}
-                        </Text>
-                        <Text
-                            fontSize= {['sm','sm','md','md']}
+                            fontSize= {['md', 'md', 'md', 'md']}
                             fontFamily =  {`'roboto', sans-serif`} 
                             fontWeight = '500' 
                             ml = {4}
-                            mt = {1}
-                            color = 'white'
-                        >   
-                            {post.description}
+                            _hover = {{textDecoration: 'underline'}}
+                        >
+                            <Link 
+                                to = {`/profile/${postUser.username}`}
+                            >
+                                {postUser.username}
+                            </Link>
                         </Text>
-                        <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
-
-                            <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#A2A4A4'} _hover = {{color: 'orange.300'}} cursor = 'pointer'>
-                                <MdThumbUp size={22}  />
-                            </Flex>
-                            <Text
-                                fontSize= {['sm','sm','0.90rem','0.90rem']}
-                                fontFamily =  {`'roboto', sans-serif`} 
-                                fontWeight = '500' 
-                                ml = {2}
-                                color = {initLikedState()?'whiteAlpha.900':'#A2A4A4'}
-                                textDecoration = {initLikedState()? 'underline 2px solid' :'initial'}
-                                
-                            > 
-                                
-                                {postLikes} {postLikes ===1? 'like': 'likes'}
-                            </Text>
-
-                            <Flex ml = {5}>
-                                <BiCommentDetail size={22} color = '#A2A4A4' />
-                                <PostLabel text ={`${post.comments.length} ${post.comments.length === 1? 'comment': 'comments'}`} />
-                            </Flex>
-
+                        
+                        <Text
+                            fontSize= {['xs','xs','sm','sm']}
+                            fontFamily =  {`'roboto', sans-serif`} 
+                            fontWeight = '500' 
+                            ml = {4}
                             
-                            
-                            <Flex ml = {4} onClick = {handleShare} color = '#A2A4A4'  _hover = {{color: 'white'}}  cursor = 'pointer'>
-                                <FaShare size={20}  />
-                                <PostLabel text = 'share'/>
-                            </Flex>
-
-                            
-
-                            <Flex visibility = {showEdit()?'visible':'hidden'}  ml = {4} onClick = {handleEdit} color = '#A2A4A4'  _hover = {{color: 'blue.300'}}  cursor = 'pointer'>
-                                <FaEdit size={20}  />
-                                <PostLabel text = 'edit' />
-                            </Flex>
-
-                            
-                            
-
-                        </Flex>
+                            color = '#A2A4A4'
+                        >
+                            {format(post.createdAt)}
+                        </Text>
                     </Flex>
-                    <Box h = '100%' alignItems='center' marginLeft = 'auto' mr = {7}>
-                        <Image src={assetsFolder+post.image} maxW = '1000px' h = {['120px','120px','150px','150px']} borderRadius = '8px' marginBottom={4}/>
-                    </Box>
+                    <Text
+                        fontSize= {['md', 'md', '1.3rem', '1.3rem']}
+                        fontFamily =  {`'roboto', sans-serif`} 
+                        fontWeight = '600' 
+                        ml = {4}
+                    >
+                        {post.title}
+                    </Text>
+                    <Text
+                        fontSize= {['sm','sm','md','md']}
+                        fontFamily =  {`'roboto', sans-serif`} 
+                        fontWeight = '500' 
+                        ml = {4}
+                        mt = {1}
+                        color = 'white'
+                    >   
+                        {post.description}
+                    </Text>
+                    <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
+
+                        <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#A2A4A4'} _hover = {{color: 'orange.300'}} cursor = 'pointer'>
+                            <MdThumbUp size={22}  />
+                        </Flex>
+                        <Text
+                            fontSize= {['sm','sm','0.90rem','0.90rem']}
+                            fontFamily =  {`'roboto', sans-serif`} 
+                            fontWeight = '500' 
+                            ml = {2}
+                            color = {initLikedState()?'whiteAlpha.900':'#A2A4A4'}
+                            textDecoration = {initLikedState()? 'underline 2px solid' :'initial'}
+                            
+                        > 
+                            
+                            {postLikes} {postLikes ===1? 'like': 'likes'}
+                        </Text>
+
+                        <Flex ml = {5}>
+                            <BiCommentDetail size={22} color = '#A2A4A4' />
+                            <PostLabel text ={`${post.comments.length} ${post.comments.length === 1? 'comment': 'comments'}`} />
+                        </Flex>
+
+                        
+                        
+                        <Flex ml = {4} onClick = {handleShare} color = '#A2A4A4'  _hover = {{color: 'white'}}  cursor = 'pointer'>
+                            <FaShare size={20}  />
+                            <PostLabel text = 'share'/>
+                        </Flex>
+
+                        
+
+                        <Flex visibility = {showEdit()?'visible':'hidden'}  ml = {4} onClick = {handleEdit} color = '#A2A4A4'  _hover = {{color: 'blue.300'}}  cursor = 'pointer'>
+                            <FaEdit size={20}  />
+                            <PostLabel text = 'edit' />
+                        </Flex>
+
+                        
+                        
+
+                    </Flex>
                 </Flex>
+                <Box h = '100%' alignItems='center' marginLeft = 'auto' mr = {7}>
+                    <Image src={assetsFolder+post.image} maxW = '1000px' h = {['120px','120px','150px','150px']} borderRadius = '8px' marginBottom={4}/>
+                </Box>
             </Flex>
+        </Flex>
 
     )
 }
