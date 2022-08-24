@@ -70,7 +70,7 @@ export default function ProfileCard({username}) {
             height = 'fit-content'
         >
 
-            <Flex bg = '#2d97e5' minW = '400px' maxW = '400px' h = '140px' borderRadius = '10px 10px 0px 0px' >
+            <Flex bg = '#2d97e5' minW = '400px' maxW = '400px' h = '140px' borderRadius = '10px 10px 0px 0px' backgroundImage = {profileUser.coverPic}>
                 <Box>
                     <Image src={profileUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '120px' maxW = '120px' h = '120px' borderRadius = '5px' ml = {8} mt = {16} outline = '4px solid white'  />
                 </Box>

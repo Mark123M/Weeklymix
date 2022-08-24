@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {
     Flex,
-    Box,
     Button,
     Text,
     Input,
@@ -9,18 +8,16 @@ import {
     Center,
     IconButton,
     Textarea,
-    Select
   } from '@chakra-ui/react';
 import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
-import {Link} from 'react-router-dom' 
 import axios from 'axios'
 import { UserContext } from '../UserContext';
-import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
+import {CloseIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
-import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate, useParams} from 'react-router-dom';
+import Compressor from 'compressorjs'
 
 export default function EditProfile() {
     const {name} = useParams()
@@ -90,8 +87,15 @@ export default function EditProfile() {
         if(cover != null){
             handleCoverUpload()
         }
+     /*   console.log('---------------------------------------------------------------------------8')
+        axios.get(`/users/${userId}`)
+        .then((res)=>{
+            setUser(res.data)
+            console.log(res.data)
+        }) */
        // setPassword('')     
     }
+
     const handlePfpChange = (e) =>{
        
         if(e.target.files[0].size > 2097152){
@@ -109,69 +113,93 @@ export default function EditProfile() {
             setInputKey(inputKey+1)
          }
          else{
-            setPfp(e.target.files[0])
+            setCover(e.target.files[0])
          }
     }
 
     //console.log( process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET, process.env.REACT_APP_CLOUDINARY_CLOUD_NAME , process.env.REACT_APP_CLOUDINARY_API_URL )
     const handleAvatarUpload = () =>{
-        console.log('upload pfp')
-        const data = new FormData()
-        data.append("file", pfp)
-        data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
-        data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
 
-        axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
-        .then((res)=>{
-            console.log(res.data.secure_url)
-            axios.put(`/users/${userId}`, {
-                userId: user._id,
-                profilePic: res.data.secure_url
-            })
-            .then((res)=>{
-                console.log(res)
-            })
+        new Compressor(pfp, {
+            quality: 0.6,
+            width: 150,
+            height: 150,
+            // The compression process is asynchronous,
+            // which means you have to access the `result` in the `success` hook function.
+            success(result) {
 
-            let updatedUser = {
-                ...user
-            }
-            //update the user changes locally in context api
-            updatedUser.profilePic = res.data.secure_url
-          
-            setUser(updatedUser)
-
-            setPfp(null)
-        })
+                // Send the compressed image file to server with XMLHttpRequest.
+                const data = new FormData()
+                data.append("file", result, result.name)
+                data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
+                data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
+        
+                axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
+                .then((res)=>{
+                    console.log(res.data.secure_url)
+                    axios.put(`/users/${userId}`, {
+                        userId: user._id,
+                        profilePic: res.data.secure_url
+                    })
+                    .then((res)=>{
+                        console.log(res)
+                    })
+                    //update the user changes locally in context api
+            
+                    axios.get(`/users/${userId}`)
+                    .then((res)=>{
+                        setUser(res.data)
+                        console.log(res.data)
+                    })
+        
+                    setPfp(null)
+                })
+            },
+            error(err) {
+                console.log(err.message);
+            },
+        });
     }
 
     const handleCoverUpload = () =>{
-        console.log('upload cover')
-        const data = new FormData()
-        data.append("file", cover)
-        data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
-        data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
 
-        axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
-        .then((res)=>{
-            console.log(res.data.secure_url)
-            axios.put(`/users/${userId}`, {
-                userId: user._id,
-                coverPic: res.data.secure_url
-            })
-            .then((res)=>{
-                console.log(res)
-            })
+        new Compressor(cover,{
+            quality: 0.6,
+            width: 400,
+            height: 400,
+            success(result) {
+                console.log('upload cover')
+                const data = new FormData()
+                data.append("file", result, result.name)
+                data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
+                data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
 
-            let updatedUser = {
-                ...user
-            }
-            //update the user changes locally in context api
-            updatedUser.coverPic = res.data.secure_url
-          
-            setUser(updatedUser)
-
-            setCover(null)
+                axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
+                .then((res)=>{
+                    console.log(res.data.secure_url)
+                    axios.put(`/users/${userId}`, {
+                        userId: user._id,
+                        coverPic: res.data.secure_url
+                    })
+                    .then((res)=>{
+                        console.log(res)
+                    })
+                    //update the user changes locally in context api
+                    
+                    axios.get(`/users/${userId}`)
+                    .then((res)=>{
+                        setUser(res.data)
+                        console.log(res.data)
+                    })
+                    setCover(null)
+                })
+            },
+            error(err) {
+                console.log(err.message)
+            },
         })
+
+        
     }
 
     console.log(pfp, cover)
