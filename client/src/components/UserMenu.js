@@ -37,7 +37,7 @@ export default function UserMenu(){
         console.log('logged out')
         setUser(null)
     }
-
+    
     if(!user) return null
     return(
         <Flex flexDirection='column' alignSelf='center' mt = {menuMargin}>
@@ -79,7 +79,7 @@ export default function UserMenu(){
                         My Profile
                     </Center>
                 </Link>
-                <Link to ={`/profile/${user.username}`}>
+                <Link to ={`/profile/${user.username}/edit`}>
                     <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55'>
                         Edit Profile
                     </Center>
