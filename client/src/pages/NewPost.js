@@ -21,6 +21,7 @@ import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
 import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
+import Compressor from 'compressorjs'
 //klraz63n
 export default function NewPost() {
     
@@ -30,19 +31,26 @@ export default function NewPost() {
     const{value: user, setValue: setUser} = useContext(UserContext)
     const navigate = useNavigate()
 
-    console.log(title,desc,postType)
+    const [image, setImage] = useState(null)
+    const [imageUrl, setImageUrl] = useState('hello')
+    const [inputKey, setInputKey] = useState(0)
 
-    const submitNewPost = (e) =>{
+    console.log(title,desc,postType, image)
+
+    const submitNewPost = async (e) =>{
         e.preventDefault()
         if(!user){
             navigate('/login', { replace: true })
         }
+        
+      //  await getImageUpload()
 
         axios.post('/posts', {
             userId: user._id,
             postType: postType,
             title: title,
             description: desc,
+            image: imageUrl
         })
         .then((res)=>{
             console.log(res)
@@ -51,7 +59,50 @@ export default function NewPost() {
         
         setTitle('')
         setDesc('')
-        setPostType('')     
+        setPostType('')   
+        
+          
+    }
+
+    console.log(image)
+
+    const handleImageChange = (e) =>{
+        if(e.target.files[0].size > 10000000){
+            alert("Post image is too big. (>10mb)");
+            setInputKey(inputKey+1)
+         }
+         else{
+            setImage(e.target.files[0])
+         }
+    }
+    const getImageUpload = () =>{
+
+        new Compressor(image,{
+            quality: 0.6,
+            width: 400,
+            height: 400,
+            success(result) {
+                console.log('upload image')
+                const data = new FormData()
+                data.append("file", result, result.name)
+                data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
+                data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
+                
+                setImage('ddd')
+                console.log(image)
+
+               /* axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
+                .then((res)=>{
+                    setImage(null)
+                    setImageUrl(res.data.secure_url)
+                }) */
+            },
+            error(err) {
+                console.log(err.message)
+            },
+        })
+
+        
     }
 
     return (
@@ -71,7 +122,7 @@ export default function NewPost() {
              <Flex
                 alignSelf = 'center'
                 flexDirection = 'column'
-                height= '600px'
+                height= '630px'
                 w = '500px'
                 padding= '20px'
                 backgroundColor= '#17171d'
@@ -129,8 +180,8 @@ export default function NewPost() {
 
             <Flex 
                 mt = {[5,5,0,0]} 
-                w = '400px' 
-                h = '600px' 
+                w = '450px' 
+                h = '630px' 
                 backgroundColor= '#17171d' 
                 flexDirection = 'column'  
                 borderRadius= '10px' 
@@ -151,20 +202,30 @@ export default function NewPost() {
                    Attach files:
 
                 </Flex>
-                <FormLabel fontSize = 'md' color = 'gray.400' ml = {5}>Image:</FormLabel>
-                <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
+                <FormLabel fontSize = 'md' color = 'green.200' ml = {5}>{`New post image: (max 10mb)`}</FormLabel>
+                <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <BsImageFill size = {67} color = '#525252'/>
-                    <Flex flexDirection = 'column'>
-                        <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'orange' size = 'sm' ml = {2} mt = {2}>Select File</Button>
+                        {/*<Text ml = {2} color = 'green.200'>{`Drag & drop or`}</Text>*/}
+                        {/*<Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>*/}     
+                    <Flex mt = {3}>
+                        <form>
+                            <Input key = {inputKey} onChange = {(e)=>handleImageChange(e)} variant = 'outline' type="file" name="postImage" width = '300px' pt = '3px'/>
+                            <Button onClick = {()=>setImage(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
+                        </form>
+                        
                     </Flex>
+                    
                 </Center>
-                <FormLabel mt = {5} fontSize = 'md' color = 'gray.400' ml = {5}>Audio:</FormLabel>
-                <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
+                <FormLabel mt = {5} fontSize = 'md' color = 'green.200' ml = {5}>{`New audio: (max 10mb)`}</FormLabel>
+                <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <AiFillAudio size = {67} color = '#525252'/>
-                    <Flex flexDirection = 'column'>
-                        <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'orange' size = 'sm' ml = {2} mt = {2}>Select File</Button>
+                        {/*<Text ml = {2} color = 'green.200'>{`Drag & drop or`}</Text>*/}
+                        {/*<Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>*/}
+                    <Flex mt = {3}>
+                        <form>
+                            <Input key = {inputKey} onChange = {(e)=>handleImageChange(e)} variant = 'outline' type="file" name="coverPicture" width = '300px' pt = '3px'/>
+                            <Button onClick = {()=>setImage(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
+                        </form>
                     </Flex>
                 </Center>
             </Flex>

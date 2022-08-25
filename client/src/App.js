@@ -18,15 +18,27 @@ import {
   Route,
 } from "react-router-dom";
 
-import { myTheme } from './styles/theme';
+import { extendTheme } from '@chakra-ui/react'
+
+
+
+
+//import { theme } from './styles/theme';
 import { UserContext } from './UserContext';
 
 function App() {
+  // 2. Add your color mode config
+  const theme = extendTheme({
+    config: {
+      initialColorMode: 'dark',
+      useSystemColorMode: false,
+    }
+  })
   const[user, setUser] = useState(null)
 
   return (
     <UserContext.Provider value = {{value: user, setValue: setUser}}>
-      <ChakraProvider theme={myTheme}>
+      <ChakraProvider theme={theme}>
         <HashRouter>
           <Routes>
             <Route path="/" element = {<Home />}></Route>

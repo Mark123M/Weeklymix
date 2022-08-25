@@ -300,7 +300,7 @@ export default function EditProfile() {
                     alignSelf='center'
                     
                 > 
-                   Edit files:
+                   Add/Edit files:
 
                 </Flex>
                 <FormLabel fontSize = 'md' color = 'green.200' ml = {5}>{`New Profile picture: (max 2mb)`}</FormLabel>
