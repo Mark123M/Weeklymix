@@ -11,6 +11,7 @@ import Register from './pages/Register'
 import NewPost from './pages/NewPost'
 import EditPost from './pages/EditPost'
 import EditProfile from './pages/EditProfile'
+import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 import {
   HashRouter, //using hashrouter for client side routing
@@ -27,6 +28,7 @@ function App() {
   return (
     <UserContext.Provider value = {{value: user, setValue: setUser}}>
       <ChakraProvider theme={myTheme}>
+        <ColorModeSwitcher/>
         <HashRouter>
           <Routes>
             <Route path="/" element = {<Home />}></Route>
