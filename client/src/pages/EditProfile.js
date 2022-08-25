@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {
     Flex,
-    Box,
     Button,
     Text,
     Input,
@@ -9,25 +8,28 @@ import {
     Center,
     IconButton,
     Textarea,
-    Select
   } from '@chakra-ui/react';
 import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
-import {Link} from 'react-router-dom' 
 import axios from 'axios'
 import { UserContext } from '../UserContext';
-import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
+import {CloseIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
-import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate, useParams} from 'react-router-dom';
+import Compressor from 'compressorjs'
 
 export default function EditProfile() {
     const {name} = useParams()
     const [username, setUsername] = useState('')
+    const [location, setLocation] = useState('')
     const [description, setDescription] = useState('')
  //   const [password, setPassword] = useState('')
     const [userId, setUserId] = useState('')
+
+    const [pfp, setPfp] = useState(null)
+    const [inputKey, setInputKey] = useState(0)
+    const [cover, setCover] = useState(null)
     
     const{value: user, setValue: setUser} = useContext(UserContext)
     const navigate = useNavigate()
@@ -43,7 +45,9 @@ export default function EditProfile() {
             console.log(res.data)
             await setUserId(res.data._id)
             await setUsername(res.data.username)
+            await setLocation(res.data.location)
             await setDescription(res.data.description)
+
           //  await setPassword(res.data.password)
         }
         getOriginalUser()
@@ -59,6 +63,7 @@ export default function EditProfile() {
             userId: user._id,
            // password: password,
             username: username,
+            location: location,
             description: description,
         })
         .then((res)=>{
@@ -74,25 +79,130 @@ export default function EditProfile() {
         })
         
         setUsername('')
+        setLocation('')
         setDescription('')
+        if(pfp!= null){
+            handleAvatarUpload()
+        }
+        if(cover != null){
+            handleCoverUpload()
+        }
+     /*   console.log('---------------------------------------------------------------------------8')
+        axios.get(`/users/${userId}`)
+        .then((res)=>{
+            setUser(res.data)
+            console.log(res.data)
+        }) */
        // setPassword('')     
     }
-    const handleDelete = () =>{
-       // console.log(`THE dddddID OF THE USER IS ${user._id}`)
 
-        axios.post(`/users/${userId}/delete`, {
-            userId: user._id,
-        })
-        .then((res)=>{
-            //console.log(res)
-            navigate('/login',{replace:true})
-        })
-        .catch((err)=>{
-            console.log(err)
-            //console.log(`the id of logged in user is ${user._id}`)
-            //console.log(`the post is ${post._id}`)
-        })
+    const handlePfpChange = (e) =>{
+       
+        if(e.target.files[0].size > 2097152){
+            alert("Profile picture is too big. (>2mb)");
+            setInputKey(inputKey+1)
+         }
+         else{
+            setPfp(e.target.files[0])
+         }
     }
+    const handleCoverChange = (e) =>{
+       
+        if(e.target.files[0].size > 10000000){
+            alert("Cover picture is too big. (>10mb)");
+            setInputKey(inputKey+1)
+         }
+         else{
+            setCover(e.target.files[0])
+         }
+    }
+
+    //console.log( process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET, process.env.REACT_APP_CLOUDINARY_CLOUD_NAME , process.env.REACT_APP_CLOUDINARY_API_URL )
+    const handleAvatarUpload = () =>{
+
+        new Compressor(pfp, {
+            quality: 0.6,
+            width: 150,
+            height: 150,
+            // The compression process is asynchronous,
+            // which means you have to access the `result` in the `success` hook function.
+            success(result) {
+
+                // Send the compressed image file to server with XMLHttpRequest.
+                const data = new FormData()
+                data.append("file", result, result.name)
+                data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
+                data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
+        
+                axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
+                .then((res)=>{
+                    console.log(res.data.secure_url)
+                    axios.put(`/users/${userId}`, {
+                        userId: user._id,
+                        profilePic: res.data.secure_url
+                    })
+                    .then((res)=>{
+                        console.log(res)
+                    })
+                    //update the user changes locally in context api
+            
+                    axios.get(`/users/${userId}`)
+                    .then((res)=>{
+                        setUser(res.data)
+                        console.log(res.data)
+                    })
+        
+                    setPfp(null)
+                })
+            },
+            error(err) {
+                console.log(err.message);
+            },
+        });
+    }
+
+    const handleCoverUpload = () =>{
+
+        new Compressor(cover,{
+            quality: 0.6,
+            width: 400,
+            height: 400,
+            success(result) {
+                console.log('upload cover')
+                const data = new FormData()
+                data.append("file", result, result.name)
+                data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
+                data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
+
+                axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
+                .then((res)=>{
+                    console.log(res.data.secure_url)
+                    axios.put(`/users/${userId}`, {
+                        userId: user._id,
+                        coverPic: res.data.secure_url
+                    })
+                    .then((res)=>{
+                        console.log(res)
+                    })
+                    //update the user changes locally in context api
+                    
+                    axios.get(`/users/${userId}`)
+                    .then((res)=>{
+                        setUser(res.data)
+                        console.log(res.data)
+                    })
+                    setCover(null)
+                })
+            },
+            error(err) {
+                console.log(err.message)
+            },
+        })
+
+        
+    }
+
+    console.log(pfp, cover)
 
     return (
         <Flex
@@ -111,7 +221,7 @@ export default function EditProfile() {
              <Flex
                 alignSelf = 'center'
                 flexDirection = 'column'
-                height= '640px'
+                height= '630px'
                 w = '500px'
                 padding= '20px'
                 backgroundColor= '#17171d'
@@ -140,39 +250,39 @@ export default function EditProfile() {
                         
                     > 
                         Edit profile:
-                    
                     </Flex>
                    
                     
                 </Flex>
                 
                 <form onSubmit={submitProfileEdits}>
-                    <FormLabel fontSize = 'md' color = 'gray.400'>Username:</FormLabel>
+                    <FormLabel fontSize = 'md' color = 'green.200'>Username:</FormLabel>
                     <Input value = {username} onChange = {(e)=>setUsername(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
+
+                    <FormLabel mt = {4} fontSize = 'md' color = 'green.200'>Location:</FormLabel>
+                    <Input value = {location} onChange = {(e)=>setLocation(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
                     
-                    <FormLabel fontSize = 'md' color = 'gray.400'  mt = {4}>About me:</FormLabel>
+                    <FormLabel fontSize = 'md' color = 'green.200'  mt = {4}>About me:</FormLabel>
                     <Textarea resize = 'none' value = {description} onChange = {(e)=>setDescription(e.target.value)} required height = '150px' fontSize = 'md' bg = 'blackAlpha.400'/>
-                    
-                    
-                    
+
                     {/* 
-                        <FormLabel fontSize = 'md' color = 'gray.400'>Re-enter new password:</FormLabel>
+                        <FormLabel fontSize = 'md' color = 'green.200'>Re-enter new password:</FormLabel>
                         <Input value = {username} onChange = {(e)=>setUsername(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
                    */} 
 
-                    <Flex>
-                        <Button variant = 'solid' type = 'submit' colorScheme='green' size = 'lg' mt = {7}>Save Edits</Button>
+                    
+                    <Button variant = 'solid' type = 'submit' colorScheme='green' size = 'lg' mt = {7}>Save Edits</Button>
                         {/*<Button variant = 'outline' onClick = {handleDelete} colorScheme='red' size = 'md' ml = 'auto' mt = {7}>Delete User</Button>*/}
-                    </Flex>
                     
-                    
+                    <FormLabel fontSize = 'sm' color = 'gray.400' mt = {4}>*Some changes may take a while to save</FormLabel>
+                     
                 </form> 
             </Flex>
 
             <Flex 
                 mt = {[5,5,0,0]} 
-                w = '400px' 
-                h = '640px' 
+                w = '450px' 
+                h = '630px' 
                 backgroundColor= '#17171d' 
                 flexDirection = 'column'  
                 borderRadius= '10px' 
@@ -190,23 +300,33 @@ export default function EditProfile() {
                     alignSelf='center'
                     
                 > 
-                   Attach files:
+                   Edit files:
 
                 </Flex>
-                <FormLabel fontSize = 'md' color = 'gray.400' ml = {5}>Avatar:</FormLabel>
-                <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
+                <FormLabel fontSize = 'md' color = 'green.200' ml = {5}>{`New Profile picture: (max 2mb)`}</FormLabel>
+                <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <BsImageFill size = {67} color = '#525252'/>
-                    <Flex flexDirection = 'column'>
-                        <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>
+                        {/*<Text ml = {2} color = 'green.200'>{`Drag & drop or`}</Text>*/}
+                        {/*<Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>*/}     
+                    <Flex mt = {3}>
+                        <form>
+                            <Input key = {inputKey} onChange = {(e)=>handlePfpChange(e)} variant = 'outline' type="file" name="profilePicture" width = '300px' pt = '3px'/>
+                            <Button onClick = {()=>setPfp(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
+                        </form>
+                        
                     </Flex>
+                    
                 </Center>
-                <FormLabel mt = {5} fontSize = 'md' color = 'gray.400' ml = {5}>Banner:</FormLabel>
-                <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
-                    <AiFillAudio size = {67} color = '#525252'/>
-                    <Flex flexDirection = 'column'>
-                        <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>
+                <FormLabel mt = {5} fontSize = 'md' color = 'green.200' ml = {5}>{`New Cover picture: (max 10mb)`}</FormLabel>
+                <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
+                    <BsImageFill size = {67} color = '#525252'/>
+                        {/*<Text ml = {2} color = 'green.200'>{`Drag & drop or`}</Text>*/}
+                        {/*<Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>*/}
+                    <Flex mt = {3}>
+                        <form>
+                            <Input key = {inputKey} onChange = {(e)=>handleCoverChange(e)} variant = 'outline' type="file" name="coverPicture" width = '300px' pt = '3px'/>
+                            <Button onClick = {()=>setCover(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
+                        </form>
                     </Flex>
                 </Center>
             </Flex>

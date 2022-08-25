@@ -20,6 +20,7 @@ import axios from 'axios'
 import SpotifyCredentials from '../apiCredentials/SpotifyCredentials'
 import ReactPlayer from 'react-player'
 import { SongEmbed } from '../components/SongEmbed';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home(){
    /* const spotify = SpotifyCredentials()
@@ -42,6 +43,8 @@ export default function Home(){
     },[])  */
     const [userNum, setUserNum] = useState()
     const [postNum, setPostNum] = useState()
+    const navigate = useNavigate()
+
     useEffect(()=>{
         const getUserNum = async()=>{
             const res = await axios.get('/users/')
@@ -94,8 +97,8 @@ export default function Home(){
                         weekly challenges with unique themes so musicians could step out of their comfort zone. 
                     </Text> 
                     <Flex>
-                        <Button colorScheme='orange' size = {['md','md','lg','lg']} variant='solid'  h = '50px' mt = {6} >
-                            Get started
+                        <Button onClick = {()=>navigate('/discussions')} colorScheme='orange' size = {['md','md','lg','lg']} variant='solid'  h = '50px' mt = {6} >
+                            Go to posts
                         </Button>
                     </Flex>
                 </Flex>
