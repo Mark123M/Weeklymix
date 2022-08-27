@@ -81,6 +81,7 @@ export default function Post({post}){
             return false
         }
         return user._id==post.userId
+        
     }
 
     const handleLikeClick = () =>{
