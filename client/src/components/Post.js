@@ -145,9 +145,9 @@ export default function Post({post}){
         > 
         {/* i have braindamage */}
             <Flex flexDirection='row' mt = {4}>
-                <Box display = {['none', 'none','inline','inline']}>
+                <Box>
                     <Link to = {`/profile/${postUser.username}`}>
-                        <Image src={postUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
+                        <Image src={postUser.profilePic || 'https://res.cloudinary.com/dyrwb96jv/image/upload/v1661549963/cdhmdf8rdxqotpfej5fh.webp'} objectFit = 'cover' minW = {['50px','50px','60px','60px']} maxW = {['50px','50px','60px','60px']} h = {['50px','50px','60px','60px']} borderRadius = '50%' ml = {5}/>
                     </Link>
                 </Box>
 
@@ -238,8 +238,8 @@ export default function Post({post}){
 
                     </Flex>
                 </Flex>
-                <Box h = '100%' alignItems='center' marginLeft = 'auto' mr = {7}>
-                    <Image src={assetsFolder+post.image} maxW = '1000px' h = {['120px','120px','150px','150px']} borderRadius = '8px' marginBottom={4}/>
+                <Box h = '100%' alignItems='center' marginLeft = 'auto' mr = {7} visibility = {['hidden','hidden','visible','visible']}>
+                    <Image visibility={post.image===''?'hidden':'visible'} src={post.image} maxW = '300px' h = {['120px','120px','120px','165px']} borderRadius = '8px' marginBottom={4}/>
                 </Box>
             </Flex>
         </Flex>

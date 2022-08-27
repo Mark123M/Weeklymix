@@ -21,6 +21,7 @@ import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
 import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate, useParams} from 'react-router-dom';
+import Compressor from 'compressorjs';
 
 export default function EditPost() {
     const {id} = useParams()
@@ -30,6 +31,9 @@ export default function EditPost() {
     const{value: user, setValue: setUser} = useContext(UserContext)
     const navigate = useNavigate()
 
+    const [image, setImage] = useState(null)
+    const [inputKey, setInputKey] = useState(0)
+
     useEffect(()=>{
         if(!user){
             navigate('/login', {replace:true})
@@ -37,9 +41,9 @@ export default function EditPost() {
         const getOriginalPost = async()=>{
             const res = await axios.get(`/posts/${id}`)
             console.log(res.data)
-            await setTitle(res.data.title)
-            await setDesc(res.data.description)
-            await setPostType(res.data.postType)
+            setTitle(res.data.title)
+            setDesc(res.data.description)
+            setPostType(res.data.postType)
             if(user._id!=res.data.userId){
                 navigate('/discussions', {replace:true})
             }
@@ -52,19 +56,64 @@ export default function EditPost() {
 
     console.log(title,desc,postType)
 
+    const handleImageChange = (e) =>{
+        if(e.target.files[0].size > 10000000){
+            alert("Cover picture is too big. (>10mb)");
+            setInputKey(inputKey+1)
+         }
+         else{
+            setImage(e.target.files[0])
+         }
+    }
+
     const submitPostEdits = (e) =>{
         e.preventDefault()
 
-        axios.put(`/posts/${id}`, {
-            userId: user._id,
-            postType: postType,
-            title: title,
-            description: desc,
-        })
-        .then((res)=>{
-            console.log(res)
-            navigate('/discussions',{replace:true})
-        })
+        new Compressor(image, {
+            quality: 0.6,
+            width: 300,
+            height: 300,
+            // The compression process is asynchronous,
+            // which means you have to access the `result` in the `success` hook function.
+            success(result) {
+
+                // Send the compressed image file to server with XMLHttpRequest.
+                const data = new FormData()
+                data.append("file", result, result.name)
+                data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
+                data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME)
+        
+                axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
+                .then((res)=>{
+                    console.log(res.data.secure_url)
+                    axios.put(`/posts/${id}`, {
+                        userId: user._id,
+                        image: res.data.secure_url,
+                        postType: postType,
+                        title: title,
+                        description: desc,
+                    })
+                    .then((res)=>{
+                        console.log(res)
+                        setImage(null)
+                        navigate('/discussions',{replace:true})
+                    })
+                })
+            },
+            error(err) {
+                axios.put(`/posts/${id}`, {
+                    userId: user._id,
+                    postType: postType,
+                    title: title,
+                    description: desc,
+                })
+                .then((res)=>{
+                    console.log(res)
+                    navigate('/discussions',{replace:true})
+                })
+                console.log(err.message);
+            },
+        });
         
         setTitle('')
         setDesc('')
@@ -165,7 +214,7 @@ export default function EditPost() {
 
             <Flex 
                 mt = {[5,5,0,0]} 
-                w = '400px' 
+                w = '450px' 
                 h = '600px' 
                 backgroundColor= '#17171d' 
                 flexDirection = 'column'  
@@ -184,23 +233,19 @@ export default function EditPost() {
                     alignSelf='center'
                     
                 > 
-                   Attach files:
+                   Add/Edit files:
 
                 </Flex>
-                <FormLabel fontSize = 'md' color = 'gray.400' ml = {5}>Image:</FormLabel>
-                <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
+                <FormLabel fontSize = 'md' color = 'green.200' mt = {4} ml = {5}>{`New post picture: (max 10mb)`}</FormLabel>
+                <Center flexDirection = 'column' w = '410px' h = ' 360px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <BsImageFill size = {67} color = '#525252'/>
-                    <Flex flexDirection = 'column'>
-                        <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>
-                    </Flex>
-                </Center>
-                <FormLabel mt = {5} fontSize = 'md' color = 'gray.400' ml = {5}>Audio:</FormLabel>
-                <Center w = '362px' h = ' 200px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
-                    <AiFillAudio size = {67} color = '#525252'/>
-                    <Flex flexDirection = 'column'>
-                        <Text ml = {2} color = 'gray.400'>{`Drag & drop or`}</Text>
-                        <Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>
+                        {/*<Text ml = {2} color = 'green.200'>{`Drag & drop or`}</Text>*/}
+                        {/*<Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>*/}     
+                    <Flex mt = {3}>
+                        <form>
+                            <Input key = {inputKey} accept = 'image/*' onChange = {(e)=>handleImageChange(e)} variant = 'outline' type="file" name="profilePicture" width = '300px' pt = '3px'/>
+                            <Button onClick = {()=>setImage(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
+                        </form>
                     </Flex>
                 </Center>
             </Flex>

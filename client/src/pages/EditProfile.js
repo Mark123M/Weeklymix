@@ -43,10 +43,10 @@ export default function EditProfile() {
         const getOriginalUser = async()=>{
             const res = await axios.get(`/users/u/${name}`)
             console.log(res.data)
-            await setUserId(res.data._id)
-            await setUsername(res.data.username)
-            await setLocation(res.data.location)
-            await setDescription(res.data.description)
+            setUserId(res.data._id)
+            setUsername(res.data.username)
+            setLocation(res.data.location)
+            setDescription(res.data.description)
 
           //  await setPassword(res.data.password)
         }
@@ -59,6 +59,13 @@ export default function EditProfile() {
     const submitProfileEdits = (e) =>{
         e.preventDefault()
 
+        if(pfp!= null){
+            handleAvatarUpload()
+        }
+        if(cover != null){
+            handleCoverUpload()
+        }
+    
         axios.put(`/users/${userId}`, {
             userId: user._id,
            // password: password,
@@ -67,33 +74,19 @@ export default function EditProfile() {
             description: description,
         })
         .then((res)=>{
-            console.log(res)
-            let updatedUser = {
-                ...user
-            }
-            //update the user changes locally in context api
-            updatedUser.username = username
-            updatedUser.description = description
-            setUser(updatedUser)
-            navigate(`/profile/${username}`,{replace:true})
+            axios.get(`/users/${userId}`)
+            .then((res)=>{
+                setUser(res.data)
+                console.log(res.data)
+                navigate(`/profile/${username}`,{replace:true})
+            })
+
+            
         })
         
         setUsername('')
         setLocation('')
         setDescription('')
-        if(pfp!= null){
-            handleAvatarUpload()
-        }
-        if(cover != null){
-            handleCoverUpload()
-        }
-     /*   console.log('---------------------------------------------------------------------------8')
-        axios.get(`/users/${userId}`)
-        .then((res)=>{
-            setUser(res.data)
-            console.log(res.data)
-        }) */
-       // setPassword('')     
     }
 
     const handlePfpChange = (e) =>{
@@ -265,14 +258,7 @@ export default function EditProfile() {
                     <FormLabel fontSize = 'md' color = 'green.200'  mt = {4}>About me:</FormLabel>
                     <Textarea resize = 'none' value = {description} onChange = {(e)=>setDescription(e.target.value)} required height = '150px' fontSize = 'md' bg = 'blackAlpha.400'/>
 
-                    {/* 
-                        <FormLabel fontSize = 'md' color = 'green.200'>Re-enter new password:</FormLabel>
-                        <Input value = {username} onChange = {(e)=>setUsername(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
-                   */} 
-
-                    
                     <Button variant = 'solid' type = 'submit' colorScheme='green' size = 'lg' mt = {7}>Save Edits</Button>
-                        {/*<Button variant = 'outline' onClick = {handleDelete} colorScheme='red' size = 'md' ml = 'auto' mt = {7}>Delete User</Button>*/}
                     
                     <FormLabel fontSize = 'sm' color = 'gray.400' mt = {4}>*Some changes may take a while to save</FormLabel>
                      
@@ -306,11 +292,9 @@ export default function EditProfile() {
                 <FormLabel fontSize = 'md' color = 'green.200' ml = {5}>{`New Profile picture: (max 2mb)`}</FormLabel>
                 <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <BsImageFill size = {67} color = '#525252'/>
-                        {/*<Text ml = {2} color = 'green.200'>{`Drag & drop or`}</Text>*/}
-                        {/*<Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>*/}     
                     <Flex mt = {3}>
                         <form>
-                            <Input key = {inputKey} onChange = {(e)=>handlePfpChange(e)} variant = 'outline' type="file" name="profilePicture" width = '300px' pt = '3px'/>
+                            <Input key = {inputKey} accept = 'image/*' onChange = {(e)=>handlePfpChange(e)} variant = 'outline' type="file" name="profilePicture" width = '300px' pt = '3px'/>
                             <Button onClick = {()=>setPfp(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
                         </form>
                         
@@ -320,11 +304,9 @@ export default function EditProfile() {
                 <FormLabel mt = {5} fontSize = 'md' color = 'green.200' ml = {5}>{`New Cover picture: (max 10mb)`}</FormLabel>
                 <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
                     <BsImageFill size = {67} color = '#525252'/>
-                        {/*<Text ml = {2} color = 'green.200'>{`Drag & drop or`}</Text>*/}
-                        {/*<Button variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2} mt = {2}>Select File</Button>*/}
                     <Flex mt = {3}>
                         <form>
-                            <Input key = {inputKey} onChange = {(e)=>handleCoverChange(e)} variant = 'outline' type="file" name="coverPicture" width = '300px' pt = '3px'/>
+                            <Input key = {inputKey} accept = 'image/*' onChange = {(e)=>handleCoverChange(e)} variant = 'outline' type="file" name="coverPicture" width = '300px' pt = '3px'/>
                             <Button onClick = {()=>setCover(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
                         </form>
                     </Flex>

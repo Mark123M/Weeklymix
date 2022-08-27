@@ -93,12 +93,12 @@ export default function Home(){
                         fontSize={[ 'md' ,'md', 'lg', 'lg' ]}
                         mt = {2} 
                     >
-                        WeeklyMix is a place where musicians could discuss, give feedback, and inspire each other. There are also
-                        weekly challenges with unique themes so musicians could step out of their comfort zone. 
+                        WeeklyMix is a place where musicians could discuss, give feedback, and inspire each other. There are
+                        weekly challenges with unique themes which inspires musicians and lets them step out of their comfort zone. 
                     </Text> 
                     <Flex>
                         <Button onClick = {()=>navigate('/discussions')} colorScheme='orange' size = {['md','md','lg','lg']} variant='solid'  h = '50px' mt = {6} >
-                            Go to posts
+                            Go to discussions
                         </Button>
                     </Flex>
                 </Flex>
@@ -118,10 +118,10 @@ export default function Home(){
                         {userNum} registered musicians
                     </Text>
                     <Text>
-                        0 challenges
+                        {postNum} posts
                     </Text>
                     <Text>
-                        {postNum} posts
+                        0 challenges
                     </Text>
                 </Flex>
                 
