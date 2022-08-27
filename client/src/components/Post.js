@@ -45,6 +45,7 @@ export default function Post({post}){
     const [postUser, setPostUser] = useState({})
     const{value: user, setValue: setUser} = useContext(UserContext)
     const [postLikes, setPostLikes] = useState(post.likes)
+    const [likedState, setLikedState] = useState(false)
 
     const navigate = useNavigate()
   
@@ -56,20 +57,18 @@ export default function Post({post}){
             setPostUser(res.data)
         }
         getPostUser()
-        
+        initLikedState()
     },[post.userId])
 
     const initLikedState = () =>{
         if(user===null){
-            return false
+            setLikedState(false)
         } 
         else{
-           // console.log(user)
-            return user.likedPosts.includes(post._id)
+            console.log(user.likedPosts.includes(post._id), user.likedPosts)
+            setLikedState(user.likedPosts.includes(post._id))
         }
     }
-    
-    //console.log(initLikedState())
 
     const handleMouseEnter = () =>{
         setBgColor('gray.700')
@@ -88,6 +87,15 @@ export default function Post({post}){
         if(!user){
             navigate('/login', { replace: true })
         }
+
+        if(likedState){
+            setPostLikes(postLikes-1)
+            setLikedState(false)
+        } else {
+            setPostLikes(postLikes+1)
+            setLikedState(true)
+        }
+
         axios.put(`/posts/${post._id}/like`, { //i tried to do axios.post and kept getting 404 because it was actually a put endpoint
             userId: user._id
         })
@@ -95,19 +103,12 @@ export default function Post({post}){
             //console.log(res)
             console.log('post liked')
 
-            let updatedUser = {
-                ...user
-            }
-            //update the user changes locally in context api
-            if(!initLikedState()){
-                updatedUser.likedPosts.push(post._id)
-                setPostLikes(postLikes+1)
-            } else {
-                updatedUser.likedPosts.splice(updatedUser.likedPosts.indexOf(post._id),1)
-                setPostLikes(postLikes-1)
-            }
-            
-            setUser(updatedUser)
+            //update the user locally in Context API
+            axios.get(`/users/${user._id}`)
+            .then((res)=>{
+                setUser(res.data)
+                console.log(res.data)
+            })
         })
         .catch((err)=>{
             console.log(err)
@@ -198,7 +199,7 @@ export default function Post({post}){
                     </Text>
                     <Flex alignItems = 'center' ml = {4} marginTop = 'auto' mb = {3} paddingTop = {3}>
 
-                        <Flex onClick = {handleLikeClick} color = {initLikedState()?'orange.300':'#A2A4A4'} _hover = {{color: 'orange.300'}} cursor = 'pointer'>
+                        <Flex onClick = {handleLikeClick} color = {likedState?'orange.300':'#A2A4A4'} _hover = {{color: 'orange.300'}} cursor = 'pointer'>
                             <MdThumbUp size={22}  />
                         </Flex>
                         <Text
@@ -206,8 +207,8 @@ export default function Post({post}){
                             fontFamily =  {`'roboto', sans-serif`} 
                             fontWeight = '500' 
                             ml = {2}
-                            color = {initLikedState()?'whiteAlpha.900':'#A2A4A4'}
-                            textDecoration = {initLikedState()? 'underline 2px solid' :'initial'}
+                            color = {likedState?'whiteAlpha.900':'#A2A4A4'}
+                            textDecoration = {likedState? 'underline 2px solid' :'initial'}
                             
                         > 
                             
