@@ -25,7 +25,6 @@ export default function Discussion(){
     
     const [postIndex, setPostIndex] = useState(10)
     const [posts, setPosts] = useState([])
-    //const [loading, setLoading] = useState(true)
     //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
 
@@ -88,7 +87,7 @@ export default function Discussion(){
         console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
            //alert('youve hit bottom')
-            await delay(1000) //allows current page to all load before moving on to the next
+            await delay(1000)
             setPostIndex(postIndex+10)
         }
     }
@@ -151,7 +150,7 @@ export default function Discussion(){
             <Center w = '100%' h = '100px' >
                 <Spinner size='xl' thickness='5px'/>
                 <Text ml = {4} fontSize = '2xl'>
-                    Loading posts...
+                    Loading more posts...
                 </Text>        
             </Center>
             
