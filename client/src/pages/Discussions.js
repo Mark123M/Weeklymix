@@ -1,9 +1,12 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React,{useState, useEffect, useContext} from 'react'
 import {
     Flex,
+    Image,
     Box,
     Button,
-    IconButton,
+    Spinner,
+    Center,
+    Text
   } from '@chakra-ui/react';
 import "@fontsource/raleway"
 import "@fontsource/roboto"
@@ -11,19 +14,18 @@ import "@fontsource/poppins"
 import "@fontsource/fira-sans"
 import "@fontsource/open-sans"
 import Navbar from '../components/Navbar'
-import Post from '../components/Post'
-import ChannelBtn from '../components/ChannelBtn'
-import axios from "axios"
-import PostBox from '../components/PostBox';
-
-import { Link } from 'react-router-dom';
-
-import { UserContext } from '../UserContext';
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../UserContext';
+import ChannelBtn from '../components/ChannelBtn'
+import PostBox from '../components/PostBox';
+import Post from '../components/Post';
 
-
-export default function Discussions(){
+export default function Discussion(){
+    
+    const [postIndex, setPostIndex] = useState(10)
     const [posts, setPosts] = useState([])
+    //const [loading, setLoading] = useState(true)
     //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
 
@@ -57,10 +59,8 @@ export default function Discussions(){
             console.log('new post created')
             //setPostFormDisplay(true)
             navigate('/discussions/new-post', {replace:true})
-        }
-        
+        }   
     }
-
 
     const channelHighlight = (channelNum) =>{
         if(channelNum === 1){
@@ -82,20 +82,35 @@ export default function Discussions(){
 
 
 
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    const handleScroll = async (e) =>{
+       
+        console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+        if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
+           //alert('youve hit bottom')
+            await delay(1000) //allows current page to all load before moving on to the next
+            setPostIndex(postIndex+10)
+        }
+    }
+    
+
     return(
         <Box 
-            overflow='auto' 
-            bg = '#1b1c22' 
+            overflowX='hidden'
+            overflowY = 'auto'
+            bg = '#131417' 
+            position = 'fixed' 
             width = '100%' 
             height = '100%'  
-            backgroundImage=''  
+           // backgroundImage='https://i.imgur.com/8wxV3Hr.png'  
             backgroundSize='100vh' 
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
+            onScroll={handleScroll}
         >
-            {/*<PostModalPopup isOpened = {postFormDisplay} setPostFormDisplay = {setPostFormDisplay} getAllPosts = {getAllPosts}/> */}
 
             <Navbar/>
+
             <Flex 
                 flexDirection='column' 
                 h = '100vh'
@@ -124,14 +139,23 @@ export default function Discussions(){
                     +new post
                 </Button>
             </Flex>
-            
-            <Flex flexDirection='column' ml = {['140px','150px','200px', '200px']} mt = {16} bg = '#131417' paddingTop={5} paddingLeft = {6}> 
+
+            <Flex flexDirection='column' ml = {['140px','150px','200px', '200px']} mt = {16} bg = '#131417' paddingTop={4} paddingLeft = {6}> 
                 <PostBox createNewPost={createNewPost}/>
                 
-                {posts.map((p)=>( //mapping the data of each post into a Post component
+                {posts.slice(0,postIndex).map((p)=>( //mapping the data of each post into a Post component
                     <Post id = {p._id} post = {p}/>
                 ))} 
+               
             </Flex>
+            <Center w = '100%' h = '100px' >
+                <Spinner size='xl' thickness='5px'/>
+                <Text ml = {4} fontSize = '2xl'>
+                    Loading posts...
+                </Text>        
+            </Center>
+            
+            
         </Box>
     )
 }

@@ -96,7 +96,7 @@ router.get('/:id', async(req, res)=>{
 //get all posts
 router.get('/', async(req, res)=>{
     try{
-        const allPosts = await Post.find() //don't put curly braces in post.find()
+        const allPosts = await Post.find({}).limit(1000) //those who scroll past the last 1000 posts are insane
         res.status(200).json(allPosts)
     } catch (err){
         res.status(500).json(err)
@@ -104,11 +104,20 @@ router.get('/', async(req, res)=>{
    // res.send("<h1>welcome to homepage</h1>")
 })
 
+router.get('/postId/:id/range/:count', async(req, res)=>{
+    try{
+        const query = await Post.find({ _id: {$lt: req.params.id} }).sort({ _id: -1 }).limit(req.params.count)
+        res.status(200).json(query)
+    } catch (err){
+        res.status(500).json(err)
+    }
+})
+
 router.get('/user/:username', async (req, res) =>{
 
     try{
         const user = await User.findOne({username:req.params.username})
-        const posts = await Post.find({userId:user._id})
+        const posts = await Post.find({userId:user._id}).limit(1000)
         res.status(200).json(posts);
     } catch (err){
         res.status(500).json(err)

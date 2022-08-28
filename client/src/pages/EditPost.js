@@ -138,7 +138,6 @@ export default function EditPost() {
 
     return (
         <Flex
-            overflow = 'auto'
             position = 'fixed'
             w = '100%'
             h = '100%'
