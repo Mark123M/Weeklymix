@@ -3,7 +3,10 @@ import {
     Flex,
     Box,
     Tabs, TabList, TabPanels, Tab, TabPanel,
-    Wrap
+    Wrap,
+    Center,
+    Spinner,
+    Text
   } from '@chakra-ui/react';
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
@@ -15,10 +18,10 @@ import ProfileCardMini from '../components/ProfileCardMini';
 import axios from "axios"
 import {useParams} from "react-router"
 
-const UserPosts = () =>{
+const UserPosts = ({index}) =>{
     const {username} = useParams()
-
     const [posts, setPosts] = useState([])
+    
 
     useEffect(()=>{
         const getUserPosts = async () =>{
@@ -28,20 +31,30 @@ const UserPosts = () =>{
         }   
         getUserPosts()
     }, [])
-    
 
     return(
-        posts.map((p)=>( //mapping the data of each post into a Post component
-            <Post id = {p.id} post = {p} key ={window.location.href}/>
+        posts.slice(0, index).map((p)=>( //mapping the data of each post into a Post component
+            <Post id = {p.id} post = {p}/>
         ))
     )
-
 }
 
 export default function Profile() {
    // const{value: user, setValue: setUser} = useContext(UserContext)
    // console.log(user)
     const {username} = useParams()
+    const [postIndex, setPostIndex] = useState(10)
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    
+    const handleScroll = async (e) =>{
+        console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+        if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
+            //alert('youve hit bottom')
+            await delay(1000) //allows current page to all load before moving on to the next
+            setPostIndex(postIndex+10)
+        }
+    } 
+
     return (
         <Box
             overflowY='auto'
@@ -56,6 +69,7 @@ export default function Profile() {
             backgroundPosition='bottom right'
             
             key ={window.location.href}
+            onScroll={handleScroll}
         >
             <Navbar/>
             <Flex flexDirection='row' mt = '-10px'>
@@ -73,7 +87,13 @@ export default function Profile() {
                             <Flex flexDirection={['column', 'column', 'column', 'row']}>
                                 <ProfileCard username = {username} /* passing the routing parameters to component*//>
                                 <Flex flexDirection='column' ml = {['0px','0px',3,3]} mt = {2} w = '100%'> {/*posts box */}
-                                    <UserPosts/>
+                                    <UserPosts index = {postIndex}/>
+                                    <Center w = '100%' h = '100px' >
+                                        <Spinner size='xl' thickness='5px'/>
+                                        <Text ml = {4} fontSize = '2xl'>
+                                            Loading posts...
+                                        </Text>        
+                                    </Center>
                                 </Flex>
                             </Flex>
                         </TabPanel>

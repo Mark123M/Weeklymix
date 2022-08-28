@@ -128,6 +128,7 @@ export default function Post({post}){
             navigate(`/discussions/${post._id}/edit`, { replace: true })
         }
     }
+    
 
 
     return(
