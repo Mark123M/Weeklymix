@@ -65,7 +65,7 @@ export default function Post({post}){
             setLikedState(false)
         } 
         else{
-            console.log(user.likedPosts.includes(post._id), user.likedPosts)
+        //    console.log(user.likedPosts.includes(post._id), user.likedPosts)
             setLikedState(user.likedPosts.includes(post._id))
         }
     }

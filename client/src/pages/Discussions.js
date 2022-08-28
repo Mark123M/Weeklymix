@@ -27,6 +27,7 @@ export default function Discussion(){
     const [posts, setPosts] = useState([])
     //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
+    
 
     const navigate = useNavigate()
 
@@ -38,8 +39,18 @@ export default function Discussion(){
             setPosts(res.data)
             //this.forceUpdate()   //had to use this since state hooks were kind of bugging out
         }
+        if(sessionStorage.getItem('storedPostIndex')){
+            console.log('retried post index', parseInt(sessionStorage.getItem('storedPostIndex'),10) )
+            setPostIndex(parseInt(sessionStorage.getItem('storedPostIndex'),10))
+        } 
         getAllPosts()
     },[])
+
+    useEffect(() =>{
+        console.log('# of posts on screen is ',postIndex)
+        updatePostState()
+
+    }, [postIndex])
 
     const[channel, setChannel] = useState(1)
     const [channelColors, setChannelColors] = useState(['purple.300', 'transparent','transparent', 'transparent', 'transparent'])
@@ -79,17 +90,23 @@ export default function Discussion(){
         }
     }
 
-
-
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const handleScroll = async (e) =>{
        
-        console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+       // console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
            //alert('youve hit bottom')
             await delay(1000)
             setPostIndex(postIndex+10)
         }
+    }
+
+    const updatePostState = () =>{
+        if(isNaN(sessionStorage.getItem('storedPostIndex'))){
+            sessionStorage.setItem('storedPostIndex', 10)
+        }
+        const newIndex = parseInt(postIndex, 10);
+        sessionStorage.setItem('storedPostIndex', newIndex)
     }
     
 
