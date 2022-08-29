@@ -67,7 +67,7 @@ export default function UserMenu(){
             </Flex>
             <Flex flexDirection='column' fontSize='sm' bg = '#1F1F1F' display = {menuOpened?'inline':'none'}>
                 <Link to ={`/profile/${user.username}`}>
-                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55'>
+                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55' onClick={()=>sessionStorage.removeItem('storedPostIndex')}>
                         My Profile
                     </Center>
                 </Link>
@@ -82,7 +82,7 @@ export default function UserMenu(){
                     </Center>
                 </Link>
                 <Link to ={`/login`} onClick = {handleLogout}>
-                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55'>
+                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55' onClick={()=>sessionStorage.removeItem('storedPostIndex')}>
                         Logout
                     </Center>
                 </Link>

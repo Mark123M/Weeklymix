@@ -1,4 +1,4 @@
-import React,{useState, useEffect, useContext} from 'react'
+import React,{useState, useEffect, useContext, useRef} from 'react'
 import {
     Flex,
     Image,
@@ -27,11 +27,14 @@ export default function Discussion(){
     const [posts, setPosts] = useState([])
     //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
+    const boxRef = useRef(null)
     
 
     const navigate = useNavigate()
 
     useEffect(() =>{
+       // console.log(boxRef)
+        
         const getAllPosts = async () =>{
             const res = await axios.get("/posts/")
             console.log(res)
@@ -94,6 +97,15 @@ export default function Discussion(){
     const handleScroll = async (e) =>{
        
        // console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+        if(e.target.scrollTop>2){
+            sessionStorage.setItem('scrollPosition', e.target.scrollTop)
+            console.log(sessionStorage.getItem('scrollPosition'))
+        }
+        
+       // e.target.scrollTop += 1000
+       // console.log(boxRef.current.scrollTop)
+      // boxRef.current.scrollTop += 1000
+
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
            //alert('youve hit bottom')
             await delay(1000)
@@ -109,9 +121,14 @@ export default function Discussion(){
         sessionStorage.setItem('storedPostIndex', newIndex)
     }
     
+    const handleLoad = () =>{
+        console.log(sessionStorage.getItem('scrollPosition'))
+        boxRef.current.scrollTop += sessionStorage.getItem('scrollPosition')
+    }
 
     return(
         <Box 
+            ref={boxRef}
             overflowX='hidden'
             overflowY = 'auto'
             bg = '#131417' 
@@ -123,6 +140,7 @@ export default function Discussion(){
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
             onScroll={handleScroll}
+            onLoad = {handleLoad}
         >
 
             <Navbar/>

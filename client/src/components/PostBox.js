@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
     Flex,
     Image,
@@ -13,6 +13,7 @@ import "@fontsource/roboto"
 
 import {Link} from 'react-router-dom'
 import {FaImage, FaFileAudio} from 'react-icons/fa'
+import { UserContext } from '../UserContext';
 
 const ImageIcon = () =>{
     return(
@@ -30,7 +31,7 @@ const AudioIcon = () =>{
 
 export default function PostBox({createNewPost}){
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
-    const [user, setUser] = useState({})
+    const{value: user, setValue: setUser} = useContext(UserContext)
 
     return(
         <Flex 
@@ -49,9 +50,7 @@ export default function PostBox({createNewPost}){
         > 
             <Flex flexDirection='row'  h = '100%'>
                 <Flex display = {['none', 'none','inline','inline']} alignSelf = 'center'>
-                    <Link to = {`/profile/${user.username}`}>
-                        <Image src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','50px','50px']} maxW = {['50px','50px','50px','50px']} h = {['50px','50px','50px','50px']} borderRadius = '50%' ml = {5}/>
-                    </Link>
+                    <Image src={(user!= null&&user.profilePic) || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = {['50px','50px','50px','50px']} maxW = {['50px','50px','50px','50px']} h = {['50px','50px','50px','50px']} borderRadius = '50%' ml = {5}/>
                 </Flex>
 
                
