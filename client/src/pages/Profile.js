@@ -12,7 +12,6 @@ import "@fontsource/fira-sans"
 import "@fontsource/roboto"
 import Navbar from '../components/Navbar'
 import ProfileCard from '../components/ProfileCard';
-import {Users} from "../DummyData"
 import Post from '../components/Post'
 import ProfileCardMini from '../components/ProfileCardMini';
 import axios from "axios"
@@ -39,6 +38,33 @@ const UserPosts = ({index}) =>{
     )
 }
 
+const UserFollowers = () =>{
+    const {username} = useParams()
+    const [followers, setFollowers] = useState([])
+    useEffect(()=>{
+        const getFollowers = async() =>{
+            const res = await axios.get(`/users/u/${username}`)
+            setFollowers(res.data.followers)
+        }
+        getFollowers()
+    }, [])
+    useEffect(()=>{
+        console.log('followers: ',followers)
+    }, [followers])
+    
+    return(
+        <Wrap spacing = '15px' ml = {7} mt={2}>
+            {followers.map((f)=>( //mapping the data of each follower into a card component
+                <ProfileCardMini id = {f}/>
+            ))}
+            {/*<ProfileCardMini username = 'LofiLarry'/>
+            <ProfileCardMini username = 'ModalMatthew'/>
+            <ProfileCardMini username = 'HiphopHubert'/>
+            <ProfileCardMini id = '62ead0e9d1018dfe30f33fd9'/>*/}
+        </Wrap>
+    )
+}
+
 export default function Profile() {
    // const{value: user, setValue: setUser} = useContext(UserContext)
    // console.log(user)
@@ -54,6 +80,7 @@ export default function Profile() {
             setPostIndex(postIndex+10)
         }
     } 
+    
 
     return (
         <Box
@@ -100,11 +127,7 @@ export default function Profile() {
                         <TabPanel>
                             <Flex flexDirection={['column', 'column', 'row', 'row']}>
                                 <ProfileCard username = {username}/>
-                                <Wrap spacing = '20px' ml = {7} mt={2}>
-                                    {Users.map((u)=>( //mapping the data of each post into a Post component
-                                        <ProfileCardMini/>
-                                    ))}
-                                </Wrap>
+                                <UserFollowers/>
                             </Flex>
                         </TabPanel>
                         <TabPanel>
