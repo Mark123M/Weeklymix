@@ -63,6 +63,11 @@ export default function Navbar(){
         setDisplay(display === 'none'? 'flex' : 'none')
     }
 
+    const resetStorage = () =>{
+        sessionStorage.removeItem('storedPostIndex')
+        sessionStorage.removeItem('scrollPosition')
+    }
+
     return(
         <Box zIndex='1' position = 'fixed'>
             <Flex background = {navColor} w = '100vw' h = '73px'  borderStyle = 'none none solid none' borderWidth='2px' borderColor='orange.300'  >
@@ -74,12 +79,18 @@ export default function Navbar(){
                     </Link>
 
                     <Flex display = {['none', 'none', 'none', 'flex'] } ml = {6}>
-                        <Link to = '/discussions'>
+                        <Link to = '/discussions' onClick = {resetStorage}>
                             <NavItem text = 'Discussions'/>
                         </Link>
-                        <NavItem text = 'Challenge'/>
-                        <NavItem text = 'Users'/>
-                        <NavItem text = 'About'/>
+                        <Link to = '/challenge'>
+                            <NavItem text = 'Challenge'/>
+                        </Link>
+                        <Link to = '/users'>
+                            <NavItem text = 'Users'/>
+                        </Link>
+                        <Link to = '/about'>
+                            <NavItem text = 'about'/>
+                        </Link>
                     </Flex>
                     
                 </Flex>
@@ -118,12 +129,19 @@ export default function Navbar(){
             <Flex display={['flex','flex','flex','none']} background = {navColor}>
                 <Flex flexDirection='column' align = 'center' w = '100vw' display = {display} >
                     
-                    <Link to = '/discussions'>
+                    <Link to = '/discussions' onClick = {resetStorage}>
                         <NavItem text = 'Discussions'/>
                     </Link>
-                    <NavItem text = 'Challenge'/>
-                    <NavItem text = 'Users'/>
-                    <NavItem text = 'About'/>
+                    <Link to = '/challenge'>
+                        <NavItem text = 'Challenge'/>
+                    </Link>
+                    <Link to = '/users'>
+                        <NavItem text = 'Users'/>
+                    </Link>
+                    <Link to = '/about'>
+                        <NavItem text = 'about'/>
+                    </Link>
+                   
 
                     <Flex style = {centerStyle} display = {user?'none':'inline'}>
                         <Link to = '/login'>
@@ -132,7 +150,13 @@ export default function Navbar(){
                             </Button>
                         </Link>
                     </Flex>
+                    <Flex mb = {5}>
+                        <UserMenu/>
+                    </Flex>
+
+                    
                 </Flex>
+                
             </Flex>
         </Box>
     )

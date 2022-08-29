@@ -28,6 +28,8 @@ export default function Discussion(){
     //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
     const boxRef = useRef(null)
+
+    const [initScroll, setInitScroll] = useState(null)
     
 
     const navigate = useNavigate()
@@ -41,19 +43,28 @@ export default function Discussion(){
             res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
             setPosts(res.data)
             //this.forceUpdate()   //had to use this since state hooks were kind of bugging out
+            setInitScroll(sessionStorage.getItem('scrollPosition'))
         }
         if(sessionStorage.getItem('storedPostIndex')){
             console.log('retried post index', parseInt(sessionStorage.getItem('storedPostIndex'),10) )
             setPostIndex(parseInt(sessionStorage.getItem('storedPostIndex'),10))
         } 
         getAllPosts()
+        
     },[])
+
+    window.onload = function () { alert("It's loaded!") }
 
     useEffect(() =>{
         console.log('# of posts on screen is ',postIndex)
         updatePostState()
 
     }, [postIndex])
+
+    useEffect(()=>{
+        console.log('restoring scroll position:',initScroll)
+        boxRef.current.scrollTop = initScroll 
+    }, [initScroll])
 
     const[channel, setChannel] = useState(1)
     const [channelColors, setChannelColors] = useState(['purple.300', 'transparent','transparent', 'transparent', 'transparent'])
@@ -97,14 +108,8 @@ export default function Discussion(){
     const handleScroll = async (e) =>{
        
        // console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
-        if(e.target.scrollTop>2){
-            sessionStorage.setItem('scrollPosition', e.target.scrollTop)
-            console.log(sessionStorage.getItem('scrollPosition'))
-        }
-        
-       // e.target.scrollTop += 1000
-       // console.log(boxRef.current.scrollTop)
-      // boxRef.current.scrollTop += 1000
+        sessionStorage.setItem('scrollPosition', e.target.scrollTop)
+        console.log(sessionStorage.getItem('scrollPosition'))
 
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
            //alert('youve hit bottom')
@@ -122,8 +127,8 @@ export default function Discussion(){
     }
     
     const handleLoad = () =>{
-        console.log(sessionStorage.getItem('scrollPosition'))
-        boxRef.current.scrollTop += sessionStorage.getItem('scrollPosition')
+       // console.log(sessionStorage.getItem('scrollPosition'))
+       // boxRef.current.scrollTop += sessionStorage.getItem('scrollPosition')
     }
 
     return(

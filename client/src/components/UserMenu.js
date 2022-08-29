@@ -26,13 +26,16 @@ export default function UserMenu(){
         setMenuMargin(menuMargin===0?'8.7rem':0)
     }
     const handleLogout = () =>{
+        sessionStorage.removeItem('storedPostIndex')
+        sessionStorage.removeItem('scrollPosition')
         console.log('logged out')
         setUser(null)
     }
+
     
     if(!user) return null
     return(
-        <Flex flexDirection='column' alignSelf='center' mt = {menuMargin}>
+        <Flex flexDirection='column' alignSelf='center' mt = {[0,0,0,menuMargin]}>
             <Flex 
                 h = '55px' 
                 bg = 'whiteAlpha.200' 
@@ -44,7 +47,7 @@ export default function UserMenu(){
                 onClick={handleClick}
             >
                 <Image ml = {2} src={user.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = 'cover' minW = '40px' maxW = '40px' h = '40px' borderRadius = '50%'/>
-                <Flex flexDirection = 'column' mr = {3} display = {['none','none','none','inline']}>
+                <Flex flexDirection = 'column' mr = {3} >
                     <Text
                         fontSize= {['md', 'md', '1.14rem', '1.14rem']}
                         fontFamily =  {`'fira sans', sans-serif`} 
@@ -67,7 +70,7 @@ export default function UserMenu(){
             </Flex>
             <Flex flexDirection='column' fontSize='sm' bg = '#1F1F1F' display = {menuOpened?'inline':'none'}>
                 <Link to ={`/profile/${user.username}`}>
-                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55' onClick={()=>sessionStorage.removeItem('storedPostIndex')}>
+                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55'>
                         My Profile
                     </Center>
                 </Link>
@@ -82,7 +85,7 @@ export default function UserMenu(){
                     </Center>
                 </Link>
                 <Link to ={`/login`} onClick = {handleLogout}>
-                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55' onClick={()=>sessionStorage.removeItem('storedPostIndex')}>
+                    <Center h = '35px' borderStyle = 'none none none solid' borderWidth = '7px' borderColor = '#f6ad55'>
                         Logout
                     </Center>
                 </Link>
