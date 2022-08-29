@@ -12,6 +12,7 @@ import NewPost from './pages/NewPost'
 import EditPost from './pages/EditPost'
 import EditProfile from './pages/EditProfile'
 import ComingSoon from './pages/ComingSoon'
+import Users from './pages/Users'
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 import {
@@ -39,7 +40,7 @@ function App() {
             <Route path="/discussions/:id/edit" element = {<EditPost/>}></Route>
 
             <Route path = "/challenge" element = {<ComingSoon/>}></Route>
-            <Route path = "/users" element = {<ComingSoon/>}></Route>
+            <Route path = "/users" element = {<Users/>}></Route>
             <Route path = "/about" element = {<ComingSoon/>}></Route>
 
             <Route path="/profile/:username" element = {<Profile/>}></Route>
