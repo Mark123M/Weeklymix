@@ -11,6 +11,7 @@ import Register from './pages/Register'
 import NewPost from './pages/NewPost'
 import EditPost from './pages/EditPost'
 import EditProfile from './pages/EditProfile'
+import ComingSoon from './pages/ComingSoon'
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 import {
@@ -36,6 +37,10 @@ function App() {
             <Route path="/discussions" element = {<Discussions />}></Route>
             <Route path="/discussions/new-post" element = {<NewPost/>}></Route>
             <Route path="/discussions/:id/edit" element = {<EditPost/>}></Route>
+
+            <Route path = "/challenge" element = {<ComingSoon/>}></Route>
+            <Route path = "/users" element = {<ComingSoon/>}></Route>
+            <Route path = "/about" element = {<ComingSoon/>}></Route>
 
             <Route path="/profile/:username" element = {<Profile/>}></Route>
             <Route path="/profile/:name/edit" element = {<EditProfile/>}></Route>

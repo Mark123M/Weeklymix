@@ -1,4 +1,4 @@
-import React,{useState, useEffect, useContext} from 'react'
+import React,{useState, useEffect, useContext, useRef} from 'react'
 import {
     Flex,
     Image,
@@ -27,30 +27,44 @@ export default function Discussion(){
     const [posts, setPosts] = useState([])
     //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
+    const boxRef = useRef(null)
+
+    const [initScroll, setInitScroll] = useState(null)
     
 
     const navigate = useNavigate()
 
     useEffect(() =>{
+       // console.log(boxRef)
+        
         const getAllPosts = async () =>{
             const res = await axios.get("/posts/")
             console.log(res)
             res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
             setPosts(res.data)
             //this.forceUpdate()   //had to use this since state hooks were kind of bugging out
+            setInitScroll(sessionStorage.getItem('scrollPosition'))
         }
         if(sessionStorage.getItem('storedPostIndex')){
             console.log('retried post index', parseInt(sessionStorage.getItem('storedPostIndex'),10) )
             setPostIndex(parseInt(sessionStorage.getItem('storedPostIndex'),10))
         } 
         getAllPosts()
+        
     },[])
+
+    window.onload = function () { alert("It's loaded!") }
 
     useEffect(() =>{
         console.log('# of posts on screen is ',postIndex)
         updatePostState()
 
     }, [postIndex])
+
+    useEffect(()=>{
+        console.log('restoring scroll position:',initScroll)
+        boxRef.current.scrollTop = initScroll 
+    }, [initScroll])
 
     const[channel, setChannel] = useState(1)
     const [channelColors, setChannelColors] = useState(['purple.300', 'transparent','transparent', 'transparent', 'transparent'])
@@ -94,6 +108,9 @@ export default function Discussion(){
     const handleScroll = async (e) =>{
        
        // console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+        sessionStorage.setItem('scrollPosition', e.target.scrollTop)
+        console.log(sessionStorage.getItem('scrollPosition'))
+
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
            //alert('youve hit bottom')
             await delay(1000)
@@ -109,9 +126,14 @@ export default function Discussion(){
         sessionStorage.setItem('storedPostIndex', newIndex)
     }
     
+    const handleLoad = () =>{
+       // console.log(sessionStorage.getItem('scrollPosition'))
+       // boxRef.current.scrollTop += sessionStorage.getItem('scrollPosition')
+    }
 
     return(
         <Box 
+            ref={boxRef}
             overflowX='hidden'
             overflowY = 'auto'
             bg = '#131417' 
@@ -123,6 +145,7 @@ export default function Discussion(){
             backgroundRepeat='no-repeat' 
             backgroundPosition='bottom right'
             onScroll={handleScroll}
+            onLoad = {handleLoad}
         >
 
             <Navbar/>
