@@ -89,7 +89,7 @@ export default function Navbar(){
                             <NavItem text = 'Users'/>
                         </Link>
                         <Link to = '/about'>
-                            <NavItem text = 'about'/>
+                            <NavItem text = 'About'/>
                         </Link>
                     </Flex>
                     
@@ -139,7 +139,7 @@ export default function Navbar(){
                         <NavItem text = 'Users'/>
                     </Link>
                     <Link to = '/about'>
-                        <NavItem text = 'about'/>
+                        <NavItem text = 'About'/>
                     </Link>
                    
 

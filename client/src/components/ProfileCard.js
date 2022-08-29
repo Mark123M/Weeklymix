@@ -32,9 +32,9 @@ export default function ProfileCard({username}) {
         const getProfileUser = async () =>{
             const res = await axios.get(`/users/u/${username}`)
             console.log(res)
-            await setProfileUser(res.data)
-            await setFollowers(res.data.followers.length)
-            await setIsFollowed(res.data.followers.includes(user._id))
+            setProfileUser(res.data)
+            setFollowers(res.data.followers.length)
+            setIsFollowed(res.data.followers.includes(user._id))
             console.log(res.data.followers.includes(user._id))
         }
         getProfileUser()
