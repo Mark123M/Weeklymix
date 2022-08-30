@@ -45,7 +45,7 @@ export default function Post({post}){
 
     useEffect(() =>{
         const getPostUser = async () =>{
-            const res = await axios.get(`users/${post.userId}`)
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${post.userId}`)
             ////console.log(res)
             setPostUser(res.data)
         }
@@ -90,7 +90,7 @@ export default function Post({post}){
             setLikedState(true)
         }
 
-        axios.put(`/posts/${post._id}/like`, { //i tried to do axios.post and kept getting 404 because it was actually a put endpoint
+        axios.put(`${process.env.REACT_APP_SERVER_URL}/posts/${post._id}/like`, { //i tried to do axios.post and kept getting 404 because it was actually a put endpoint
             userId: user._id
         })
         .then((res)=>{
@@ -98,7 +98,7 @@ export default function Post({post}){
             //console.log("post liked")
 
             //update the user locally in Context API
-            axios.get(`/users/${user._id}`)
+            axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${user._id}`)
             .then((res)=>{
                 setUser(res.data)
                 //console.log(res.data)

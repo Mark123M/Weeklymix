@@ -66,7 +66,7 @@ export default function NewPost() {
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
                     //console.log(res.data.secure_url)
-                    axios.post(`/posts/`, {
+                    axios.post(`${process.env.REACT_APP_SERVER_URL}/posts/`, {
                         userId: user._id,
                         image: res.data.secure_url,
                         postType: postType,
@@ -81,7 +81,7 @@ export default function NewPost() {
                 })
             },
             error(err) {
-                axios.post(`/posts/`, {
+                axios.post(`${process.env.REACT_APP_SERVER_URL}/posts/`, {
                     userId: user._id,
                     postType: postType,
                     title: title,

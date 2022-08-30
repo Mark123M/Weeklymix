@@ -20,7 +20,7 @@ export default function UserMenu(){
     const{value: user, setValue: setUser} = useContext(UserContext)
 
     const handleClick = () =>{
-        console.log("menu")
+        //console.log("menu")
         setMenuOpened(!menuOpened)
         setMenuMargin(menuMargin===0?"8.7rem":0)
     }

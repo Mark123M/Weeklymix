@@ -36,7 +36,7 @@ export default function EditPost() {
             navigate("/login", {replace:true})
         }
         const getOriginalPost = async()=>{
-            const res = await axios.get(`/posts/${id}`)
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts/${id}`)
             //console.log(res.data)
             setTitle(res.data.title)
             setDesc(res.data.description)
@@ -82,7 +82,7 @@ export default function EditPost() {
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
                     //console.log(res.data.secure_url)
-                    axios.put(`/posts/${id}`, {
+                    axios.put(`${process.env.REACT_APP_SERVER_URL}/posts/${id}`, {
                         userId: user._id,
                         image: res.data.secure_url,
                         postType: postType,
@@ -97,7 +97,7 @@ export default function EditPost() {
                 })
             },
             error(err) {
-                axios.put(`/posts/${id}`, {
+                axios.put(`${process.env.REACT_APP_SERVER_URL}/posts/${id}`, {
                     userId: user._id,
                     postType: postType,
                     title: title,
@@ -118,7 +118,7 @@ export default function EditPost() {
     const handleDelete = () =>{
        // //console.log(`THE dddddID OF THE USER IS ${user._id}`)
 
-        axios.post(`/posts/${id}/delete`, {
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/posts/${id}/delete`, {
             userId: user._id,
         })
         .then((res)=>{

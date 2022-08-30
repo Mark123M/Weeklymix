@@ -10,7 +10,7 @@ export const ColorModeSwitcher = props => {
       toggleColorMode()
     } 
   }, [colorMode, toggleColorMode])
-  console.log(colorMode)
+  //console.log(colorMode)
   return (
     <>
     </>

@@ -72,7 +72,7 @@ export default function Navbar(){
                 <Flex marginRight = "auto" ml = {8}>
                     <Link to = "/">
                         <Flex>
-                                <Image src="https://i.imgur.com/JWiCcmR.png" alt = "WeeklyMix Logo" maxW = "220px"  />
+                            <Image src="https://res.cloudinary.com/dyrwb96jv/image/upload/v1661899946/pueh0bhyv7d7ndgx1ppm.png" alt = "WeeklyMix Logo" maxW = "220px"  />
                         </Flex>
                     </Link>
 

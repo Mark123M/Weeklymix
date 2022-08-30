@@ -42,12 +42,12 @@ export default function Home(){
 
     useEffect(()=>{
         const getUserNum = async()=>{
-            const res = await axios.get("/users/")
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/`)
             //console.log(res.data.length)
             setUserNum(res.data.length)
         }
         const getPostNum = async()=>{
-            const res = await axios.get("/posts/")
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts/`)
             //console.log(res.data.length)
             setPostNum(res.data.length)
         }

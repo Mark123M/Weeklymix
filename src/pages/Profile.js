@@ -23,7 +23,7 @@ const UserPosts = ({index}) =>{
     
     useEffect(()=>{
         const getUserPosts = async () =>{
-            const res = await axios.get(`/posts/user/${username}`)
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts/user/${username}`)
             res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
             setPosts(res.data)
         }   
@@ -42,7 +42,7 @@ const UserFollowers = () =>{
     const [followers, setFollowers] = useState([])
     useEffect(()=>{
         const getFollowers = async() =>{
-            const res = await axios.get(`/users/u/${username}`)
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/u/${username}`)
             setFollowers(res.data.followers)
         }
         getFollowers()

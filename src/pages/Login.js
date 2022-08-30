@@ -37,7 +37,7 @@ export default function Login(){
         e.preventDefault()
         //console.log(`logging in: ${email} ${password}`)
 
-        axios.post("/auth/login", {
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
             email: email,
             password: password
         })
@@ -80,7 +80,7 @@ export default function Login(){
         >
             <Flex flexDirection = "column">
                 <Box>
-                    <Image src = "assets/sitelogo.png"/>
+                    <Image src = "https://res.cloudinary.com/dyrwb96jv/image/upload/v1661899946/pueh0bhyv7d7ndgx1ppm.png"/>
                 </Box>
                 <Text 
                     fontFamily={`"roboto",san-serif`} 

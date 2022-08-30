@@ -28,7 +28,7 @@ export default function Users() {
 
     useEffect(()=>{
         const getUsers = async() =>{
-            const res = await axios.get(`/users/`)
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/`)
             setUsers(res.data)
             setFilteredUsers(res.data)
         }

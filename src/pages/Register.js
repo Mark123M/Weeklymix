@@ -26,7 +26,7 @@ export default function Register(){
     const handleRegister = (e) => {
         e.preventDefault()
 
-        axios.post("/auth/register", {
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/register`, {
             username: username,
             email: email,
             password: password
@@ -59,7 +59,7 @@ export default function Register(){
         >
             <Flex flexDirection = "column">
                 <Box>
-                    <Image src = "assets/sitelogo.png"/>
+                    <Image src = "https://res.cloudinary.com/dyrwb96jv/image/upload/v1661899946/pueh0bhyv7d7ndgx1ppm.png"/>
                 </Box>
                 <Text 
                     fontFamily={`"roboto",san-serif`} 

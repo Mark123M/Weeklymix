@@ -40,7 +40,7 @@ export default function EditProfile() {
             navigate(`/profile/${name}`, {replace:true})
         }
         const getOriginalUser = async()=>{
-            const res = await axios.get(`/users/u/${name}`)
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/u/${name}`)
             //console.log(res.data)
             setUserId(res.data._id)
             setUsername(res.data.username)
@@ -65,7 +65,7 @@ export default function EditProfile() {
             handleCoverUpload()
         }
     
-        axios.put(`/users/${userId}`, {
+        axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${userId}`, {
             userId: user._id,
            // password: password,
             username: username,
@@ -73,7 +73,7 @@ export default function EditProfile() {
             description: description,
         })
         .then((res)=>{
-            axios.get(`/users/${userId}`)
+            axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${userId}`)
             .then((res)=>{
                 setUser(res.data)
                 //console.log(res.data)
@@ -129,7 +129,7 @@ export default function EditProfile() {
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
                     //console.log(res.data.secure_url)
-                    axios.put(`/users/${userId}`, {
+                    axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${userId}`, {
                         userId: user._id,
                         profilePic: res.data.secure_url
                     })
@@ -138,7 +138,7 @@ export default function EditProfile() {
                     })
                     //update the user changes locally in context api
             
-                    axios.get(`/users/${userId}`)
+                    axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${userId}`)
                     .then((res)=>{
                         setUser(res.data)
                         //console.log(res.data)
@@ -169,7 +169,7 @@ export default function EditProfile() {
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
                     //console.log(res.data.secure_url)
-                    axios.put(`/users/${userId}`, {
+                    axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${userId}`, {
                         userId: user._id,
                         coverPic: res.data.secure_url
                     })
@@ -178,7 +178,7 @@ export default function EditProfile() {
                     })
                     //update the user changes locally in context api
                     
-                    axios.get(`/users/${userId}`)
+                    axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${userId}`)
                     .then((res)=>{
                         setUser(res.data)
                         //console.log(res.data)

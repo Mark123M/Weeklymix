@@ -29,7 +29,7 @@ export default function ProfileCardMini({username, id}) {
 
     useEffect(() =>{
         const getProfileUser = async () =>{
-            const res = username? await axios.get(`/users/u/${username}`): await axios.get(`/users/${id}`)
+            const res = username? await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/u/${username}`): await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${id}`)
             //console.log(res)
             setProfileUser(res.data)
             setFollowers(res.data.followers.length)
@@ -43,7 +43,7 @@ export default function ProfileCardMini({username, id}) {
         if(!user){
             navigate("/login", {replace: true})
         }
-        axios.put(`/users/${profileUser._id}/follow`, {
+        axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${profileUser._id}/follow`, {
             userId:user._id
         })
         .then((res)=>{

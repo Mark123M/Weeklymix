@@ -37,7 +37,7 @@ export default function Discussion(){
        // //console.log(boxRef)
         
         const getAllPosts = async () =>{
-            const res = await axios.get("/posts/")
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts/`)
             //console.log(res)
             res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
             setPosts(res.data)

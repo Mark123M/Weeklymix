@@ -46,7 +46,7 @@ export default function PostBox({createNewPost}){
         > 
             <Flex flexDirection="row"  h = "100%">
                 <Flex display = {["none", "none","inline","inline"]} alignSelf = "center">
-                    <Image src={(user!= null&&user.profilePic) || assetsFolder+"users/defaultAvatar.jpg"} objectFit = "cover" minW = {["50px","50px","50px","50px"]} maxW = {["50px","50px","50px","50px"]} h = {["50px","50px","50px","50px"]} borderRadius = "50%" ml = {5}/>
+                    <Image src={(user!= null&&user.profilePic) || "https://res.cloudinary.com/dyrwb96jv/image/upload/v1661549963/cdhmdf8rdxqotpfej5fh.webp"} objectFit = "cover" minW = {["50px","50px","50px","50px"]} maxW = {["50px","50px","50px","50px"]} h = {["50px","50px","50px","50px"]} borderRadius = "50%" ml = {5}/>
                 </Flex>
 
                
