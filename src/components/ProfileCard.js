@@ -31,11 +31,11 @@ export default function ProfileCard({username}) {
     useEffect(() =>{
         const getProfileUser = async () =>{
             const res = await axios.get(`/users/u/${username}`)
-            console.log(res)
+            //console.log(res)
             setProfileUser(res.data)
             setFollowers(res.data.followers.length)
             setIsFollowed(res.data.followers.includes(user._id))
-            console.log(res.data.followers.includes(user._id))
+            //console.log(res.data.followers.includes(user._id))
         }
         getProfileUser()
     },[isFollowed])
@@ -47,7 +47,7 @@ export default function ProfileCard({username}) {
         })
         .then((res)=>{
             setIsFollowed(!isFollowed)
-            console.log(res)
+            //console.log(res)
         })
     }
 
@@ -57,7 +57,7 @@ export default function ProfileCard({username}) {
         }
         return user.username==username
     }
-   // console.log(user)
+   // //console.log(user)
 
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
     return (

@@ -7,17 +7,15 @@ import {
     Button,
     IconButton,
     Icon,
-    Text,
-    Menu, MenuButton,MenuList, MenuItem
   } from '@chakra-ui/react';
-import {FaDiscord, FaReddit, FaInstagram} from 'react-icons/fa'
+import {FaDiscord, FaReddit} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 //import NavItem from './NavbarLink'
 import {useState, useContext} from 'react'
 import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
-import {HamburgerIcon, CloseIcon, ChevronDownIcon} from '@chakra-ui/icons'
+import {HamburgerIcon} from '@chakra-ui/icons'
 
 import { UserContext } from '../UserContext';
 import UserMenu from './UserMenu';
@@ -59,7 +57,7 @@ export default function Navbar(){
     }
 
     const handleMenuClick = () =>{
-        console.log('menu clicked')
+        //console.log('menu clicked')
         setDisplay(display === 'none'? 'flex' : 'none')
     }
 

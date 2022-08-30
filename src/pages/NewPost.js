@@ -1,7 +1,6 @@
 import React, {useState, useContext} from 'react'
 import {
     Flex,
-    Box,
     Button,
     Text,
     Input,
@@ -14,12 +13,10 @@ import {
 import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
-import {Link} from 'react-router-dom' 
 import axios from 'axios'
 import { UserContext } from '../UserContext';
-import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
+import {CloseIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
-import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
 import Compressor from 'compressorjs';
 //klraz63n
@@ -34,7 +31,7 @@ export default function NewPost() {
     const [image, setImage] = useState(null)
     const [inputKey, setInputKey] = useState(0)
 
-    console.log(title,desc,postType)
+    //console.log(title,desc,postType)
 
     const handleImageChange = (e) =>{
         if(e.target.files[0].size > 10000000){
@@ -68,7 +65,7 @@ export default function NewPost() {
         
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
-                    console.log(res.data.secure_url)
+                    //console.log(res.data.secure_url)
                     axios.post(`/posts/`, {
                         userId: user._id,
                         image: res.data.secure_url,
@@ -77,7 +74,7 @@ export default function NewPost() {
                         description: desc,
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                         setImage(null)
                         navigate('/discussions',{replace:true})
                     })
@@ -91,14 +88,12 @@ export default function NewPost() {
                     description: desc,
                 })
                 .then((res)=>{
-                    console.log(res)
+                    //console.log(res)
                     navigate('/discussions',{replace:true})
                 })
-                console.log(err.message);
+                //console.log(err.message);
             },
         });
-
-     
         
         setTitle('')
         setDesc('')

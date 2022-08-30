@@ -21,7 +21,6 @@ const UserPosts = ({index}) =>{
     const {username} = useParams()
     const [posts, setPosts] = useState([])
     
-
     useEffect(()=>{
         const getUserPosts = async () =>{
             const res = await axios.get(`/posts/user/${username}`)
@@ -49,7 +48,7 @@ const UserFollowers = () =>{
         getFollowers()
     }, [])
     useEffect(()=>{
-        console.log('followers: ',followers)
+        //console.log('followers: ',followers)
     }, [followers])
     
     return(
@@ -67,13 +66,13 @@ const UserFollowers = () =>{
 
 export default function Profile() {
    // const{value: user, setValue: setUser} = useContext(UserContext)
-   // console.log(user)
+   // //console.log(user)
     const {username} = useParams()
     const [postIndex, setPostIndex] = useState(10)
     const delay = ms => new Promise(res => setTimeout(res, ms));
     
     const handleScroll = async (e) =>{
-        console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+        //console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
             //alert('youve hit bottom')
             await delay(1000) //allows current page to all load before moving on to the next
@@ -138,13 +137,7 @@ export default function Profile() {
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
-                
             </Flex>
-            
-
-
-         
-            
         </Box>
     )
 }

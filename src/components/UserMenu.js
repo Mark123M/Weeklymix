@@ -9,8 +9,7 @@ import {Link} from 'react-router-dom'
 import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
-import {HamburgerIcon, CloseIcon, ChevronDownIcon} from '@chakra-ui/icons'
-
+import {ChevronDownIcon} from '@chakra-ui/icons'
 import { UserContext } from '../UserContext';
 
 export default function UserMenu(){

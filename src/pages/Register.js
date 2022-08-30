@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef} from 'react'
 import {
     Flex,
     Image,
@@ -33,13 +33,13 @@ export default function Register(){
         })
         .then((res)=>{
             navigate('/login', { replace: true })
-            console.log(res);
+            //console.log(res);
         })
 
         setUsername('')
         setEmail('')
         setPassword('')
-        console.log(`user registered ${username} ${email} ${password}`)
+        //console.log(`user registered ${username} ${email} ${password}`)
     }
 
     return(

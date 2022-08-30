@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login(){
     
     const{value: user, setValue: setUser} = useContext(UserContext)
-    console.log(user)
+    //console.log(user)
 
 
     const emailRef = useRef()
@@ -31,11 +31,11 @@ export default function Login(){
     const [error, setError] = useState(false)
     const navigate = useNavigate()
 
-    console.log(email, password)
+    //console.log(email, password)
 
     const handleLogin = (e) => {
         e.preventDefault()
-        console.log(`logging in: ${email} ${password}`)
+        //console.log(`logging in: ${email} ${password}`)
 
         axios.post('/auth/login', {
             email: email,
@@ -44,11 +44,11 @@ export default function Login(){
         .then((res)=>{
             setUser(res.data)
             navigate('/', { replace: true })
-            console.log(res);
+            //console.log(res);
         })
         .catch(function(error){
             setError(true)
-            console.log(error, 'The username and password do not match.')
+            //console.log(error, 'The username and password do not match.')
         })
         setEmail('')
         setPassword('')

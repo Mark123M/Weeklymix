@@ -5,20 +5,13 @@ import {
     Image,
     Text,
     Box,
-    Icon,
-    Button,
-    IconButton
   } from '@chakra-ui/react';
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
-
 import {Link} from 'react-router-dom'
-
-
-import {BiCommentDetail, BiLike} from 'react-icons/bi'
-import { FaShare, FaTrashAlt, FaEdit } from 'react-icons/fa';
+import {BiCommentDetail} from 'react-icons/bi'
+import { FaShare, FaEdit } from 'react-icons/fa';
 import {MdThumbUp} from 'react-icons/md'
-
 import axios from 'axios'
 import {format} from "timeago.js"
 import { UserContext } from '../UserContext';
@@ -53,7 +46,7 @@ export default function Post({post}){
     useEffect(() =>{
         const getPostUser = async () =>{
             const res = await axios.get(`users/${post.userId}`)
-            //console.log(res)
+            ////console.log(res)
             setPostUser(res.data)
         }
         getPostUser()
@@ -65,7 +58,7 @@ export default function Post({post}){
             setLikedState(false)
         } 
         else{
-        //    console.log(user.likedPosts.includes(post._id), user.likedPosts)
+        //    //console.log(user.likedPosts.includes(post._id), user.likedPosts)
             setLikedState(user.likedPosts.includes(post._id))
         }
     }
@@ -101,18 +94,18 @@ export default function Post({post}){
             userId: user._id
         })
         .then((res)=>{
-            //console.log(res)
-            console.log('post liked')
+            ////console.log(res)
+            //console.log('post liked')
 
             //update the user locally in Context API
             axios.get(`/users/${user._id}`)
             .then((res)=>{
                 setUser(res.data)
-                console.log(res.data)
+                //console.log(res.data)
             })
         })
         .catch((err)=>{
-            console.log(err)
+            //console.log(err)
         })
     }
 

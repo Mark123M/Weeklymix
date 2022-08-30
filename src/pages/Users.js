@@ -2,7 +2,6 @@ import React, { useState, useEffect} from 'react'
 import {
     Flex,
     Box,
-    Tabs, TabList, TabPanels, Tab, TabPanel,
     Wrap,
     Input,
     Icon,
@@ -39,7 +38,7 @@ export default function Users() {
     const delay = ms => new Promise(res => setTimeout(res, ms));
     
     const handleScroll = async (e) =>{
-       // console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+       // //console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
             //alert('youve hit bottom')
             await delay(1000) //allows current page to all load before moving on to the next
@@ -57,7 +56,7 @@ export default function Users() {
        
     }
     useEffect(()=>{
-        console.log('filtered users',filteredUsers)
+        //console.log('filtered users',filteredUsers)
     }, [filteredUsers])
 
     return (

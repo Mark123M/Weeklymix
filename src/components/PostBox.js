@@ -1,17 +1,13 @@
 import React from 'react'
-import { useState, useEffect, useContext } from 'react';
+import {useContext } from 'react';
 import {
     Flex,
     Image,
-    Box,
     Icon,
-    Button,
     Input,
   } from '@chakra-ui/react';
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
-
-import {Link} from 'react-router-dom'
 import {FaImage, FaFileAudio} from 'react-icons/fa'
 import { UserContext } from '../UserContext';
 

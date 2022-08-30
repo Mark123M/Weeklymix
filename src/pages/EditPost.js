@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {
     Flex,
-    Box,
     Button,
     Text,
     Input,
@@ -14,12 +13,10 @@ import {
 import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
-import {Link} from 'react-router-dom' 
 import axios from 'axios'
 import { UserContext } from '../UserContext';
-import {CloseIcon, HamburgerIcon} from '@chakra-ui/icons'
+import {CloseIcon} from '@chakra-ui/icons'
 import {BsImageFill} from 'react-icons/bs'
-import {AiFillAudio} from 'react-icons/ai'
 import { useNavigate, useParams} from 'react-router-dom';
 import Compressor from 'compressorjs';
 
@@ -40,7 +37,7 @@ export default function EditPost() {
         }
         const getOriginalPost = async()=>{
             const res = await axios.get(`/posts/${id}`)
-            console.log(res.data)
+            //console.log(res.data)
             setTitle(res.data.title)
             setDesc(res.data.description)
             setPostType(res.data.postType)
@@ -51,10 +48,9 @@ export default function EditPost() {
         getOriginalPost()
     }, [])
     
-    console.log(id)
+    //console.log(id)
     
-
-    console.log(title,desc,postType)
+    //console.log(title,desc,postType)
 
     const handleImageChange = (e) =>{
         if(e.target.files[0].size > 10000000){
@@ -85,7 +81,7 @@ export default function EditPost() {
         
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
-                    console.log(res.data.secure_url)
+                    //console.log(res.data.secure_url)
                     axios.put(`/posts/${id}`, {
                         userId: user._id,
                         image: res.data.secure_url,
@@ -94,7 +90,7 @@ export default function EditPost() {
                         description: desc,
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                         setImage(null)
                         navigate('/discussions',{replace:true})
                     })
@@ -108,10 +104,10 @@ export default function EditPost() {
                     description: desc,
                 })
                 .then((res)=>{
-                    console.log(res)
+                    //console.log(res)
                     navigate('/discussions',{replace:true})
                 })
-                console.log(err.message);
+                //console.log(err.message);
             },
         });
         
@@ -120,19 +116,19 @@ export default function EditPost() {
         setPostType('')     
     }
     const handleDelete = () =>{
-       // console.log(`THE dddddID OF THE USER IS ${user._id}`)
+       // //console.log(`THE dddddID OF THE USER IS ${user._id}`)
 
         axios.post(`/posts/${id}/delete`, {
             userId: user._id,
         })
         .then((res)=>{
-            //console.log(res)
+            ////console.log(res)
             navigate('/discussions',{replace:true})
         })
         .catch((err)=>{
-            console.log(err)
-            //console.log(`the id of logged in user is ${user._id}`)
-            //console.log(`the post is ${post._id}`)
+            //console.log(err)
+            ////console.log(`the id of logged in user is ${user._id}`)
+            ////console.log(`the post is ${post._id}`)
         })
     }
 

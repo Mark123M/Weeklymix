@@ -1,7 +1,6 @@
 import React,{useState, useEffect, useContext, useRef} from 'react'
 import {
     Flex,
-    Image,
     Box,
     Button,
     Spinner,
@@ -35,18 +34,18 @@ export default function Discussion(){
     const navigate = useNavigate()
 
     useEffect(() =>{
-       // console.log(boxRef)
+       // //console.log(boxRef)
         
         const getAllPosts = async () =>{
             const res = await axios.get("/posts/")
-            console.log(res)
+            //console.log(res)
             res.data.sort(function(a,b){return -1 * a.createdAt.localeCompare(b.createdAt);});
             setPosts(res.data)
             //this.forceUpdate()   //had to use this since state hooks were kind of bugging out
             setInitScroll(sessionStorage.getItem('scrollPosition'))
         }
         if(sessionStorage.getItem('storedPostIndex')){
-            console.log('retried post index', parseInt(sessionStorage.getItem('storedPostIndex'),10) )
+            //console.log('retried post index', parseInt(sessionStorage.getItem('storedPostIndex'),10) )
             setPostIndex(parseInt(sessionStorage.getItem('storedPostIndex'),10))
         } 
         getAllPosts()
@@ -54,13 +53,13 @@ export default function Discussion(){
     },[])
 
     useEffect(() =>{
-        console.log('# of posts on screen is ',postIndex)
+        //console.log('# of posts on screen is ',postIndex)
         updatePostState()
 
     }, [postIndex])
 
     useEffect(()=>{
-        console.log('restoring scroll position:',initScroll)
+        //console.log('restoring scroll position:',initScroll)
         boxRef.current.scrollTop = initScroll 
     }, [initScroll])
 
@@ -68,7 +67,7 @@ export default function Discussion(){
     const [channelColors, setChannelColors] = useState(['purple.300', 'transparent','transparent', 'transparent', 'transparent'])
     
     const switchChannel = (event, channelNum) => {
-        console.log(event.target.innerText)
+        //console.log(event.target.innerText)
         channelHighlight(channelNum)    
         setChannel(channelNum)
     }
@@ -78,7 +77,7 @@ export default function Discussion(){
             navigate('/login', { replace: true })
         }
         else {
-            console.log('new post created')
+            //console.log('new post created')
             //setPostFormDisplay(true)
             navigate('/discussions/new-post', {replace:true})
         }   
@@ -105,9 +104,9 @@ export default function Discussion(){
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const handleScroll = async (e) =>{
        
-       // console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+       // //console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
         sessionStorage.setItem('scrollPosition', e.target.scrollTop)
-        console.log(sessionStorage.getItem('scrollPosition'))
+        //console.log(sessionStorage.getItem('scrollPosition'))
 
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
            //alert('youve hit bottom')
@@ -125,7 +124,7 @@ export default function Discussion(){
     }
     
     const handleLoad = () =>{
-       // console.log(sessionStorage.getItem('scrollPosition'))
+       // //console.log(sessionStorage.getItem('scrollPosition'))
        // boxRef.current.scrollTop += sessionStorage.getItem('scrollPosition')
     }
 

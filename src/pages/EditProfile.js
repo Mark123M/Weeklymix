@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from 'react'
 import {
     Flex,
     Button,
-    Text,
     Input,
     FormLabel,
     Center,
@@ -42,7 +41,7 @@ export default function EditProfile() {
         }
         const getOriginalUser = async()=>{
             const res = await axios.get(`/users/u/${name}`)
-            console.log(res.data)
+            //console.log(res.data)
             setUserId(res.data._id)
             setUsername(res.data.username)
             setLocation(res.data.location)
@@ -54,7 +53,7 @@ export default function EditProfile() {
     }, [])
     
 
-    console.log(username,description)
+    //console.log(username,description)
 
     const submitProfileEdits = (e) =>{
         e.preventDefault()
@@ -77,7 +76,7 @@ export default function EditProfile() {
             axios.get(`/users/${userId}`)
             .then((res)=>{
                 setUser(res.data)
-                console.log(res.data)
+                //console.log(res.data)
                 navigate(`/profile/${username}`,{replace:true})
             })
 
@@ -110,7 +109,7 @@ export default function EditProfile() {
          }
     }
 
-    //console.log( process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET, process.env.REACT_APP_CLOUDINARY_CLOUD_NAME , process.env.REACT_APP_CLOUDINARY_API_URL )
+    ////console.log( process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET, process.env.REACT_APP_CLOUDINARY_CLOUD_NAME , process.env.REACT_APP_CLOUDINARY_API_URL )
     const handleAvatarUpload = () =>{
 
         new Compressor(pfp, {
@@ -129,27 +128,27 @@ export default function EditProfile() {
         
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
-                    console.log(res.data.secure_url)
+                    //console.log(res.data.secure_url)
                     axios.put(`/users/${userId}`, {
                         userId: user._id,
                         profilePic: res.data.secure_url
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                     })
                     //update the user changes locally in context api
             
                     axios.get(`/users/${userId}`)
                     .then((res)=>{
                         setUser(res.data)
-                        console.log(res.data)
+                        //console.log(res.data)
                     })
         
                     setPfp(null)
                 })
             },
             error(err) {
-                console.log(err.message);
+                //console.log(err.message);
             },
         });
     }
@@ -161,7 +160,7 @@ export default function EditProfile() {
             width: 400,
             height: 400,
             success(result) {
-                console.log('upload cover')
+                //console.log('upload cover')
                 const data = new FormData()
                 data.append("file", result, result.name)
                 data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
@@ -169,33 +168,33 @@ export default function EditProfile() {
 
                 axios.post(process.env.REACT_APP_CLOUDINARY_API_URL, data)
                 .then((res)=>{
-                    console.log(res.data.secure_url)
+                    //console.log(res.data.secure_url)
                     axios.put(`/users/${userId}`, {
                         userId: user._id,
                         coverPic: res.data.secure_url
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                     })
                     //update the user changes locally in context api
                     
                     axios.get(`/users/${userId}`)
                     .then((res)=>{
                         setUser(res.data)
-                        console.log(res.data)
+                        //console.log(res.data)
                     })
                     setCover(null)
                 })
             },
             error(err) {
-                console.log(err.message)
+                //console.log(err.message)
             },
         })
 
         
     }
 
-    console.log(pfp, cover)
+    //console.log(pfp, cover)
 
     return (
         <Flex

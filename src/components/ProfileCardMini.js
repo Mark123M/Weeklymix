@@ -30,11 +30,11 @@ export default function ProfileCardMini({username, id}) {
     useEffect(() =>{
         const getProfileUser = async () =>{
             const res = username? await axios.get(`/users/u/${username}`): await axios.get(`/users/${id}`)
-            console.log(res)
+            //console.log(res)
             setProfileUser(res.data)
             setFollowers(res.data.followers.length)
             setIsFollowed(res.data.followers.includes(user._id))
-            console.log(res.data.followers.includes(user._id))
+            //console.log(res.data.followers.includes(user._id))
         }
         getProfileUser()
     },[isFollowed])
@@ -48,7 +48,7 @@ export default function ProfileCardMini({username, id}) {
         })
         .then((res)=>{
             setIsFollowed(!isFollowed)
-            console.log(res)
+            //console.log(res)
         })
     }
 
