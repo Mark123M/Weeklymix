@@ -14,46 +14,32 @@ import {
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
 import Navbar from '../components/Navbar'
-import ProfileCard from '../components/ProfileCard';
-import Post from '../components/Post'
 import ProfileCardMini from '../components/ProfileCardMini';
 import axios from "axios"
-import {useParams} from "react-router"
 import {GiPerspectiveDiceSixFacesOne} from 'react-icons/gi'
-import {ImDice} from 'react-icons/im'
+import { useNavigate } from 'react-router-dom';
 
-const UserFollowers = () =>{
-   
-}
-
-export default function Profile() {
-    const {username} = useParams()
+export default function Users() {
     const [users, setUsers] = useState([])
     const [userIndex, setUserIndex] = useState(10)
-    const [search, setSearch] = useState()
+    const [search, setSearch] = useState('')
+    const [filteredUsers, setFilteredUsers] = useState([])
+
+    const navigate = useNavigate()
 
     useEffect(()=>{
         const getUsers = async() =>{
             const res = await axios.get(`/users/`)
             setUsers(res.data)
+            setFilteredUsers(res.data)
         }
         getUsers()
     }, [])
-
-    useEffect(()=>{
-        console.log('followers: ',users)
-    }, [users])
     
- 
-       
-    
-
-    
-
     const delay = ms => new Promise(res => setTimeout(res, ms));
     
     const handleScroll = async (e) =>{
-        console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+       // console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
             //alert('youve hit bottom')
             await delay(1000) //allows current page to all load before moving on to the next
@@ -61,6 +47,18 @@ export default function Profile() {
         }
     } 
     
+    const getRandomUser = () =>{
+        const index = Math.floor(Math.random() * (users.length))
+        navigate(`/profile/${users[index].username}`)
+    }
+
+    const handleUserSearch = () =>{
+      setFilteredUsers(users.filter(u=>u.username.toLowerCase().includes(search.toLowerCase())))
+       
+    }
+    useEffect(()=>{
+        console.log('filtered users',filteredUsers)
+    }, [filteredUsers])
 
     return (
         <Box
@@ -95,18 +93,26 @@ export default function Profile() {
                 > 
                     <Flex flexDirection='row'  h = '100%' alignItems = 'center'>
                         {/*<Icon as = {BsSearch} w = {8} h = {8} ml = {2}/> */}
-                        <Input alignSelf='center' ml = {3} mr = {5} h = '45px' fontSize = 'lg' placeholder='Search for a user...' color='white' bg = 'blackAlpha.400'></Input>
-                        <Button variant = 'solid' size = 'md' fontSize = 'lg' colorScheme = 'green'>Search</Button>
-                        <Flex><Button variant = 'link' size = 'lg' ml = {10} mr = {2}> Meet someone new</Button></Flex>
-                        <Flex><Icon as={GiPerspectiveDiceSixFacesOne} w = {12} h = {12} mr = {3}/></Flex>
+                        <Input value = {search} onChange = {(e)=>setSearch(e.target.value)} alignSelf='center' ml = {3} mr = {5} h = '45px' fontSize = 'lg' placeholder='Search for a user...' color='white' bg = 'blackAlpha.400'/>
+                        <Button onClick = {handleUserSearch} variant = 'solid' size = 'md' fontSize = 'lg' colorScheme = 'green'>Search</Button>
+                        <Flex display = {['none','none','flex','flex']}><Button onClick = {getRandomUser} variant = 'link' size = 'lg' ml = {7} mr = {2}> Random user</Button></Flex>
+                        <Flex onClick = {getRandomUser} cursor = 'pointer'>
+                            <Icon as={GiPerspectiveDiceSixFacesOne} w = {12} h = {12} mr = {3}/>
+                        </Flex>
                     </Flex>
                 </Flex>
                 <Wrap spacing = '15px' mt={7} justify = 'center'>
-                    {users.map((u)=>( //mapping the data of each follower into a card component
-                        <ProfileCardMini id = {u._id}/>
+                    {filteredUsers.slice(0, userIndex).map((u)=>( //mapping the data of each follower into a card component
+                        <ProfileCardMini id = {u._id} key = {u._id}/>
                     ))}
         
                 </Wrap>
+                <Center w = '100%' h = '100px' >
+                <Spinner size='xl' thickness='5px'/>
+                <Text ml = {4} fontSize = '2xl'>
+                    Loading users...
+                </Text>        
+            </Center>
             </Flex>
         </Box>
     )

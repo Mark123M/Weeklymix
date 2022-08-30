@@ -41,6 +41,7 @@ export default function ProfileCard({username}) {
     },[isFollowed])
 
     const handleFollow = () =>{
+        navigate('/login', {replace: true})
         axios.put(`/users/${profileUser._id}/follow`, {
             userId:user._id
         })

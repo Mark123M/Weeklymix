@@ -183,14 +183,14 @@ export default function Discussion(){
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.slice(0,postIndex).map((p)=>( //mapping the data of each post into a Post component
-                    <Post id = {p._id} post = {p}/>
+                    <Post id = {p._id} key = {p._id} post = {p}/>
                 ))} 
                
             </Flex>
             <Center w = '100%' h = '100px' >
                 <Spinner size='xl' thickness='5px'/>
                 <Text ml = {4} fontSize = '2xl'>
-                    Loading more posts...
+                    Loading posts...
                 </Text>        
             </Center>
             

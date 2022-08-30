@@ -33,7 +33,7 @@ const UserPosts = ({index}) =>{
 
     return(
         posts.slice(0, index).map((p)=>( //mapping the data of each post into a Post component
-            <Post id = {p.id} post = {p}/>
+            <Post id = {p.id} key = {p.id} post = {p}/>
         ))
     )
 }
@@ -55,7 +55,7 @@ const UserFollowers = () =>{
     return(
         <Wrap spacing = '15px' ml = {7} mt={2}>
             {followers.map((f)=>( //mapping the data of each follower into a card component
-                <ProfileCardMini id = {f}/>
+                <ProfileCardMini id = {f} key = {f}/>
             ))}
             {/*<ProfileCardMini username = 'LofiLarry'/>
             <ProfileCardMini username = 'ModalMatthew'/>
