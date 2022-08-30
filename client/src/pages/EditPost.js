@@ -58,7 +58,7 @@ export default function EditPost() {
 
     const handleImageChange = (e) =>{
         if(e.target.files[0].size > 10000000){
-            alert("Cover picture is too big. (>10mb)");
+            alert("Post image is too big. (>10mb)");
             setInputKey(inputKey+1)
          }
          else{
