@@ -53,8 +53,6 @@ export default function Discussion(){
         
     },[])
 
-    window.onload = function () { alert("It's loaded!") }
-
     useEffect(() =>{
         console.log('# of posts on screen is ',postIndex)
         updatePostState()
