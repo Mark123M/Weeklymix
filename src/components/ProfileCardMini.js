@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from "react"
 import {
     Flex,
     Image,
@@ -6,15 +6,15 @@ import {
     Box,
     Button,
     Icon
-  } from '@chakra-ui/react';
+  } from "@chakra-ui/react";
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
-import {Users} from '../DummyData'
-import axios from 'axios'
-import { UserContext } from '../UserContext';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import {AiOutlineUserAdd} from 'react-icons/ai'
+import {Users} from "../DummyData"
+import axios from "axios"
+import { UserContext } from "../UserContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import {AiOutlineUserAdd} from "react-icons/ai"
 
 export default function ProfileCardMini({username, id}) {
     const assetsFolder = process.env.REACT_APP_PUBLIC_FOLDER
@@ -41,7 +41,7 @@ export default function ProfileCardMini({username, id}) {
 
     const handleFollow = () =>{
         if(!user){
-            navigate('/login', {replace: true})
+            navigate("/login", {replace: true})
         }
         axios.put(`/users/${profileUser._id}/follow`, {
             userId:user._id
@@ -54,31 +54,31 @@ export default function ProfileCardMini({username, id}) {
 
     return (
         <Flex
-            flexDirection='row'
-            bg = '#24262d'
-            w = '450px'
+            flexDirection="row"
+            bg = "#24262d"
+            w = "450px"
             
-            ml = {['0px','0px',5,5]}
-            borderRadius = '10px 10px 10px 10px'
-            alignItems='center'
+            ml = {["0px","0px",5,5]}
+            borderRadius = "10px 10px 10px 10px"
+            alignItems="center"
         >
-           {/* <Box h = '100%' alignItems='center' mr = {7} >
-                <Image src='assets/guitar.jfif' objectFit='cover' minW = '400px' maxW = '400px' h = '150px' borderRadius = '20px 20px 0px 0px' marginBottom={4}/>
+           {/* <Box h = "100%" alignItems="center" mr = {7} >
+                <Image src="assets/guitar.jfif" objectFit="cover" minW = "400px" maxW = "400px" h = "150px" borderRadius = "20px 20px 0px 0px" marginBottom={4}/>
             </Box> */}
 
            
             <Box>
-                <Image src={profileUser.profilePic||'https://res.cloudinary.com/dyrwb96jv/image/upload/v1661549963/cdhmdf8rdxqotpfej5fh.webp'} objectFit = 'cover' minW = '160px' maxW = '160px' h = '160px' borderRadius = '5px' border = '3px solid white'  />
+                <Image src={profileUser.profilePic||"https://res.cloudinary.com/dyrwb96jv/image/upload/v1661549963/cdhmdf8rdxqotpfej5fh.webp"} objectFit = "cover" minW = "160px" maxW = "160px" h = "160px" borderRadius = "5px" border = "3px solid white"  />
             </Box>
 
-            <Flex flexDirection='column' align = 'left' w = '100%' mr = {5}>
+            <Flex flexDirection="column" align = "left" w = "100%" mr = {5}>
                 <Text
-                    fontSize= '2xl'
-                    fontFamily =  {`'fira sans', sans-serif`} 
-                    fontWeight = '500'  
-                    _hover = {{textDecoration: 'underline'}}
-                    maxW = '200px'
-                    marginLeft = 'auto'
+                    fontSize= "2xl"
+                    fontFamily =  {`"fira sans", sans-serif`} 
+                    fontWeight = "500"  
+                    _hover = {{textDecoration: "underline"}}
+                    maxW = "200px"
+                    marginLeft = "auto"
                 >
                     <Link 
                         to = {`/profile/${profileUser.username}`}
@@ -88,27 +88,27 @@ export default function ProfileCardMini({username, id}) {
                 </Text>
 
                 <Text
-                    fontSize= {['sm','sm','sm','sm']}
-                    fontFamily =  {`'roboto', sans-serif`} 
-                    fontWeight = '500' 
-                    color = '#A2A4A4'
-                    marginLeft = 'auto'
+                    fontSize= {["sm","sm","sm","sm"]}
+                    fontFamily =  {`"roboto", sans-serif`} 
+                    fontWeight = "500" 
+                    color = "#A2A4A4"
+                    marginLeft = "auto"
                 >
                     {profileUser.location}
                 </Text>
                 <Text
-                    fontSize= {['xs','xs','sm','sm']}
-                    fontFamily =  {`'roboto', sans-serif`} 
-                    fontWeight = '500' 
-                    color = '#A2A4A4'
-                    ml = 'auto'
+                    fontSize= {["xs","xs","sm","sm"]}
+                    fontFamily =  {`"roboto", sans-serif`} 
+                    fontWeight = "500" 
+                    color = "#A2A4A4"
+                    ml = "auto"
                     mt = {1}
                 >
                     {followers} followers 
                 </Text>
-                <Button onClick = {handleFollow} colorScheme='orange' variant={isFollowed?'outline':'solid'} mt = {4} w = '120px' size = 'sm' marginLeft = 'auto'>
-                    <Icon as = {AiOutlineUserAdd} w = {6} h = {6} color ={isFollowed?'orange.200':'black'}/>
-                    {isFollowed?'Unfollow':'Follow'}
+                <Button onClick = {handleFollow} colorScheme="orange" variant={isFollowed?"outline":"solid"} mt = {4} w = "120px" size = "sm" marginLeft = "auto">
+                    <Icon as = {AiOutlineUserAdd} w = {6} h = {6} color ={isFollowed?"orange.200":"black"}/>
+                    {isFollowed?"Unfollow":"Follow"}
                 </Button>
             </Flex>
            

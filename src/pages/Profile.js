@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect} from "react"
 import {
     Flex,
     Box,
@@ -7,13 +7,13 @@ import {
     Center,
     Spinner,
     Text
-  } from '@chakra-ui/react';
+  } from "@chakra-ui/react";
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
-import Navbar from '../components/Navbar'
-import ProfileCard from '../components/ProfileCard';
-import Post from '../components/Post'
-import ProfileCardMini from '../components/ProfileCardMini';
+import Navbar from "../components/Navbar"
+import ProfileCard from "../components/ProfileCard";
+import Post from "../components/Post"
+import ProfileCardMini from "../components/ProfileCardMini";
 import axios from "axios"
 import {useParams} from "react-router"
 
@@ -48,18 +48,18 @@ const UserFollowers = () =>{
         getFollowers()
     }, [])
     useEffect(()=>{
-        //console.log('followers: ',followers)
+        //console.log("followers: ",followers)
     }, [followers])
     
     return(
-        <Wrap spacing = '15px' ml = {7} mt={2}>
+        <Wrap spacing = "15px" ml = {7} mt={2}>
             {followers.map((f)=>( //mapping the data of each follower into a card component
                 <ProfileCardMini id = {f} key = {f}/>
             ))}
-            {/*<ProfileCardMini username = 'LofiLarry'/>
-            <ProfileCardMini username = 'ModalMatthew'/>
-            <ProfileCardMini username = 'HiphopHubert'/>
-            <ProfileCardMini id = '62ead0e9d1018dfe30f33fd9'/>*/}
+            {/*<ProfileCardMini username = "LofiLarry"/>
+            <ProfileCardMini username = "ModalMatthew"/>
+            <ProfileCardMini username = "HiphopHubert"/>
+            <ProfileCardMini id = "62ead0e9d1018dfe30f33fd9"/>*/}
         </Wrap>
     )
 }
@@ -72,9 +72,9 @@ export default function Profile() {
     const delay = ms => new Promise(res => setTimeout(res, ms));
     
     const handleScroll = async (e) =>{
-        //console.log('scrolling', e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
+        //console.log("scrolling", e.target.scrollHeight - e.target.scrollTop, e.target.clientHeight)
         if(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <= 50 ){ //tolerance value for how far user scrolls down to load posts
-            //alert('youve hit bottom')
+            //alert("youve hit bottom")
             await delay(1000) //allows current page to all load before moving on to the next
             setPostIndex(postIndex+10)
         }
@@ -83,40 +83,40 @@ export default function Profile() {
 
     return (
         <Box
-            overflowY='auto'
-            overflowX = 'auto'
-            bg = '#131417' 
-            position = 'fixed'
-            width = '100%' 
-            height = '100%'  
-            backgroundImage=''  
-            backgroundSize='100vh' 
-            backgroundRepeat='no-repeat' 
-            backgroundPosition='bottom right'
+            overflowY="auto"
+            overflowX = "auto"
+            bg = "#131417" 
+            position = "fixed"
+            width = "100%" 
+            height = "100%"  
+            backgroundImage=""  
+            backgroundSize="100vh" 
+            backgroundRepeat="no-repeat" 
+            backgroundPosition="bottom right"
             
             key ={window.location.href}
             onScroll={handleScroll}
         >
             <Navbar/>
-            <Flex flexDirection='row' mt = '-10px'>
+            <Flex flexDirection="row" mt = "-10px">
 
-                <Tabs size = {['md','md','md','md']} variant = 'line' colorScheme = 'purple' w = '100vw' fontFamily =  {`'fira sans', sans-serif`} mt = '80px'  >
-                    <TabList bg = '#24252E' justifyContent='center' mt = {1}>
-                        <Tab mr = {[0,0,10,10]} borderWidth = '5px' borderStyle='none none solid none'>Posts</Tab>
-                        <Tab mr = {[0,0,10,10]} borderWidth = '5px' borderStyle='none none solid none'>Followers</Tab>
-                        <Tab mr = {[0,0,10,10]} borderWidth = '5px' borderStyle='none none solid none'>Submissions</Tab>
-                        <Tab mr = {[0,0,10,10]} borderWidth = '5px' borderStyle='none none solid none'>Awards</Tab>
+                <Tabs size = {["md","md","md","md"]} variant = "line" colorScheme = "purple" w = "100vw" fontFamily =  {`"fira sans", sans-serif`} mt = "80px"  >
+                    <TabList bg = "#24252E" justifyContent="center" mt = {1}>
+                        <Tab mr = {[0,0,10,10]} borderWidth = "5px" borderStyle="none none solid none">Posts</Tab>
+                        <Tab mr = {[0,0,10,10]} borderWidth = "5px" borderStyle="none none solid none">Followers</Tab>
+                        <Tab mr = {[0,0,10,10]} borderWidth = "5px" borderStyle="none none solid none">Submissions</Tab>
+                        <Tab mr = {[0,0,10,10]} borderWidth = "5px" borderStyle="none none solid none">Awards</Tab>
                     </TabList>
 
                     <TabPanels>
                         <TabPanel>
-                            <Flex flexDirection={['column', 'column', 'column', 'row']}>
+                            <Flex flexDirection={["column", "column", "column", "row"]}>
                                 <ProfileCard username = {username} /* passing the routing parameters to component*//>
-                                <Flex flexDirection='column' ml = {['0px','0px',3,3]} mt = {2} w = '100%'> {/*posts box */}
+                                <Flex flexDirection="column" ml = {["0px","0px",3,3]} mt = {2} w = "100%"> {/*posts box */}
                                     <UserPosts index = {postIndex}/>
-                                    <Center w = '100%' h = '100px' >
-                                        <Spinner size='xl' thickness='5px'/>
-                                        <Text ml = {4} fontSize = '2xl'>
+                                    <Center w = "100%" h = "100px" >
+                                        <Spinner size="xl" thickness="5px"/>
+                                        <Text ml = {4} fontSize = "2xl">
                                             Loading posts...
                                         </Text>        
                                     </Center>
@@ -124,7 +124,7 @@ export default function Profile() {
                             </Flex>
                         </TabPanel>
                         <TabPanel>
-                            <Flex flexDirection={['column', 'column', 'row', 'row']}>
+                            <Flex flexDirection={["column", "column", "row", "row"]}>
                                 <ProfileCard username = {username}/>
                                 <UserFollowers/>
                             </Flex>

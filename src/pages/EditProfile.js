@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect, useContext} from "react"
 import {
     Flex,
     Button,
@@ -7,24 +7,24 @@ import {
     Center,
     IconButton,
     Textarea,
-  } from '@chakra-ui/react';
+  } from "@chakra-ui/react";
 import "@fontsource/raleway"
 import "@fontsource/roboto"
 import "@fontsource/fira-sans"
-import axios from 'axios'
-import { UserContext } from '../UserContext';
-import {CloseIcon} from '@chakra-ui/icons'
-import {BsImageFill} from 'react-icons/bs'
-import { useNavigate, useParams} from 'react-router-dom';
-import Compressor from 'compressorjs'
+import axios from "axios"
+import { UserContext } from "../UserContext";
+import {CloseIcon} from "@chakra-ui/icons"
+import {BsImageFill} from "react-icons/bs"
+import { useNavigate, useParams} from "react-router-dom";
+import Compressor from "compressorjs"
 
 export default function EditProfile() {
     const {name} = useParams()
-    const [username, setUsername] = useState('')
-    const [location, setLocation] = useState('')
-    const [description, setDescription] = useState('')
- //   const [password, setPassword] = useState('')
-    const [userId, setUserId] = useState('')
+    const [username, setUsername] = useState("")
+    const [location, setLocation] = useState("")
+    const [description, setDescription] = useState("")
+ //   const [password, setPassword] = useState("")
+    const [userId, setUserId] = useState("")
 
     const [pfp, setPfp] = useState(null)
     const [inputKey, setInputKey] = useState(0)
@@ -35,7 +35,7 @@ export default function EditProfile() {
 
     useEffect(()=>{
         if(!user){
-            navigate('/login', {replace:true})
+            navigate("/login", {replace:true})
         } else if (user.username!=name){
             navigate(`/profile/${name}`, {replace:true})
         }
@@ -83,9 +83,9 @@ export default function EditProfile() {
             
         })
         
-        setUsername('')
-        setLocation('')
-        setDescription('')
+        setUsername("")
+        setLocation("")
+        setDescription("")
     }
 
     const handlePfpChange = (e) =>{
@@ -160,7 +160,7 @@ export default function EditProfile() {
             width: 400,
             height: 400,
             success(result) {
-                //console.log('upload cover')
+                //console.log("upload cover")
                 const data = new FormData()
                 data.append("file", result, result.name)
                 data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
@@ -198,47 +198,47 @@ export default function EditProfile() {
 
     return (
         <Flex
-            overflow = 'auto'
-            position = 'fixed'
-            w = '100%'
-            h = '100%'
-            top = '0'
-            bottom='0'
-            left = '0'
-            right = '0'
-            bg = 'rgba(0,0,0,0.7)'
-            flexDirection={['column','column','row','row']}
-            justifyContent = 'center'
+            overflow = "auto"
+            position = "fixed"
+            w = "100%"
+            h = "100%"
+            top = "0"
+            bottom="0"
+            left = "0"
+            right = "0"
+            bg = "rgba(0,0,0,0.7)"
+            flexDirection={["column","column","row","row"]}
+            justifyContent = "center"
         >
              <Flex
-                alignSelf = 'center'
-                flexDirection = 'column'
-                height= '630px'
-                w = '500px'
-                padding= '20px'
-                backgroundColor= '#17171d'
-                borderRadius= '10px'
+                alignSelf = "center"
+                flexDirection = "column"
+                height= "630px"
+                w = "500px"
+                padding= "20px"
+                backgroundColor= "#17171d"
+                borderRadius= "10px"
                 mt = {[0,0,0,0]}
             >   
-                <Flex w = '100%' mb = {4} flexDirection = 'column'>
+                <Flex w = "100%" mb = {4} flexDirection = "column">
                     <IconButton
                         size="lg"
-                        colorScheme = 'white'
+                        colorScheme = "white"
                         icon={<CloseIcon/>}
-                        marginRight = 'auto'
-                        variant = 'ghost'
+                        marginRight = "auto"
+                        variant = "ghost"
                       
                         onClick = {()=>navigate(`/profile/${user.username}`,{replace:true})}
                     />
                     <Flex 
-                        fontFamily={`'raleway',san-serif`} 
-                        fontWeight = '600' 
-                        fontSize={[ 'lg' ,'xl', '2xl', '2xl' ]}
-                        color = 'gray.300'
-                        marginTop = '-40px'
-                        borderStyle = 'none none solid none'
-                        borderWidth = '1px'
-                        alignSelf='center'
+                        fontFamily={`"raleway",san-serif`} 
+                        fontWeight = "600" 
+                        fontSize={[ "lg" ,"xl", "2xl", "2xl" ]}
+                        color = "gray.300"
+                        marginTop = "-40px"
+                        borderStyle = "none none solid none"
+                        borderWidth = "1px"
+                        alignSelf="center"
                         
                     > 
                         Edit profile:
@@ -248,65 +248,65 @@ export default function EditProfile() {
                 </Flex>
                 
                 <form onSubmit={submitProfileEdits}>
-                    <FormLabel fontSize = 'md' color = 'green.200'>Username:</FormLabel>
-                    <Input value = {username} onChange = {(e)=>setUsername(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
+                    <FormLabel fontSize = "md" color = "green.200">Username:</FormLabel>
+                    <Input value = {username} onChange = {(e)=>setUsername(e.target.value)}  required height = "45px" fontSize = "md" bg = "blackAlpha.400"/>
 
-                    <FormLabel mt = {4} fontSize = 'md' color = 'green.200'>Location:</FormLabel>
-                    <Input value = {location} onChange = {(e)=>setLocation(e.target.value)}  required height = '45px' fontSize = 'md' bg = 'blackAlpha.400'/>
+                    <FormLabel mt = {4} fontSize = "md" color = "green.200">Location:</FormLabel>
+                    <Input value = {location} onChange = {(e)=>setLocation(e.target.value)}  required height = "45px" fontSize = "md" bg = "blackAlpha.400"/>
                     
-                    <FormLabel fontSize = 'md' color = 'green.200'  mt = {4}>About me:</FormLabel>
-                    <Textarea resize = 'none' value = {description} onChange = {(e)=>setDescription(e.target.value)} required height = '150px' fontSize = 'md' bg = 'blackAlpha.400'/>
+                    <FormLabel fontSize = "md" color = "green.200"  mt = {4}>About me:</FormLabel>
+                    <Textarea resize = "none" value = {description} onChange = {(e)=>setDescription(e.target.value)} required height = "150px" fontSize = "md" bg = "blackAlpha.400"/>
 
-                    <Button variant = 'solid' type = 'submit' colorScheme='green' size = 'lg' mt = {7}>Save Edits</Button>
+                    <Button variant = "solid" type = "submit" colorScheme="green" size = "lg" mt = {7}>Save Edits</Button>
                     
-                    <FormLabel fontSize = 'sm' color = 'gray.400' mt = {4}>*Some changes may take a while to save</FormLabel>
+                    <FormLabel fontSize = "sm" color = "gray.400" mt = {4}>*Some changes may take a while to save</FormLabel>
                      
                 </form> 
             </Flex>
 
             <Flex 
                 mt = {[5,5,0,0]} 
-                w = '450px' 
-                h = '630px' 
-                backgroundColor= '#17171d' 
-                flexDirection = 'column'  
-                borderRadius= '10px' 
+                w = "450px" 
+                h = "630px" 
+                backgroundColor= "#17171d" 
+                flexDirection = "column"  
+                borderRadius= "10px" 
                 ml = {4}
-                alignSelf = 'center'
+                alignSelf = "center"
             >
                 <Flex 
-                    fontFamily={`'raleway',san-serif`} 
-                    fontWeight = '600' 
-                    fontSize={[ 'lg' ,'xl', '2xl', '2xl' ]}
-                    color = 'gray.300'
-                    mt = '28px'
-                    borderStyle = 'none none solid none'
-                    borderWidth = '1px'
-                    alignSelf='center'
+                    fontFamily={`"raleway",san-serif`} 
+                    fontWeight = "600" 
+                    fontSize={[ "lg" ,"xl", "2xl", "2xl" ]}
+                    color = "gray.300"
+                    mt = "28px"
+                    borderStyle = "none none solid none"
+                    borderWidth = "1px"
+                    alignSelf="center"
                     
                 > 
                    Edit files:
 
                 </Flex>
-                <FormLabel fontSize = 'md' color = 'green.200' ml = {5}>{`New Profile picture: (max 2mb)`}</FormLabel>
-                <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
-                    <BsImageFill size = {67} color = '#525252'/>
+                <FormLabel fontSize = "md" color = "green.200" ml = {5}>{`New Profile picture: (max 2mb)`}</FormLabel>
+                <Center flexDirection = "column" w = "410px" h = " 220px" bg = "#111116" alignSelf = "center" borderRadius = "10px" mt = {1} borderStyle = "dashed" borderColor = "#525252" borderWidth = "2px">
+                    <BsImageFill size = {67} color = "#525252"/>
                     <Flex mt = {3}>
                         <form>
-                            <Input key = {inputKey} accept = 'image/*' onChange = {(e)=>handlePfpChange(e)} variant = 'outline' type="file" name="profilePicture" width = '300px' pt = '3px'/>
-                            <Button onClick = {()=>setPfp(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
+                            <Input key = {inputKey} accept = "image/*" onChange = {(e)=>handlePfpChange(e)} variant = "outline" type="file" name="profilePicture" width = "300px" pt = "3px"/>
+                            <Button onClick = {()=>setPfp(null)} type = "reset" variant = "outline" colorScheme = "green" size = "sm" ml = {2}>Clear</Button>
                         </form>
                         
                     </Flex>
                     
                 </Center>
-                <FormLabel mt = {5} fontSize = 'md' color = 'green.200' ml = {5}>{`New Cover picture: (max 10mb)`}</FormLabel>
-                <Center flexDirection = 'column' w = '410px' h = ' 220px' bg = '#111116' alignSelf = 'center' borderRadius = '10px' mt = {1} borderStyle = 'dashed' borderColor = '#525252' borderWidth = '2px'>
-                    <BsImageFill size = {67} color = '#525252'/>
+                <FormLabel mt = {5} fontSize = "md" color = "green.200" ml = {5}>{`New Cover picture: (max 10mb)`}</FormLabel>
+                <Center flexDirection = "column" w = "410px" h = " 220px" bg = "#111116" alignSelf = "center" borderRadius = "10px" mt = {1} borderStyle = "dashed" borderColor = "#525252" borderWidth = "2px">
+                    <BsImageFill size = {67} color = "#525252"/>
                     <Flex mt = {3}>
                         <form>
-                            <Input key = {inputKey} accept = 'image/*' onChange = {(e)=>handleCoverChange(e)} variant = 'outline' type="file" name="coverPicture" width = '300px' pt = '3px'/>
-                            <Button onClick = {()=>setCover(null)} type = 'reset' variant = 'outline' colorScheme = 'green' size = 'sm' ml = {2}>Clear</Button>
+                            <Input key = {inputKey} accept = "image/*" onChange = {(e)=>handleCoverChange(e)} variant = "outline" type="file" name="coverPicture" width = "300px" pt = "3px"/>
+                            <Button onClick = {()=>setCover(null)} type = "reset" variant = "outline" colorScheme = "green" size = "sm" ml = {2}>Clear</Button>
                         </form>
                     </Flex>
                 </Center>

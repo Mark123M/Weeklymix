@@ -1,6 +1,6 @@
-const router = require('express').Router()
+const router = require("express").Router()
 const User = require("../models/User")
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt")
 
 //member registration
 router.post("/register",async (req, res)=>{
@@ -33,10 +33,10 @@ router.post("/login", async(req, res)=>{
         const isValid = await bcrypt.compare(req.body.password, user.password)
 
         if(!user){
-            res.status(404).json('user not found')
+            res.status(404).json("user not found")
         }
         else if(isValid === false){
-            res.status(400).json('incorrect password')
+            res.status(400).json("incorrect password")
         } 
         else{
             res.status(200).json(user)

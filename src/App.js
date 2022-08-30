@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {
   ChakraProvider, CSSReset, propNames,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import Home from './pages/Home'
-import Discussions from './pages/Discussions'
-import Profile from './pages/Profile';
-import Login from './pages/Login'
-import Register from './pages/Register'
-import NewPost from './pages/NewPost'
-import EditPost from './pages/EditPost'
-import EditProfile from './pages/EditProfile'
-import ComingSoon from './pages/ComingSoon'
-import Users from './pages/Users'
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import Home from "./pages/Home"
+import Discussions from "./pages/Discussions"
+import Profile from "./pages/Profile";
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import NewPost from "./pages/NewPost"
+import EditPost from "./pages/EditPost"
+import EditProfile from "./pages/EditProfile"
+import ComingSoon from "./pages/ComingSoon"
+import Users from "./pages/Users"
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
 
 import {
   HashRouter, //using hashrouter for client side routing
@@ -21,8 +21,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import { myTheme } from './styles/theme';
-import { UserContext } from './UserContext';
+import { myTheme } from "./styles/theme";
+import { UserContext } from "./UserContext";
 
 function App() {
   const[user, setUser] = useState(null)
