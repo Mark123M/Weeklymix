@@ -1,9 +1,9 @@
-const Post = require('../models/Post')
+const Post = require("../models/Post")
 const router = require("express").Router()
-const User = require('../models/User')
+const User = require("../models/User")
 
 //create a post
-router.post('/', async (req, res)=>{
+router.post("/", async (req, res)=>{
     const newPost = new Post(req.body)
     try{
         const savedPost = await newPost.save()
@@ -13,7 +13,7 @@ router.post('/', async (req, res)=>{
     }
 })
 //edit a post
-router.put('/:id', async (req, res)=>{
+router.put("/:id", async (req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
         if(post.userId === req.body.userId){ //check if the userId of the request equal to the userId of the post (if the post is theirs)
@@ -30,7 +30,7 @@ router.put('/:id', async (req, res)=>{
 })
 
 //delete a post
-router.post('/:id/delete', async (req, res)=>{
+router.post("/:id/delete", async (req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
         await console.log(`THE ID OF THE USER IS ${req.body.userId}`)
@@ -48,7 +48,7 @@ router.post('/:id/delete', async (req, res)=>{
    
 })
 //like a post
-/*router.put('/:id/like', async(req, res)=>{
+/*router.put("/:id/like", async(req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
         if(!post.likes.includes(req.body.userId)){
@@ -63,7 +63,7 @@ router.post('/:id/delete', async (req, res)=>{
     }
 }) */
 
-router.put('/:id/like', async(req, res)=>{
+router.put("/:id/like", async(req, res)=>{
     console.log(req.body.userId)
     try{
         const user = await User.findById(req.body.userId)
@@ -72,11 +72,11 @@ router.put('/:id/like', async(req, res)=>{
         if(!user.likedPosts.includes(req.params.id)){
             await user.updateOne({$push:{likedPosts:req.params.id}})
             await post.updateOne({$inc:{likes: 1}})
-            res.status(200).json('You have liked this post')
+            res.status(200).json("You have liked this post")
         } else {
             await user.updateOne({$pull:{likedPosts:req.params.id}})
             await post.updateOne({$inc:{likes: -1}})
-            res.status(200).json('You have unliked this post')
+            res.status(200).json("You have unliked this post")
         }
     } catch (err){
         res.status(500).json(err)
@@ -85,7 +85,7 @@ router.put('/:id/like', async(req, res)=>{
 
 //get a post
 
-router.get('/:id', async(req, res)=>{
+router.get("/:id", async(req, res)=>{
     try{
         const post = await Post.findById(req.params.id)
         res.status(200).json(post)
@@ -94,7 +94,7 @@ router.get('/:id', async(req, res)=>{
     }
 })
 //get all posts
-router.get('/', async(req, res)=>{
+router.get("/", async(req, res)=>{
     try{
         const allPosts = await Post.find({}).limit(1000) //those who scroll past the last 1000 posts are insane
         res.status(200).json(allPosts)
@@ -104,7 +104,7 @@ router.get('/', async(req, res)=>{
    // res.send("<h1>welcome to homepage</h1>")
 })
 
-router.get('/postId/:id/range/:count', async(req, res)=>{
+router.get("/postId/:id/range/:count", async(req, res)=>{
     try{
         const query = await Post.find({ _id: {$lt: req.params.id} }).sort({ _id: -1 }).limit(req.params.count)
         res.status(200).json(query)
@@ -113,7 +113,7 @@ router.get('/postId/:id/range/:count', async(req, res)=>{
     }
 })
 
-router.get('/user/:username', async (req, res) =>{
+router.get("/user/:username", async (req, res) =>{
 
     try{
         const user = await User.findOne({username:req.params.username})

@@ -1,9 +1,9 @@
 const User = require("../models/User")
-const router = require('express').Router()
-const cloudinary = require('../utils/cloudinary')
-const upload = require('../utils/multer')
+const router = require("express").Router()
+const cloudinary = require("../utils/cloudinary")
+const upload = require("../utils/multer")
 
-//create&change a user's info
+//create&change a user"s info
 router.put("/:id", async(req, res)=>{
     //compares id of the request and the parameter so that a user could only update their own info
     if(req.body.userId === req.params.id||req.body.isAdmin){ 
@@ -55,7 +55,7 @@ router.post("/:id/delete", async(req, res)=>{
 })
 
 //get a user
-router.get('/:id', async (req, res)=>{
+router.get("/:id", async (req, res)=>{
     try{
         const user = await User.findById(req.params.id)
         const{password,updatedAt, ...other} = user._doc
@@ -66,7 +66,7 @@ router.get('/:id', async (req, res)=>{
 })
 
 //get a user by their username
-router.get('/u/:username', async (req, res)=>{
+router.get("/u/:username", async (req, res)=>{
     try{
         const user = await User.findOne({username:req.params.username})
         const{password,updatedAt, ...other} = user._doc
@@ -101,7 +101,7 @@ router.get('/u/:username', async (req, res)=>{
             res.status(500).json(err)
         }
     } else {
-        res.status(403).json("Don't follow yourself!")
+        res.status(403).json("Don"t follow yourself!")
     }
 })
 */
