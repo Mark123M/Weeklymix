@@ -74,12 +74,12 @@ export default function Discussion(){
 
     const createNewPost = () =>{
         if(!user){
-            navigate("/login", { replace: true })
+            navigate("/login")
         }
         else {
             //console.log("new post created")
             //setPostFormDisplay(true)
-            navigate("/discussions/new-post", {replace:true})
+            navigate("/discussions/new-post")
         }   
     }
 
@@ -148,6 +148,7 @@ export default function Discussion(){
             <Navbar/>
 
             <Flex 
+                display = {['none','none','flex','flex']}
                 flexDirection="column" 
                 h = "100vh"
                 paddingLeft = {[1,2,4,4]}
@@ -167,16 +168,15 @@ export default function Discussion(){
                     variant = "solid" 
                     mt = {10} 
                     colorScheme = "orange" 
-                    size = {["md","md","lg","lg"]}
+                    size = {["md","md","md","lg"]}
                     alignSelf="center"
                     onClick = {createNewPost}
-                
                 >
                     +new post
                 </Button>
             </Flex>
 
-            <Flex flexDirection="column" ml = {["140px","150px","200px", "200px"]} mt = {16} bg = "#131417" paddingTop={4} paddingLeft = {6}> 
+            <Flex flexDirection="column" ml = {["-10px","-10px","150px", "200px"]} mt = {16} mr = {1} bg = "#131417" paddingTop={4} paddingLeft = {6}> 
                 <PostBox createNewPost={createNewPost}/>
                 
                 {posts.slice(0,postIndex).map((p)=>( //mapping the data of each post into a Post component

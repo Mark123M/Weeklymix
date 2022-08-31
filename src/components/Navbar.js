@@ -7,8 +7,9 @@ import {
     Button,
     IconButton,
     Icon,
+    Text
   } from "@chakra-ui/react";
-import {FaDiscord, FaReddit} from "react-icons/fa"
+import {FaDiscord, FaReddit, FaGithub} from "react-icons/fa"
 import {Link} from "react-router-dom"
 //import NavItem from "./NavbarLink"
 import {useState, useContext} from "react"
@@ -94,10 +95,13 @@ export default function Navbar(){
                 </Flex>
                 
                 
-                <Flex display = {["none", "none", "none", "flex"] } flexDirection = "row" justifyContent="center" ml = "auto" mr = {12}>
-                    
+                <Flex display = {["none", "none", "none", "flex"] } flexDirection = "row" alignItems = 'center' justifyContent="center" ml = "auto" mr = {12}>
+
+                    <Icon as = {FaGithub} alignSelf = "center" mr = {3} w = {7} h = {7}/>
+                    <a href="https://github.com/Mark123M/weeklymix" target="_blank">
+                        <Text mr = {3} fontFamily = {`"open sans", sans-serif`} _hover = {{textDecoration: 'underline'}}> Github page </Text>
+                    </a>
                     <Icon as={FaDiscord} alignSelf = "center" mr = {5} w = {7} h = {7}/>
-                    <Icon as={FaReddit} alignSelf = "center" mr = {5} w = {7} h = {7}/>
 
                     <Flex style = {centerStyle} display = {user?"none":"initial"}>
                         <Link to = "/login">
@@ -139,6 +143,16 @@ export default function Navbar(){
                     <Link to = "/about">
                         <NavItem text = "About"/>
                     </Link>
+
+                    <Flex mt = {2} mb = {5}>
+                        <Icon as = {FaGithub} alignSelf = "center" mr = {3} w = {7} h = {7}/>
+                        <a href="https://github.com/Mark123M/weeklymix" target="_blank">
+                            <Text mr = {3} fontFamily = {`"open sans", sans-serif`} _hover = {{textDecoration: 'underline'}}> Github page </Text>
+                        </a>
+                        <Icon as={FaDiscord} alignSelf = "center" mr = {5} w = {7} h = {7}/>
+                        <Icon as={FaReddit} alignSelf = "center" mr = {5} w = {7} h = {7}/>
+                    </Flex>
+                    
                    
 
                     <Flex style = {centerStyle} display = {user?"none":"inline"}>

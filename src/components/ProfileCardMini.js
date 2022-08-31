@@ -41,7 +41,7 @@ export default function ProfileCardMini({username, id}) {
 
     const handleFollow = () =>{
         if(!user){
-            navigate("/login", {replace: true})
+            navigate("/login")
         }
         axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${profileUser._id}/follow`, {
             userId:user._id

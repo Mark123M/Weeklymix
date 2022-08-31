@@ -35,9 +35,9 @@ export default function EditProfile() {
 
     useEffect(()=>{
         if(!user){
-            navigate("/login", {replace:true})
+            navigate("/login", {replace: true})
         } else if (user.username!=name){
-            navigate(`/profile/${name}`, {replace:true})
+            navigate(`/profile/${name}`, {replace: true})
         }
         const getOriginalUser = async()=>{
             const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/u/${name}`)

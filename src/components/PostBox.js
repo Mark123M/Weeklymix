@@ -34,8 +34,8 @@ export default function PostBox({createNewPost}){
             cursor = "pointer"
             mt = {8}
             mb = {4}
-            ml = {4}
-            mr = {8}
+            ml = {[0,1,3,8]}
+            mr = {[0,1,3,8]}
             fontSize = "xl" 
             flexDirection="column"
             borderRadius = "10px"

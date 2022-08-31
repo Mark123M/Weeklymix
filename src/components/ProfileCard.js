@@ -11,7 +11,8 @@ import {
 import "@fontsource/fira-sans"
 import "@fontsource/roboto"
 import {BiPencil} from "react-icons/bi"
-import { FaFlagUsa, FaYoutube, FaSpotify, FaSoundcloud,FaReddit} from "react-icons/fa";
+import { FaYoutube, FaSpotify, FaSoundcloud,FaReddit} from "react-icons/fa";
+import {MdLocationOn} from "react-icons/md"
 import {HiUserGroup} from "react-icons/hi"
 import {AiOutlineUserAdd} from "react-icons/ai"
 import SocialLink from "./SocialLink";
@@ -41,7 +42,9 @@ export default function ProfileCard({username}) {
     },[isFollowed])
 
     const handleFollow = () =>{
-        navigate("/login", {replace: true})
+        if(!user){
+            navigate("/login")
+        }
         axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${profileUser._id}/follow`, {
             userId:user._id
         })
@@ -73,7 +76,7 @@ export default function ProfileCard({username}) {
 
             <Flex bg = "#2d97e5" minW = "400px" maxW = "400px" h = "140px" borderRadius = "10px 10px 0px 0px" backgroundImage = {profileUser.coverPic}>
                 <Box>
-                    <Image src={profileUser.profilePic || assetsFolder+"users/defaultAvatar.jpg"} objectFit = "cover" minW = "120px" maxW = "120px" h = "120px" borderRadius = "5px" ml = {8} mt = {16} outline = "4px solid white"  />
+                    <Image src={profileUser.profilePic || "https://res.cloudinary.com/dyrwb96jv/image/upload/v1661549963/cdhmdf8rdxqotpfej5fh.webp"} objectFit = "cover" minW = "120px" maxW = "120px" h = "120px" borderRadius = "5px" ml = {8} mt = {16} outline = "4px solid white"  />
                 </Box>
                 <Button visibility = {showEdit()?"visible":"hidden"} mt = "155px" ml = "auto" mr = {5} colorScheme = "purple" onClick = {()=>navigate(`/profile/${profileUser.username}/edit`)}>
                     <BiPencil size = {30}/>
@@ -96,14 +99,15 @@ export default function ProfileCard({username}) {
 
             <Flex>
 
-                <Flex flexDirection = "column">
+                <Flex flexDirection = "column" mt = {2}>
                     <Flex>
-                        <Icon as = {FaFlagUsa} w = {5} h = {5} ml = {7}/>
+                        <Icon as = {MdLocationOn} w = {7} h = {7} ml = {6}/>
                         <Text
                             fontSize= {["xs","xs","sm","sm"]}
                             fontFamily =  {`"roboto", sans-serif`} 
                             fontWeight = "500" 
                             ml = {3}
+                            mt = {1}
                             color = "#A2A4A4"
                         >
                             {profileUser.location}

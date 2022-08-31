@@ -79,7 +79,7 @@ export default function Post({post}){
 
     const handleLikeClick = () =>{
         if(!user){
-            navigate("/login", { replace: true })
+            navigate("/login")
         }
 
         if(likedState){
@@ -118,7 +118,7 @@ export default function Post({post}){
             navigate("/login", { replace: true })
         }
         else{
-            navigate(`/discussions/${post._id}/edit`, { replace: true })
+            navigate(`/discussions/${post._id}/edit`)
         }
     }
     
@@ -136,8 +136,8 @@ export default function Post({post}){
             onMouseLeave = {handleMouseLeave}
             mt = {1}
             mb = {1}
-            ml = {4}
-            mr = {8}
+            ml = {[0,1,3,8]}
+            mr = {[0,1,3,8]}
         > 
         {/* i have braindamage */}
             <Flex flexDirection="row" mt = {4}>

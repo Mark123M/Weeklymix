@@ -112,7 +112,7 @@ export default function Profile() {
                         <TabPanel>
                             <Flex flexDirection={["column", "column", "column", "row"]}>
                                 <ProfileCard username = {username} /* passing the routing parameters to component*//>
-                                <Flex flexDirection="column" ml = {["0px","0px",3,3]} mt = {2} w = "100%"> {/*posts box */}
+                                <Flex flexDirection="column" ml = {["0px","0px",3,3]} mt = {2} w = "100%" mr = '-12px'> {/*posts box */}
                                     <UserPosts index = {postIndex}/>
                                     <Center w = "100%" h = "100px" >
                                         <Spinner size="xl" thickness="5px"/>

@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react"
+import React from "react"
 import {
     Flex,
     Image,
@@ -10,8 +10,6 @@ import "@fontsource/poppins"
 import "@fontsource/fira-sans"
 import "@fontsource/open-sans"
 import Navbar from "../components/Navbar"
-import axios from "axios"
-import { useNavigate } from "react-router-dom";
 
 export default function ComingSoon(){
    /* const spotify = SpotifyCredentials()

@@ -132,7 +132,7 @@ export default function NewPost() {
                         marginRight = "auto"
                         variant = "ghost"
                       
-                        onClick = {()=>navigate("/discussions")}
+                        onClick = {()=>navigate("/discussions", {replace: true}) }
                     />
                     <Flex 
                         fontFamily={`"raleway",san-serif`} 
