@@ -1,7 +1,7 @@
 {
   "name": "weeklymix",
   "version": "0.1.0",
-  "homepage": "https://mark123m.github.io/weeklymix",
+  "homepage": "https://mark123m.github.io/Weeklymix",
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^2.0.3",
@@ -53,7 +53,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://thawing-woodland-29859.herokuapp.com/api",
+  "proxy": "https://web-production-c44a.up.railway.app/api",
   "devDependencies": {
     "gh-pages": "^4.0.0"
   }

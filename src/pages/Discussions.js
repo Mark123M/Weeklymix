@@ -24,6 +24,7 @@ export default function Discussion(){
     
     const [postIndex, setPostIndex] = useState(10)
     const [posts, setPosts] = useState([])
+    const [postsFilter, setPostsFilter] = useState('');
     //const [postFormDisplay, setPostFormDisplay] = useState(false)
     const{value: user, setValue: setUser} = useContext(UserContext)
     const boxRef = useRef(null)
@@ -67,9 +68,20 @@ export default function Discussion(){
     const [channelColors, setChannelColors] = useState(["purple.300", "transparent","transparent", "transparent", "transparent"])
     
     const switchChannel = (event, channelNum) => {
-        //console.log(event.target.innerText)
+        console.log(event.target.innerText, channelNum)
         channelHighlight(channelNum)    
         setChannel(channelNum)
+        if(channelNum === 1){
+            setPostsFilter('');
+        } else if (channelNum === 2){
+            setPostsFilter("Announcements");
+        } else if (channelNum === 3){
+            setPostsFilter("Discussion");
+        } else if (channelNum === 4){
+            setPostsFilter("Feedback");
+        } else{
+            setPostsFilter("Off topic");
+        }
     }
 
     const createNewPost = () =>{
@@ -179,7 +191,7 @@ export default function Discussion(){
             <Flex flexDirection="column" ml = {["-10px","-10px","150px", "200px"]} mt = {16} mr = {1} bg = "#131417" paddingTop={4} paddingLeft = {6}> 
                 <PostBox createNewPost={createNewPost}/>
                 
-                {posts.slice(0,postIndex).map((p)=>( //mapping the data of each post into a Post component
+                {posts.filter(p=>p.postType.includes(postsFilter)).slice(0,postIndex).map((p)=>( //mapping the data of each post into a Post component
                     <Post id = {p._id} key = {p._id} post = {p}/>
                 ))} 
                
