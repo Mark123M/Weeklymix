@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
+
 const mongoose = require('mongoose')
 const dotenv = require("dotenv")
 const helmet = require("helmet")
 const morgan = require("morgan")
 const path = require('path');
+const cors = require('cors')
 
 const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
@@ -20,6 +22,7 @@ mongoose.connect(process.env.MONGO_URL)
 app.use(express.json())
 app.use(helmet())
 app.use(morgan("common"))
+app.use(cors())
 
 app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute)
@@ -41,7 +44,7 @@ app.get('/users',(req, res)=>{
     }
   })
 }) */
-
-app.listen(3001, ()=>{
-    console.log('hello world')
+const PORT = process.env.PORT || 3001
+app.listen(PORT, ()=>{
+    console.log(`Server running on port ${PORT}`)
 })
