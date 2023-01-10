@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Weeklymix/static/css/main.9fe2af5b.css",
-    "main.js": "/Weeklymix/static/js/main.df01dfd1.js",
+    "main.js": "/Weeklymix/static/js/main.91153288.js",
     "static/media/fira-sans-all-400-normal.woff": "/Weeklymix/static/media/fira-sans-all-400-normal.a53186151b57dec16d41.woff",
     "static/media/open-sans-all-400-normal.woff": "/Weeklymix/static/media/open-sans-all-400-normal.3bc4108fa8f9a72e6ea5.woff",
     "static/media/raleway-all-400-normal.woff": "/Weeklymix/static/media/raleway-all-400-normal.98e7ff86f2b9a46e19cc.woff",
@@ -39,10 +39,10 @@
     "static/media/roboto-greek-ext-400-normal.woff2": "/Weeklymix/static/media/roboto-greek-ext-400-normal.169619821ea93019d1bb.woff2",
     "index.html": "/Weeklymix/index.html",
     "main.9fe2af5b.css.map": "/Weeklymix/static/css/main.9fe2af5b.css.map",
-    "main.df01dfd1.js.map": "/Weeklymix/static/js/main.df01dfd1.js.map"
+    "main.91153288.js.map": "/Weeklymix/static/js/main.91153288.js.map"
   },
   "entrypoints": [
     "static/css/main.9fe2af5b.css",
-    "static/js/main.df01dfd1.js"
+    "static/js/main.91153288.js"
   ]
 }
