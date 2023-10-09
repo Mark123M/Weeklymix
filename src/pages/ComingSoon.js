@@ -50,7 +50,7 @@ export default function ComingSoon(){
             <Flex w = "100%"  alignItems = "center" justifyContent = "center" flexDirection = "column">
                 <Image src={"https://res.cloudinary.com/dyrwb96jv/image/upload/v1661552813/h16sisfqu3xpnbkpzvi6.jpg"} objectFit = "cover" minW = "180px" maxW = "180px" h = "180px" borderRadius = "50%" ml = {5}/>
                 <Text fontFamily =  {`"open sans", sans-serif`} fontSize = "4xl" >
-                    I"m still working on it! :)
+                    coming soon :)
                 </Text>
             </Flex>
 

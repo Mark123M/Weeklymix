@@ -81,11 +81,11 @@ export default function Navbar(){
                         <Link to = "/discussions" onClick = {resetStorage}>
                             <NavItem text = "Discussions"/>
                         </Link>
-                        <Link to = "/challenge">
-                            <NavItem text = "Challenge"/>
-                        </Link>
                         <Link to = "/users">
                             <NavItem text = "Users"/>
+                        </Link>
+                        <Link to = "/challenge">
+                            <NavItem text = "Challenge"/>
                         </Link>
                         <Link to = "/about">
                             <NavItem text = "About"/>
